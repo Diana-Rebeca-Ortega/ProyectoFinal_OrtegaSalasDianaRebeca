@@ -1,14 +1,17 @@
+package Vista;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/*
 class VentanaPantallaCompleta extends JFrame  {
     private JLabel fondo;
     private Panel panelBienvenido;
 
     public VentanaPantallaCompleta() {
-        ImageIcon imagenFondo = new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\farmacia.jpg");
+        ImageIcon imagenFondo = new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\farmacia.jpg");
         fondo = new JLabel(imagenFondo);
         addComponentListener(new ComponentAdapter() {//Redimencionar el fondo de pantalla
             @Override
@@ -53,9 +56,9 @@ public class VentanInicio {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // new Altas_Alumnos();
-                new VentanaPantallaCompleta();
+
+               // new VentanaPantallaCompleta();
             }
         });
     }
-}
+}*/

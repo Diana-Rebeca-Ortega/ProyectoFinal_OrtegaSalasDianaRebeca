@@ -68,7 +68,7 @@ class VentanaLogin extends JFrame  {
     }//VentanaPantallaCompleta
 
 }
-class VentanaPrincipal extends  JFrame{
+class VentanaPrincipal extends  JFrame implements ActionListener{
     JMenu menuPrincipal, informacion;
     public VentanaPrincipal(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);//para que no queden registros en la ram
@@ -100,6 +100,35 @@ class VentanaPrincipal extends  JFrame{
 
         add(menuBar);
         setJMenuBar(menuBar);
+
+        JPanel panelScroll = new JPanel();
+        panelScroll.setLayout(null);
+        panelScroll.setBackground(Color.red);
+        panelScroll.setPreferredSize(new Dimension( 1060,getHeight()+100));
+        //add(panelScroll);
+
+        JScrollPane scrollPane = new JScrollPane(panelScroll);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(getWidth()-30,100,20,getHeight()-140);
+        add(scrollPane);
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                //scrollPane.setSize(getWidth(),getHeight());
+                scrollPane.setBounds(getWidth()-30,100,20,getHeight()-160);
+                panelScroll.setPreferredSize(new Dimension(getWidth(),getHeight()+100));
+                panelScroll.revalidate();
+                scrollPane.revalidate();
+            }
+        });
+
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
 

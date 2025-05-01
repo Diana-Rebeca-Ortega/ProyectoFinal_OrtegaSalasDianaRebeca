@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VentanaMedico extends JFrame  {
-
+    JRadioButton radioLogin, radioSignup;
+    ButtonGroup bg;
         public VentanaMedico(){
             setTitle("MEDICO");
             setSize(570,700);
@@ -12,20 +13,23 @@ public class VentanaMedico extends JFrame  {
             setLayout(null);
             setVisible(true);
 
-
-
             JLabel txtLogin = new JLabel("BIENVENIDO MEDICO ");
             txtLogin.setFont(new Font("Arial", Font.PLAIN, 24));
             txtLogin.setBounds(160,30, 300,30);
             add(txtLogin);
 
-            JButton btnLogin = new JButton("Log in");
-            btnLogin.setBounds(100,80, 150,30);
-            add(btnLogin);
+            bg= new ButtonGroup();
+            radioLogin = new JRadioButton("Login");
+            radioLogin.setBounds(100,80, 150,30);
+            radioLogin.setFont(new Font("Arial", Font.PLAIN, 18));
+            bg.add(radioLogin);
+            add(radioLogin);
 
-            JButton btnSingUp = new JButton("Sing Up");
-            btnSingUp.setBounds(300,80, 150,30);
-            add(btnSingUp);
+            radioSignup = new JRadioButton("Sing up");
+            radioSignup.setBounds(300,80, 150,30);
+            radioSignup.setFont(new Font("Arial", Font.PLAIN, 18));
+            bg.add(radioSignup);
+            add(radioSignup);
 
 
 

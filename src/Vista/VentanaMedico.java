@@ -9,6 +9,7 @@ public class VentanaMedico extends JFrame implements ActionListener {
     JRadioButton radioLogin, radioSignup;
     ButtonGroup bg;
     JPanel panelLogin, panelSingUp;
+    JButton btnIniciarSesion;
     public VentanaMedico(){
             setTitle("MEDICO");
             setSize(570,700);
@@ -41,14 +42,34 @@ public class VentanaMedico extends JFrame implements ActionListener {
             panelLogin.setBounds(20, 120,500,400);
             panelLogin.setBackground(new Color(103, 188, 252));
 
-            JLabel txtSSN = new JLabel("Ingrese SSN");
-            txtSSN.setBounds(210,30,100,20);
+            JLabel txtSSN = new JLabel("Ingrese Usuario (SSN)");
+            txtSSN.setBounds(170,30,150,20);
             txtSSN.setToolTipText("(Número de Seguro Social)");
             panelLogin.add(txtSSN);
 
             JTextField cajaSSN = new JTextField();
             cajaSSN.setBounds(150, 50, 200,20);
             panelLogin.add(cajaSSN);
+
+        JLabel txtSSNContraseña = new JLabel("Ingrese Contraseña");
+        txtSSNContraseña.setBounds(170,80,150,20);
+        panelLogin.add(txtSSNContraseña);
+
+        JTextField cajaSSNContraseña = new JTextField();
+        cajaSSNContraseña.setBounds(150, 100, 200,20);
+        panelLogin.add(cajaSSNContraseña);
+
+        JLabel txtRecuperarContraseña = new JLabel("¿Olvidaste tu Contraseña?");
+        txtRecuperarContraseña.setFont(new Font("Arial", Font.PLAIN, 10));
+        txtRecuperarContraseña.setBackground(Color.GRAY);
+        txtRecuperarContraseña.setBounds(150,120,200,20);
+        panelLogin.add(txtRecuperarContraseña);
+
+         btnIniciarSesion = new JButton("Iniciar Sesion");
+        btnIniciarSesion.setBounds(170,140,150,20);
+        panelLogin.add(btnIniciarSesion);
+        btnIniciarSesion.addActionListener(this);
+
 //PANEL SIGN UP********************************************************
             panelSingUp = new JPanel();
             panelSingUp.setLayout(null);
@@ -125,5 +146,17 @@ public class VentanaMedico extends JFrame implements ActionListener {
             revalidate();
             repaint();
         }
-    }
+        //////////////////////////////////////////////INICIAR SESION
+
+        if (e.getSource()==btnIniciarSesion){
+/*
+                if(alumnoDAO.mostrarAlumno(cajaNombres.getText(), "Nombre")==null){
+                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
+                }else{
+                    Alumno ob1 = alumnoDAO.mostrarAlumno(cajaNombres.getText(), "Nombre");
+                    actualizarTablaConsultas(tablaAlumnosModificaiones, ob1);
+                }//else
+*/
+        }/////////////////////////////////////////INICIAR SESION
+    }//actionListener
 }

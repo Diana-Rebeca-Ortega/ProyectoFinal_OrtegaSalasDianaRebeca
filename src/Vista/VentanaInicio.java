@@ -13,21 +13,6 @@ class VentanaLogin extends JFrame  {
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
-/*
-        bg = new ButtonGroup();
-
-        radioLogin = new JRadioButton("Login");
-        radioLogin.setBounds(50, 15, 130,30);
-        radioLogin.setFont(new Font("Arial", Font.PLAIN, 18));
-        bg.add(radioLogin);
-        add(radioLogin);
-
-        radioSignup = new JRadioButton("Sing up");
-        radioSignup.setBounds(200, 15, 130,30);
-        radioSignup.setFont(new Font("Arial", Font.PLAIN, 18));
-        bg.add(radioSignup);
-        add(radioSignup);
-*/
 
         JButton btnPaciente = new JButton("PACIENTE");
         btnPaciente.setBounds(90, 90, 100,30);

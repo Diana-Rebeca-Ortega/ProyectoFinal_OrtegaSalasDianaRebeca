@@ -11,7 +11,6 @@ public class ConexionBD {
     private ResultSet rs;
 
     public ConexionBD() {
-
             // Class.forName("com.mysql.cj.jdbc.Driver");
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,15 +19,25 @@ public class ConexionBD {
                 try {
                     conexion = DriverManager.getConnection(URL, "root", "1819diana");
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    System.out.println("ERROR EN LA CONECCION DE BASE DE DATOS");
                 }
                 System.out.println("YEIII CASI SOY ING INMORTAL muchas gracias, se conecto el programa a la base de datos");
 
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                System.out.println("ERROR en el conector driver ");
             }
-
-
+    }
+    public boolean ejecutarInstruccionLMD(String sql) {
+        boolean resultado = false;
+        try {
+            stm = conexion.createStatement();
+            if (stm.executeUpdate(sql)>=1)
+                resultado =true;
+        } catch (SQLException e) {
+            System.out.println("Error en la ejecucion de la instruccion SQL");
+        }
+        return resultado;
     }
 
     public static void main(String[] args) {

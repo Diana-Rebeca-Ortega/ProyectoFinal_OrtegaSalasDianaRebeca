@@ -1,5 +1,5 @@
 package Modelo;
-/*
+
 
 import Vista.VentanaInicio;
     public class Medico {
@@ -69,4 +69,4 @@ import Vista.VentanaInicio;
         public void setAñosExperiencia(byte añosExperiencia) {
             this.añosExperiencia = añosExperiencia;
         }
-    }*/
+    }

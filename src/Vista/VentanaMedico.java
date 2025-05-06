@@ -1,5 +1,8 @@
 package Vista;
 
+import Controlador.MedicoDAO;
+import Modelo.Medico;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +13,9 @@ public class VentanaMedico extends JFrame implements ActionListener {
     ButtonGroup bg;
     JPanel panelLogin, panelSingUp;
     JButton btnIniciarSesion;
+    JButton registrarse;
+    JTextField cajaSSNS, cajaNombreMedico, cajaPrimerApMedico, cajaSegundoApMedico;
+    JComboBox cajaEspecialidad,cajaAñosExperiencia ;
     public VentanaMedico(){
             setTitle("MEDICO");
             setSize(570,700);
@@ -85,7 +91,7 @@ public class VentanaMedico extends JFrame implements ActionListener {
         txtSSNS.setToolTipText("(Número de Seguro Social)");
         panelSingUp.add(txtSSNS);
 
-        JTextField cajaSSNS = new JTextField();
+        cajaSSNS = new JTextField("123456789do");
         cajaSSNS.setBounds(70, 50, 200,17);
         panelSingUp.add(cajaSSNS);
 
@@ -93,7 +99,7 @@ public class VentanaMedico extends JFrame implements ActionListener {
         txtNombreMedico.setBounds(30,70,100,20);
         panelSingUp.add(txtNombreMedico);
 
-        JTextField cajaNombreMedico = new JTextField();
+        cajaNombreMedico = new JTextField();
         cajaNombreMedico.setBounds(100, 70, 200,17);
         panelSingUp.add(cajaNombreMedico);
 
@@ -101,7 +107,7 @@ public class VentanaMedico extends JFrame implements ActionListener {
         txtPrimerApMedico.setBounds(30,90,130,20);
         panelSingUp.add(txtPrimerApMedico);
 
-        JTextField cajaPrimerApMedico = new JTextField();
+        cajaPrimerApMedico = new JTextField();
         cajaPrimerApMedico.setBounds(180, 90, 200,17);
         panelSingUp.add(cajaPrimerApMedico);
 
@@ -109,7 +115,7 @@ public class VentanaMedico extends JFrame implements ActionListener {
         txtSegundoApMedico.setBounds(30,110,130,20);
         panelSingUp.add(txtSegundoApMedico);
 
-        JTextField cajaSegundoApMedico = new JTextField();
+        cajaSegundoApMedico = new JTextField();
         cajaSegundoApMedico.setBounds(180, 110, 200,17);
         panelSingUp.add(cajaSegundoApMedico);
 
@@ -117,7 +123,12 @@ public class VentanaMedico extends JFrame implements ActionListener {
         txtEspecialidad.setBounds(30,130,130,20);
         panelSingUp.add(txtEspecialidad);
 
-        JTextField cajaEspecialidad = new JTextField();
+        cajaEspecialidad = new JComboBox();
+        cajaEspecialidad.addItem("Dentista");
+        cajaEspecialidad.addItem("Cardiologo");
+        cajaEspecialidad.addItem("Nutriologo");
+        cajaEspecialidad.addItem("Ocular");
+        cajaEspecialidad.addItem("Ginecologo");
         cajaEspecialidad.setBounds(110, 130, 200,17);
         panelSingUp.add(cajaEspecialidad);
 
@@ -125,11 +136,33 @@ public class VentanaMedico extends JFrame implements ActionListener {
         txtAñosExperiencia.setBounds(30,150,130,20);
         panelSingUp.add(txtAñosExperiencia);
 
-        JTextField cajaAñosExperiencia = new JTextField();
+         cajaAñosExperiencia = new JComboBox();
+        for (int i =0; i< 70; i++){
+            cajaAñosExperiencia.addItem(i+"");
+        }
         cajaAñosExperiencia.setBounds(160, 150, 200,17);
         panelSingUp.add(cajaAñosExperiencia);
-        
 
+        JLabel txtContraseña = new JLabel("Ingresa contraseña:");
+        txtContraseña.setBounds(30,200,130,20);
+        panelSingUp.add(txtContraseña);
+
+        JTextField cajaContraseña = new JTextField();
+        cajaContraseña.setBounds(160, 200, 200,17);
+        panelSingUp.add(cajaContraseña);
+
+        JLabel txtContraseñaReingresada = new JLabel("Reingresa contraseña:");
+        txtContraseñaReingresada.setBounds(30,230,230,20);
+        panelSingUp.add(txtContraseñaReingresada);
+
+        JTextField cajaContraseñaReingreada = new JTextField();
+        cajaContraseñaReingreada.setBounds(160, 230, 200,17);
+        panelSingUp.add(cajaContraseñaReingreada);
+
+        registrarse = new JButton("Registrarse");
+        registrarse.setBounds(200,290,130,20);
+        panelSingUp.add(registrarse);
+        registrarse.addActionListener(this);
         }
 
 
@@ -146,6 +179,16 @@ public class VentanaMedico extends JFrame implements ActionListener {
             revalidate();
             repaint();
         }
+        ///*****************************Registrarse************
+        if(e.getSource()==registrarse){
+            MedicoDAO medicoDAO = new MedicoDAO();
+            Medico medico = new Medico(cajaSSNS.getText(),cajaNombreMedico.getText(),cajaPrimerApMedico.getText(),
+                    cajaSegundoApMedico.getText(), cajaEspecialidad.getSelectedItem()+"", Byte.parseByte(cajaAñosExperiencia.getSelectedItem()+""));
+            medicoDAO.agregarMedico(medico);
+
+        }
+        ///*****************************Registrarse************
+
         //////////////////////////////////////////////INICIAR SESION
 
         if (e.getSource()==btnIniciarSesion){

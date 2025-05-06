@@ -1,6 +1,7 @@
 package Controlador;
 
 //importar otros paquetes
+import Modelo.Medico;
 import conexionBD.ConexionBD;
 
 
@@ -14,18 +15,16 @@ public class MedicoDAO {
 
     //MMMMMMMMMMMMMMMMMMMMMMETODOS ABCCccccccccccccccccccccccccccccccccc
 
-/*
+
     //***************************************ALTAS*******************************
 
-    public boolean agregarAlumno(Alumno alumno){
+    public boolean agregarMedico(Medico medico){
         // System.out.println("numcontrol"+alumno.getNumControl());
-        String sql = "INSERT INTO alumnos VALUES('"+alumno.getNumControl()+"','"+alumno.getNombre()+
-                "','"+alumno.getPrimerApellido()+"','"+alumno.getSegundoApellido()+"'," +
-                ""+alumno.getEdad()+"  ,"+alumno.getSemestre()+" , '"+alumno.getCarrera()+"'  )";
+        String sql = "INSERT INTO medicos VALUES('"+medico.getNumSSN()+"','"+medico.getNombre()+"','"+medico.getPrimerApellido()+"','"+medico.getSegundoApellido()+"','"+medico.getEspecialidad()+"','"+medico.getAñosExperiencia()+"')";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
 
-
+/*
     //*******************************BAJAS/*****************************
     public  boolean eliminarAlumnos (String numControl){
         String sql = "DELETE FROM alumnos WHERE Num_Control='"+numControl+"' ";

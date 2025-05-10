@@ -1,5 +1,7 @@
 package Vista.GUI_Medico;
 
+
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -255,7 +257,12 @@ public class HomeMedico extends JFrame implements ActionListener {
             revalidate();
             repaint();
         }if(e.getSource()==btnAsignarConsulta){
-
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new AsignarConsulta();
+                }
+            });
         }
     }
 }

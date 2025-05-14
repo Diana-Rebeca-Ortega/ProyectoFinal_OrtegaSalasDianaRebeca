@@ -19,7 +19,7 @@ public class HomeMedico extends JFrame implements ActionListener {
             cerrado, cambiarContraseña;
     JMenu privacidad;
     JPanel panelPerfil, panelCambioContraseña, panelAsistencia, panelAsignarConsulta;
-
+    JButton btnSig;
     public HomeMedico(){
         setTitle("MEDICO");
         setSize(1080,560);
@@ -159,6 +159,22 @@ public class HomeMedico extends JFrame implements ActionListener {
         JLabel txtSeleccion = new JLabel();
         formatoPerfilMedico(txtSeleccion, "Seleccione la cita a atender", 30,30,300,20,"Arial", 20, panelAsistencia);
 
+
+        btnSig = new JButton("SIGUIENTE");
+        btnSig.setBounds(30,400,100,20);
+        panelAsistencia.add(btnSig);
+        btnSig.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AsistenciaConsulta();
+                    }
+                });
+            }
+        });
+
 //*******************Panel Asignar Consulta ***************************
         panelAsignarConsulta = new JPanel();
         panelAsignarConsulta.setBounds(5,toolBar.getHeight()+5,1050,470);
@@ -256,6 +272,7 @@ public class HomeMedico extends JFrame implements ActionListener {
             add(panelAsignarConsulta, BorderLayout.CENTER);
             revalidate();
             repaint();
+
         }if(e.getSource()==btnAsignarConsulta){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override

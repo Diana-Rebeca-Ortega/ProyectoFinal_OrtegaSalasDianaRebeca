@@ -50,6 +50,7 @@ public class HomePaciente  extends JFrame implements ActionListener{
         menuDespegable.add(SolicitarConsulta);
 
         SolicitarConsulta.addActionListener(this);
+
     }
 
     @Override

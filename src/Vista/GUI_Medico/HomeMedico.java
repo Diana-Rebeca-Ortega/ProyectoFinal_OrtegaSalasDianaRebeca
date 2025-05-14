@@ -228,7 +228,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         panelAsignarConsulta.add(btnCancelar);
         btnCancelar.addActionListener(this);
 
-
+        solicitudesConsultasPacientes.addActionListener(this);
     }
 
     public void formatoPerfilMedico(JLabel etiqueta, String texto, int x, int y ,
@@ -261,6 +261,13 @@ public class HomeMedico extends JFrame implements ActionListener {
                 @Override
                 public void run() {
                     new AsignarConsulta();
+                }
+            });
+        }if(e.getSource()==solicitudesConsultasPacientes){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new  SolicitudesDeConsultaMedico();
                 }
             });
         }

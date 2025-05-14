@@ -2,6 +2,7 @@ package Vista;
 
 import Vista.GUI_Medico.HomeMedico;
 import Vista.GUI_Medico.LoginMedico;
+import Vista.GUI_Paciente.HomePaciente;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -49,7 +50,7 @@ class VentanaLogin extends JFrame  {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            new VentanaPaciente();
+                            new HomePaciente();
                         }});}}});
 
         JButton btnMedico = new JButton("MEDICO");

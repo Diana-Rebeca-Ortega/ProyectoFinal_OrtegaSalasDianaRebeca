@@ -1,5 +1,4 @@
-package Vista;
-
+package Vista.GUI_Paciente;
 import javax.swing.*;
 
 public class VentanaPaciente extends JFrame {

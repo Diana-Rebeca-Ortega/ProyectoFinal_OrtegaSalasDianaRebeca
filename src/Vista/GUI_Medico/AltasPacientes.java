@@ -2,12 +2,14 @@ package Vista.GUI_Medico;
 
 import Controlador.PacienteDAO;
 import Modelo.Paciente;
+import Modelo.ResultSetTableModel;
 import conexionBD.ConexionBD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class AltasPacientes extends JFrame implements ActionListener {
 
@@ -44,7 +46,7 @@ public class AltasPacientes extends JFrame implements ActionListener {
                 return canEdit[columnIndex];
             }
         });
-
+        actualizarTabla(tablaPacientesAltas);
 
 //Panel Verde NEON
         panelVerde = new JPanel();
@@ -168,22 +170,69 @@ public class AltasPacientes extends JFrame implements ActionListener {
 
     }
 
+    public void actualizarTabla(JTable tabla) {
+        final String Driver_Controlador = "com.mysql.cj.jdbc.Driver";
+        final String URL = "jdbc:mysql://localhost:3306/farmaciarx";
+        final String CONSULTA = " select * from pacientes;";
+        //el final se refiere a que son constantes
+        try {
+            ResultSetTableModel modelo = new ResultSetTableModel(Driver_Controlador, URL, CONSULTA);
+            tabla.setModel(modelo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }//actualizarTabla
+
+    int filasAñadidas=0;
+    int filasOriginales=0;
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCAceptar) {
+            try {
             Paciente p = new Paciente (cajaSSN.getText(), cajaNombres.getText(),cajaApPaterno.getText(),
             cajaApMaterno.getText(), Byte.parseByte(
                     comboEDAD.getSelectedItem()+""), cajaCalle.getText(),
             cajaColonia.getText(), cajaNoCasa.getText(), cajaCP.getText());
 
             PacienteDAO pacienteDAO = new PacienteDAO();
-
+                if (cajaSSN.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,  "No has ingresado un NSS ");
+                }else{
             if (pacienteDAO.agregarPaciente(p)) {
+                filasAñadidas++;
+                actualizarTabla(tablaPacientesAltas);
+                System.out.println("FELICIDADES: se agrego un nuevo Paciente a la BDD (desde la ventanaInicio)");
+            }else {
+                System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD (desde la ventanaInicio)");
+            }
+                }
+            }catch (Exception exception ){
+                if (comboEDAD.getSelectedItem().equals("Elige EDAD...")){
+                    JOptionPane.showMessageDialog(null,  "No has elegido una edad ");
+                }
+            }
 
-               // actualizarTabla(tablaAlumnosAltas);
-                System.out.println("FELICIDADES: se agrego un nuevo Alumno a la BDD (desde la ventanaInicio)");
-            }else
-                System.out.println("ERROR: no se pudo agregar un nuevo Alumno a la BDD (desde la ventanaInicio)");
         }//if si es el btm aceptar
+        if (e.getSource() == btnBorrar) {//**********************************************************************
+            cajaSSN.setText("");
+            cajaApPaterno.setText("");
+            cajaApMaterno.setText("");
+            cajaNombres.setText("");
+            comboEDAD.setSelectedIndex(0);
+            cajaCalle.setText("");
+            cajaColonia.setText("");
+            cajaNoCasa.setText("");
+
+        }if (e.getSource() == btnCancelar) {//**************************************************************
+            filasOriginales= tablaPacientesAltas.getRowCount()- filasAñadidas;
+            setVisible(false);
+            for (   int i =1; i <= filasAñadidas;i++  ){
+                System.out.println(i+" añadido");
+                String sql = "DELETE FROM alumnos WHERE Num_Control='"+ tablaPacientesAltas.getValueAt(tablaPacientesAltas.getRowCount()-i, 0)+"' ";
+                conexionBD.ejecutarInstruccionLMD(sql);
+            }//for
+        }
     }
 }

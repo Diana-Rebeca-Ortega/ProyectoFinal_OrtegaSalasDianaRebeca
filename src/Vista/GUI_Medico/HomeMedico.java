@@ -81,6 +81,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         asistenciaConsultas.addActionListener(this);
         asignarConsulta.addActionListener(this);
         menuAltas.addActionListener(this);
+        menuBajas.addActionListener(this);
 
         JLabel txtHome = new JLabel("Home ");
         txtHome.setBounds(520,50,300,40);
@@ -294,6 +295,13 @@ public class HomeMedico extends JFrame implements ActionListener {
                 @Override
                 public void run() {
                     new  AltasPacientes();
+                }
+            });
+        }if(e.getSource()==menuBajas){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new  BajasPacientes();
                 }
             });
         }

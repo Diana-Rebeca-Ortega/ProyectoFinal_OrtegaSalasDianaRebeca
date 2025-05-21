@@ -16,8 +16,8 @@ public class BajasPacientes  extends JFrame implements ActionListener {
 
         JTable tablaPacientesBajas;
         JTextField cajaNSS;
-        JLabel cajaNombre, cajaApPaterno, cajaApMaterno, cajaCalle, cajaColonia, cajaEdad;
-        JLabel txtNSS,  txtNombre, txtApellidoPaterno, txtApellidoMaterno, txtCalle, txtColonia, txtEdad;
+        JLabel cajaNombre, cajaApPaterno, cajaApMaterno, cajaCalle, cajaColonia, cajaEdad, cajaNoCasa, cajaCP;
+        JLabel txtNSS,  txtNombre, txtApellidoPaterno, txtApellidoMaterno, txtCalle, txtColonia, txtEdad, txtNoCasa, txtCP;
         JPanel panelRojo, panelROSA;
         JButton btnBuscar, btnBorrar, btnEliminar, btnCancelar;
 
@@ -51,7 +51,7 @@ public class BajasPacientes  extends JFrame implements ActionListener {
             panelROSA = new JPanel();
             panelROSA.setLayout(null);
             panelROSA.setBackground(new Color(255, 46, 93 ));
-            panelROSA.setBounds(10, 280, 870, 170);
+            panelROSA.setBounds(10, 320, 870, 170);
 
 // Agregar la tabla a un JScrollPane
             JScrollPane scrollPane = new JScrollPane(tablaPacientesBajas);
@@ -116,6 +116,8 @@ public class BajasPacientes  extends JFrame implements ActionListener {
             txtEdad = new JLabel("EDAD:");
             txtCalle = new JLabel("CALLE:");
             txtColonia = new JLabel("COLONIA:");
+            txtNoCasa = new JLabel("NO.CASA:");
+            txtCP = new JLabel("CP:");
 
             txtNombre.setBounds( 40, 100, 300, 20);
             txtApellidoPaterno.setBounds( 40, 130, 300, 20);
@@ -123,7 +125,8 @@ public class BajasPacientes  extends JFrame implements ActionListener {
             txtEdad.setBounds(40, 190, 300, 20);
             txtCalle.setBounds( 40, 220, 300, 20);
             txtColonia.setBounds( 40, 250, 300, 20);
-
+            txtNoCasa.setBounds( 40, 270, 300, 20);
+            txtCP.setBounds( 40, 290, 300, 20);
 
             add(txtNombre);
             add(txtApellidoPaterno);
@@ -131,6 +134,8 @@ public class BajasPacientes  extends JFrame implements ActionListener {
             add(txtEdad);
             add(txtCalle);
             add(txtColonia);
+            add(txtNoCasa);
+            add(txtCP);
 
             Border borde = BorderFactory.createLineBorder(   Color.BLACK);
 
@@ -176,6 +181,21 @@ public class BajasPacientes  extends JFrame implements ActionListener {
             cajaColonia.setOpaque(true);
             cajaColonia.setBounds(120, 250, 270, 18);
             add(cajaColonia);
+
+            cajaNoCasa = new JLabel();
+            cajaNoCasa.setBorder(borde);
+            cajaNoCasa.setBackground(new Color(218, 230, 231 ));
+            cajaNoCasa.setOpaque(true);
+            cajaNoCasa.setBounds(120, 270, 270, 18);
+            add(cajaNoCasa);
+
+            cajaCP = new JLabel();
+            cajaCP.setBorder(borde);
+            cajaCP.setBackground(new Color(218, 230, 231 ));
+            cajaCP.setOpaque(true);
+            cajaCP.setBounds(120, 290, 270, 18);
+            add(cajaCP);
+
             actualizarTabla(tablaPacientesBajas);
 
         }//constructor
@@ -207,6 +227,8 @@ public class BajasPacientes  extends JFrame implements ActionListener {
                         cajaEdad.setText(tablaPacientesBajas.getValueAt(i, 4) + "");
                         cajaCalle.setText(tablaPacientesBajas.getValueAt(i, 5) + "");
                         cajaColonia.setText(tablaPacientesBajas.getValueAt(i, 6) + "");
+                        cajaNoCasa.setText(tablaPacientesBajas.getValueAt(i, 7) + "");
+                        cajaCP. setText(tablaPacientesBajas.getValueAt(i, 8) + "");
                         registro = registro * 0;
 
                     }
@@ -222,9 +244,11 @@ public class BajasPacientes  extends JFrame implements ActionListener {
                 cajaCalle.setText("");
                 cajaColonia.setText("");
                 cajaEdad.setText("");
+                cajaCP.setText("");
+                cajaNoCasa.setText("");
             }if( e.getSource().equals(btnEliminar)){
                 PacienteDAO pacienteDAO = new PacienteDAO();
-                if (pacienteDAO.eliminarAlumnos(cajaNSS.getText())) {
+                if (pacienteDAO.eliminarPaciente(cajaNSS.getText())) {
                     actualizarTabla(tablaPacientesBajas);
                     System.out.println("FELICIDADES: se ha ELIMINADO correctamente desde la Ven_Inicio");
                 }else

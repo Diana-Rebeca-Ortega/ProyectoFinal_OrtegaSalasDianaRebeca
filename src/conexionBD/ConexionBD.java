@@ -28,6 +28,17 @@ public class ConexionBD {
                 System.out.println("ERROR en el conector driver ");
             }
     }
+    public ResultSet ejecutarInstruccionSQL(String sql) {
+        rs = null;
+        try {
+            stm = conexion.createStatement();
+            rs = stm.executeQuery(sql); //ejecuta la consulta
+        } catch (SQLException e) {
+            System.out.println("Error en la ejecucion de la instruccion SQL");
+        }//try-catch
+        return rs; //retorna los resultados
+    }//ejecutarInstruccionesSQL
+
     public boolean ejecutarInstruccionLMD(String sql) {
         boolean resultado = false;
         try {

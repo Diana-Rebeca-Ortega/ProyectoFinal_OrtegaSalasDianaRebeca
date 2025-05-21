@@ -224,6 +224,7 @@ public class AltasPacientes extends JFrame implements ActionListener {
             cajaCalle.setText("");
             cajaColonia.setText("");
             cajaNoCasa.setText("");
+            cajaCP.setText("");
 
         }if (e.getSource() == btnCancelar) {//**************************************************************
             filasOriginales= tablaPacientesAltas.getRowCount()- filasAñadidas;

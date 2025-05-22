@@ -82,5 +82,18 @@ public class PacienteDAO {
         }
         return a;
     }
-
+    //*******************************CAMBIOS*****************************
+    public boolean cambiarPaciente(Paciente paciente){
+        sql = "UPDATE pacientes SET Nombre='"+
+                paciente.getNombre()+"',PApellido='"+
+                paciente.getPrimerApellido()+"', SApellido='"+
+                paciente.getSegundoApellido()+"',Edad='"+
+                paciente.getEdad()+"', calle='"+
+                paciente.getCalle()+"', Colonia='"+
+                paciente.getColonia()+"',No_Casa='"+
+                paciente.getNo_Casa()+"', CP='"+
+                paciente.getCP()+"'  WHERE ID_Paciente_SSN='"+
+                paciente.getNumSSN()+"'; ";
+        return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
+    }
 }

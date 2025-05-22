@@ -66,6 +66,11 @@ public class HomeMedico extends JFrame implements ActionListener {
         privacidad.add(cambiarContraseña);
          cerrado = new JMenuItem("Cerrar Sesión");
 
+        menuAltas.setBackground(new Color(123, 254, 31));
+        menuBajas.setBackground(new Color(255, 22, 22));
+        menuConsultas.setBackground(new Color(255, 147, 22));
+        menuCambios.setBackground(new Color(22, 156, 255));
+
         menuDespegable.add(persona);
         menuDespegable.add(perfil);
         menuDespegable.add(menuAltas);
@@ -83,6 +88,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         menuAltas.addActionListener(this);
         menuBajas.addActionListener(this);
         menuConsultas.addActionListener(this);
+        menuCambios.addActionListener(this);
 
         JLabel txtHome = new JLabel("Home ");
         txtHome.setBounds(520,50,300,40);
@@ -311,6 +317,13 @@ public class HomeMedico extends JFrame implements ActionListener {
                 @Override
                 public void run() {
                     new  ConsultasPacientes();
+                }
+            });
+        }if(e.getSource()==menuCambios){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new  CambiosPacientes();
                 }
             });
         }

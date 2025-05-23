@@ -14,7 +14,9 @@ import java.io.IOException;
 public class HomeMedico extends JFrame implements ActionListener {
     private JPopupMenu menuDespegable;
     PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica();
-   JPanel ac ;
+   PanelMenuPerfilMedico panelMenuPerfilMedico = new PanelMenuPerfilMedico();
+    JPanel ac ;
+    JPanel mp;
     JButton btnAsignarConsulta, btnCancelar;
     JMenuItem persona, perfil, menuAltas, menuBajas, menuCambios,menuConsultas,
             asignarConsulta, solicitudesConsultasPacientes,asistenciaConsultas,
@@ -96,37 +98,6 @@ public class HomeMedico extends JFrame implements ActionListener {
         JLabel txtHome = new JLabel("Home ");
         txtHome.setBounds(520,50,300,40);
         //add(txtHome);
-//**********************Panel del Perfil Personal*****************************
-       panelPerfil = new JPanel();
-       panelPerfil.setBounds(5,toolBar.getHeight()+5,1050,470);
-       panelPerfil.setBackground(new Color(225, 253, 207));
-        panelPerfil.setLayout(null);
-
-       JLabel txtPerfil = new JLabel();
-       formatoPerfilMedico(txtPerfil,"Información del Perfil", 20,10,300,40,"Verdana",24,panelPerfil );
-
-       JLabel txtUsuario = new JLabel();
-        txtUsuario.setForeground(Color.red);
-       formatoPerfilMedico( txtUsuario,"usuario:", 25,90,100,50,"Tahoma",11 , panelPerfil  );
-
-       JLabel txtSSN = new JLabel();
-       formatoPerfilMedico(txtSSN, "SSN (Número de Seguro Social):", 73,90,300,20,"Verdana",14,panelPerfil);
-
-       JLabel txtNombre = new JLabel();
-       formatoPerfilMedico(txtNombre, "Nombre:", 73, 170,200,20, "Verdana",14,panelPerfil);
-
-       JLabel txtApellidoUno = new JLabel();
-       formatoPerfilMedico(txtApellidoUno, "Apellido Paterno:", 350,170,300,20,"Verdana",14,panelPerfil);
-
-        JLabel txtApellidoDos = new JLabel();
-        formatoPerfilMedico(txtApellidoDos, "Apellido Materno:", 700,170,300,20,"Verdana",14,panelPerfil);
-
-       JLabel txtEspecialidad = new JLabel();
-       formatoPerfilMedico(txtEspecialidad, "Especialidad:", 73,250, 200,20, "Verdana",14,panelPerfil);
-
-       JLabel txtAñosExperiencias = new JLabel();
-       formatoPerfilMedico(txtAñosExperiencias, "Años de Experiencia:", 73, 330, 200,20, "Verdana",14,panelPerfil );
-
 
 //********************************Panel Privacidad Cambiar Contraseña*************************
         panelCambioContraseña = new JPanel();
@@ -187,6 +158,7 @@ public class HomeMedico extends JFrame implements ActionListener {
             }
         });
         ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar, btnAsignarConsulta,btnCancelar);
+        mp= panelMenuPerfilMedico.añadirPanelPerfilMedico(toolBar);
         solicitudesConsultasPacientes.addActionListener(this);
     }
 
@@ -198,18 +170,17 @@ public class HomeMedico extends JFrame implements ActionListener {
         pan.add(etiqueta);
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==perfil){
-            add(panelPerfil, BorderLayout.CENTER);
+            add(mp, BorderLayout.CENTER);
             remove(ac);
             revalidate();
             repaint();
         }
         if(e.getSource()==asignarConsulta){//menuitem
             add(ac, BorderLayout.CENTER);
-            remove(panelPerfil);
+            remove(mp);
             revalidate();
             repaint();
         }

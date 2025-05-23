@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +19,7 @@ public class HomeMedico extends JFrame implements ActionListener {
    PanelMenuPerfilMedico panelMenuPerfilMedico = new PanelMenuPerfilMedico();
     JPanel ac ;
     JPanel mp;
-    JButton btnAsignarConsulta, btnCancelar;
+    JButton  btnCancelar;
     JMenuItem persona, perfil, menuAltas, menuBajas, menuCambios,menuConsultas,
             asignarConsulta, solicitudesConsultasPacientes,asistenciaConsultas,
             cerrado, cambiarContraseña;
@@ -94,6 +96,16 @@ public class HomeMedico extends JFrame implements ActionListener {
         menuBajas.addActionListener(this);
         menuConsultas.addActionListener(this);
         menuCambios.addActionListener(this);
+        cerrado.addActionListener(this);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int res = JOptionPane.showConfirmDialog(null,"¿Estas seguro de que quieres cerrar sesion?", "Cerrando Sesion",JOptionPane.YES_NO_OPTION);
+                if(res==JOptionPane.YES_OPTION){
+                    dispose();
+                }
+            }
+        });
 
         JLabel txtHome = new JLabel("Home ");
         txtHome.setBounds(520,50,300,40);
@@ -157,7 +169,7 @@ public class HomeMedico extends JFrame implements ActionListener {
                 });
             }
         });
-        ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar, btnAsignarConsulta,btnCancelar);
+        ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar,btnCancelar);
         mp= panelMenuPerfilMedico.añadirPanelPerfilMedico(toolBar);
         solicitudesConsultasPacientes.addActionListener(this);
     }
@@ -184,25 +196,18 @@ public class HomeMedico extends JFrame implements ActionListener {
             revalidate();
             repaint();
         }
+        if(e.getSource()==asistenciaConsultas){
+            add(panelAsistencia, BorderLayout.CENTER);
+            revalidate();
+            repaint();
+        }
         if (e.getSource()==cambiarContraseña){
             add(panelCambioContraseña, BorderLayout.CENTER);
             revalidate();
             repaint();
         }
 
-        /*if(e.getSource()==asistenciaConsultas){
-            add(panelAsistencia, BorderLayout.CENTER);
-            revalidate();
-            repaint();
-        }*/
-         if(e.getSource()==btnAsignarConsulta){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new AsignarConsulta();
-                }
-            });
-        }if(e.getSource()==solicitudesConsultasPacientes){
+         if(e.getSource()==solicitudesConsultasPacientes){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -239,6 +244,12 @@ public class HomeMedico extends JFrame implements ActionListener {
                     new  CambiosPacientes();
                 }
             });
+        }if(e.getSource()==cerrado){
+            int res = JOptionPane.showConfirmDialog(null,"¿Estas seguro de que quieres cerrar sesion?", "Cerrando Sesion",JOptionPane.YES_NO_OPTION);
+            if(res==JOptionPane.YES_OPTION){
+                dispose();
+            }
         }
+
     }
 }

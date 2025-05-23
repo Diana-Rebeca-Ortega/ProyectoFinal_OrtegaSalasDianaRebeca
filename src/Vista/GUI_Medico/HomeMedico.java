@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class HomeMedico extends JFrame implements ActionListener {
     private JPopupMenu menuDespegable;
+    PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica();
+   JPanel ac ;
     JButton btnAsignarConsulta, btnCancelar;
     JMenuItem persona, perfil, menuAltas, menuBajas, menuCambios,menuConsultas,
             asignarConsulta, solicitudesConsultasPacientes,asistenciaConsultas,
@@ -20,6 +22,7 @@ public class HomeMedico extends JFrame implements ActionListener {
     JMenu privacidad;
     JPanel panelPerfil, panelCambioContraseña, panelAsistencia, panelAsignarConsulta;
     JButton btnSig;
+    JToolBar toolBar;
     public HomeMedico(){
         setTitle("MEDICO");
         setSize(1080,560);
@@ -27,7 +30,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         setLayout(null);
         setVisible(true);
 
-        JToolBar toolBar = new JToolBar();
+         toolBar = new JToolBar();
         toolBar.setBounds(0, 0, 1080,50);
 
         JButton btnToolBarAjustes = new JButton();
@@ -183,76 +186,7 @@ public class HomeMedico extends JFrame implements ActionListener {
                 });
             }
         });
-
-//*******************Panel Asignar Consulta ***************************
-        panelAsignarConsulta = new JPanel();
-        panelAsignarConsulta.setBounds(5,toolBar.getHeight()+5,1050,470);
-        panelAsignarConsulta.setBackground(new Color(225, 253, 207));
-        panelAsignarConsulta.setLayout(null);
-
-        JLabel txtAsignarConsulta = new JLabel();
-       formatoPerfilMedico(txtAsignarConsulta,"ASIGNAR CONSULTA",30,10,350,40,"Arial",25, panelAsignarConsulta);
-
-        JLabel txtSeleccionar = new JLabel();
-        formatoPerfilMedico(txtSeleccionar, "Seleccione un paciente para asignarle una consulta medica", 40,40,450,20,"Arial", 16, panelAsignarConsulta);
-
-        JLabel txtBuscandolo = new JLabel();
-        formatoPerfilMedico(txtBuscandolo,"Ingrese SSN para tener acceso a los datos del Paciente", 50,70,600,20,"Arial", 12, panelAsignarConsulta);
-
-        JTextField cajaBuscarPaciente = new JTextField();
-        cajaBuscarPaciente.setBounds(50, 95, 300, 20);
-        panelAsignarConsulta.add(cajaBuscarPaciente);
-
-        BufferedImage imBuscar;
-        try {imBuscar = ImageIO.read(new File("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\buscar.png"));
-        } catch (IOException e) {throw new RuntimeException(e);}
-
-        JButton btnBuscar = new JButton(new ImageIcon(imBuscar.getScaledInstance(20,20,Image.SCALE_SMOOTH)));
-        btnBuscar.setBounds(350, 95, 20, 20);
-        panelAsignarConsulta.add(btnBuscar);
-
-        JLabel txtDatos = new JLabel();
-        formatoPerfilMedico(txtDatos, "Datos del Paciente:", 50, 170, 250,20, "Arial", 15, panelAsignarConsulta );
-
-        JLabel txtSSNConsulta = new JLabel();
-        formatoPerfilMedico(txtSSNConsulta, "SSN:", 50, 200, 50, 20, "Arial", 14, panelAsignarConsulta);
-
-        JLabel txtNombree = new JLabel();
-        formatoPerfilMedico(txtNombree, "Nombre:", 50, 230, 100, 20, "Arial", 12, panelAsignarConsulta);
-
-        JLabel txtAPuno = new JLabel();
-        formatoPerfilMedico(txtAPuno, "A.Paterno: ", 50, 260, 100, 20, "Arial", 12, panelAsignarConsulta);
-
-        JLabel txtAPdos = new JLabel();
-        formatoPerfilMedico(txtAPdos, "A.Materno: ", 50, 290, 100, 20, "Arial", 12, panelAsignarConsulta);
-
-        JLabel txtEdaad = new JLabel();
-        formatoPerfilMedico(txtEdaad, "Edad: ", 50, 320, 100, 20, "Arial", 12, panelAsignarConsulta);
-
-        JLabel txtColonia = new JLabel();
-        JLabel txtCalle = new JLabel();
-        JLabel txtNO = new JLabel();
-        JLabel txtCP = new JLabel();
-        JLabel txtMunicipio = new JLabel();
-        JLabel txtEstado = new JLabel();
-
-        formatoPerfilMedico(txtColonia, "Colonia: ", 500, 200, 100, 20, "Arial", 12, panelAsignarConsulta);
-        formatoPerfilMedico(txtCalle, "Calle: ", 500, 230, 100, 20, "Arial", 12, panelAsignarConsulta);
-        formatoPerfilMedico(txtNO, "NO.Casa: ", 500, 260, 100, 20, "Arial", 12, panelAsignarConsulta);
-        formatoPerfilMedico(txtCP, "Codigo Postal: ", 500, 290, 100, 20, "Arial", 12, panelAsignarConsulta);
-        formatoPerfilMedico(txtMunicipio, "Minicipio: ", 500, 320, 100, 20, "Arial", 12, panelAsignarConsulta);
-        formatoPerfilMedico(txtEstado, "Estado: ", 500, 350, 100, 20, "Arial", 12, panelAsignarConsulta);
-
-        btnAsignarConsulta = new JButton("Asignar Consulta");
-        btnAsignarConsulta.setBounds(100,410,160,20 );
-        panelAsignarConsulta.add(btnAsignarConsulta);
-        btnAsignarConsulta.addActionListener(this);
-
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(270,410,110,20 );
-        panelAsignarConsulta.add(btnCancelar);
-        btnCancelar.addActionListener(this);
-
+        ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar, btnAsignarConsulta,btnCancelar);
         solicitudesConsultasPacientes.addActionListener(this);
     }
 
@@ -263,26 +197,34 @@ public class HomeMedico extends JFrame implements ActionListener {
         etiqueta.setFont(new Font(letra, Font.BOLD,tamLetra));
         pan.add(etiqueta);
     }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==perfil){
             add(panelPerfil, BorderLayout.CENTER);
+            remove(ac);
             revalidate();
             repaint();
-        }if (e.getSource()==cambiarContraseña){
+        }
+        if(e.getSource()==asignarConsulta){//menuitem
+            add(ac, BorderLayout.CENTER);
+            remove(panelPerfil);
+            revalidate();
+            repaint();
+        }
+        if (e.getSource()==cambiarContraseña){
             add(panelCambioContraseña, BorderLayout.CENTER);
             revalidate();
             repaint();
-        }if(e.getSource()==asistenciaConsultas){
+        }
+
+        /*if(e.getSource()==asistenciaConsultas){
             add(panelAsistencia, BorderLayout.CENTER);
             revalidate();
             repaint();
-        }if(e.getSource()==asignarConsulta){
-            add(panelAsignarConsulta, BorderLayout.CENTER);
-            revalidate();
-            repaint();
-
-        }if(e.getSource()==btnAsignarConsulta){
+        }*/
+         if(e.getSource()==btnAsignarConsulta){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {

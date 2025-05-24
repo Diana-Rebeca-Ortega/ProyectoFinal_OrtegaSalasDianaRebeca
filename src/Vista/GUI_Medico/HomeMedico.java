@@ -34,7 +34,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         setLayout(null);
         setVisible(true);
 
-         toolBar = new JToolBar();
+        toolBar = new JToolBar();
         toolBar.setBounds(0, 0, 1080,50);
 
         JButton btnToolBarAjustes = new JButton();

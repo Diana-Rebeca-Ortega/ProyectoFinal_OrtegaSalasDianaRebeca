@@ -1,5 +1,6 @@
 package Vista;
 
+import Vista.GUI.Administrativo.HomeAdministrativo;
 import Vista.GUI_Medico.HomeMedico;
 import Vista.GUI_Medico.LoginMedico;
 import Vista.GUI_Paciente.HomePaciente;
@@ -66,8 +67,8 @@ class VentanaLogin extends JFrame  {
                             new HomeMedico();
                         }});}}});
 
-        JButton btnFarmacia = new JButton("ADMINISTRAYIVO");
-        btnFarmacia.setBounds(130, 340, 100,30);
+        JButton btnFarmacia = new JButton("ADMINISTRATIVO");
+        btnFarmacia.setBounds(110, 340, 150,30);
         add(btnFarmacia);
         btnFarmacia.addActionListener(new ActionListener() {
             @Override
@@ -76,7 +77,7 @@ class VentanaLogin extends JFrame  {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            new VentanaAdministracion();
+                            new HomeAdministrativo();
                         }});}}});
 
 

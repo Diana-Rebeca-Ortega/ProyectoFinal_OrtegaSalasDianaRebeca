@@ -1,9 +1,7 @@
 package Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas;
 
 import Controlador.ComFarmaceuticaDAO;
-import Controlador.PacienteDAO;
 import Modelo.CompanniaFarmaceutica;
-import Modelo.Paciente;
 import Modelo.ResultSetTableModel;
 import conexionBD.ConexionBD;
 

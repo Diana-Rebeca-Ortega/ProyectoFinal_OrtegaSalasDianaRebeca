@@ -16,5 +16,12 @@ public class ComFarmaceuticaDAO {
         String sql = "INSERT INTO compañiasfarmaceuticas VALUES('"+cf.getNombreCompania()+"','"+cf.getTelefono()+"' )";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
+    //*******************************CAMBIOS*****************************
+    public boolean cambiarComFar( CompanniaFarmaceutica cf){
+        String sql = "UPDATE compañiasfarmaceuticas SET  NombreCompania='" +cf.getNombreCompania() +"'," +
+                " Telefono='" +cf.getTelefono() + "'";
+        return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
+    }
+
 
 }

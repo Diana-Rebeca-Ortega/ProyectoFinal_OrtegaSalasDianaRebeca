@@ -75,8 +75,8 @@ public class HomeMedico extends JFrame implements ActionListener {
 
         menuAltas.setBackground(new Color(123, 254, 31));
         menuBajas.setBackground(new Color(255, 22, 22));
-        menuConsultas.setBackground(new Color(255, 147, 22));
-        menuCambios.setBackground(new Color(22, 156, 255));
+        menuConsultas.setBackground(new Color(22, 156, 255));
+        menuCambios.setBackground(new Color(255, 147, 22));
 
         menuDespegable.add(persona);
         menuDespegable.add(perfil);

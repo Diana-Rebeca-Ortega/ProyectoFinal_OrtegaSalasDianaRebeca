@@ -32,7 +32,7 @@ public class ConsultasPacientes extends JFrame implements ActionListener {
     public ConsultasPacientes(){
 
         getContentPane().setLayout(null);
-        setTitle("Cambios Pacientes");
+        setTitle("Consultas Pacientes");
         setSize(900,530);
         setLocationRelativeTo(null);//locacion en la ventana
         setVisible(true);
@@ -56,7 +56,7 @@ public class ConsultasPacientes extends JFrame implements ActionListener {
             }
         });
                 //Actualizar el primer registro
-                Paciente ob1 = pacienteDAO.mostrarPaciente ("", "ID");
+                Paciente ob1 = pacienteDAO.mostrarPaciente ("", "Uno");
                 actualizarTablaConsultas(tablaPacientesModificaiones, ob1);
                 //PANEL VERDE MENTA
                 panelCian = new JPanel();

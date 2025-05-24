@@ -62,7 +62,7 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
         panelNaranja.setBackground(new Color(255, 97, 0 ));
         panelNaranja.setBounds(0, 0, getWidth(), 30);
         JLabel texBAJAS = new JLabel("    MODIFICACIONES COMPAÑIAS FARMACEUTICAS:");
-        texBAJAS.setBounds(10, 0, 290, 20);
+        texBAJAS.setBounds(10, 0, 400, 20);
         texBAJAS.setForeground(Color.WHITE);
         panelNaranja.add(texBAJAS);
         add(panelNaranja);
@@ -134,17 +134,32 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(btnBorrar)) {//***************************************************************
             cajaNombreCom.setText("");
+            cajaTelefono.setText("");
         }
         ComFarmaceuticaDAO cfDAO = new ComFarmaceuticaDAO();
+
         if (e.getSource().equals(btnGuardarCambios)) {
-            CompanniaFarmaceutica cf = new CompanniaFarmaceutica(cajaNombreCom.getText(), cajaTelefono.getText());
-            if (cfDAO.cambiarComFar(cf)) {
-                actualizarTabla(tablaComFarCambios
-        );
-                System.out.println("Registro modificado CORRECTAMENTE");
-            }else
-                System.out.println("ERROR en la modificacion del registro lindo ");
+            if (cajaTelefono.getText().length() != 10) {
+                JOptionPane.showMessageDialog(null, "Los números telefonicos deben contar con 10 digitos");
+            } else {
+
+                if (cajaNombreCom.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No has ingresado El nombre de la compañia ");
+                } else {
+                    CompanniaFarmaceutica cf = new CompanniaFarmaceutica(cajaNombreCom.getText(), cajaTelefono.getText());
+                    if (cfDAO.cambiarComFar(cf)) {
+                        actualizarTabla(tablaComFarCambios
+                        );
+                        System.out.println("Registro modificado CORRECTAMENTE");
+                    } else{
+                        cajaNombreCom.setText("");
+                        System.out.println("ERROR en la modificacion del registro lindo ");
+                    JOptionPane.showMessageDialog(null, "Solo se permiten cadenas numericas para el registro de telefonos");
+                    }
+                }
+            }
         }
+
 
         if (e.getSource().equals(btnBuscar)) {//**************************************************************************
             System.out.println("buscar datos");

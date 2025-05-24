@@ -129,20 +129,31 @@ public class Altas_CompañiasFarmaceuticas extends JFrame implements ActionListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCAceptar) {
+
+                //int zy = Integer.parseInt(String.valueOf(cajTelefono.getText()));
+            if (cajTelefono.getText().length()!=10){
+                JOptionPane.showMessageDialog(null,  "Los números telefonicos deben contar con 10 digitos");
+
+            }else {
                 CompanniaFarmaceutica cf = new CompanniaFarmaceutica (cajaID_ComFarmaceutica.getText(), cajTelefono.getText());
 
                 ComFarmaceuticaDAO cfDAO = new ComFarmaceuticaDAO();
                 if (cajaID_ComFarmaceutica.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null,  "No has ingresado un NSS ");
+                    JOptionPane.showMessageDialog(null,  "No has ingresado El nombre de la compañia ");
                 }else{
                     if (cfDAO.agregarCF(cf)) {
                         filasAñadidas++;
                         actualizarTabla(tablaComFarAltas);
                         System.out.println("FELICIDADES: se agrego un nueva CF a la BDD");
                     }else {
-                        System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD ");
+                        System.out.println("ERROR: no se pudo agregar un nuevo CF a la BDD ");
+                        JOptionPane.showMessageDialog(null,  "Solo se permiten cadenas numericas para el registro de telefonos");
+
                     }
                 }
+            }
+
+
         }//if si es el btm aceptar
         if (e.getSource() == btnBorrar) {//**********************************************************************
             cajaID_ComFarmaceutica.setText("");

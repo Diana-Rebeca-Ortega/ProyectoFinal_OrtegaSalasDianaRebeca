@@ -2,6 +2,7 @@ package Vista.GUI.Administrativo;
 
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
+import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,8 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
     JButton contratos;
     JButton RegistrosMedicos;
     JButton comFarmaceuticas;
-    JMenuItem Contratos, NewContrato, AltasComFarmaceutica, CambiosComFarmaceuticas;
+    JMenuItem Contratos, NewContrato;
+    JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica;
     JPopupMenu menuDespegableContratos, menuDespegableComFarmaceuticas;
     PanelNuevoContrato pnc = new PanelNuevoContrato();
     public  HomeAdministrativo(){
@@ -92,12 +94,16 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
         AltasComFarmaceutica.setBackground(new Color(123, 254, 31));
         CambiosComFarmaceuticas= new JMenuItem("Modificaciones Compañia Farmaceutica");
         CambiosComFarmaceuticas.setBackground(new Color(255, 147, 22));
+        ConsultasComFarmaceutica= new JMenuItem("Consultas Compañia Farmaceutica");
+        ConsultasComFarmaceutica.setBackground(new Color(22, 156, 255));
 
         menuDespegableComFarmaceuticas.add(AltasComFarmaceutica);
         menuDespegableComFarmaceuticas.add(CambiosComFarmaceuticas);
+        menuDespegableComFarmaceuticas.add(ConsultasComFarmaceutica);
 
         AltasComFarmaceutica.addActionListener(this);
         CambiosComFarmaceuticas.addActionListener(this);
+        ConsultasComFarmaceutica.addActionListener(this);
 
 
 
@@ -119,18 +125,18 @@ JScrollPane nuevoCOntrato;
                     new Altas_CompañiasFarmaceuticas();
                 }
             });
-        }if (e.getSource()==AltasComFarmaceutica){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new Altas_CompañiasFarmaceuticas();
-                }
-            });
         }if (e.getSource()==CambiosComFarmaceuticas){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     new Cambios_CompañiasFarmaceuticas();
+                }
+            });
+        }if (e.getSource()==ConsultasComFarmaceutica){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new Consultas_CompañiasFarmaceuticas();
                 }
             });
         }

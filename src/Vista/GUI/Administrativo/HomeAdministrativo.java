@@ -1,5 +1,6 @@
 package Vista.GUI.Administrativo;
 
+import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,10 +10,11 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
     JToolBar toolBar;
     private JLabel encabezado, lugar;
     private  JPanel panelEncabezado;
-    JButton compañiasFarmaceuticas;
+    JButton contratos;
     JButton RegistrosMedicos;
-    JMenuItem Contratos, NewContrato;
-    JPopupMenu menuDespegable;
+    JButton comFarmaceuticas;
+    JMenuItem Contratos, NewContrato, AltasComFarmaceutica;
+    JPopupMenu menuDespegableContratos, menuDespegableComFarmaceuticas;
     PanelNuevoContrato pnc = new PanelNuevoContrato();
     public  HomeAdministrativo(){
         setTitle("ADMINISTRATIVO");
@@ -40,35 +42,61 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
         toolBar = new JToolBar();
         toolBar.setBounds(0,panelEncabezado.getHeight() , 1080,22);
 
-        compañiasFarmaceuticas = new JButton("Compañias Farmaceuticas");
-        compañiasFarmaceuticas.setSize(300,20);
-        toolBar.add(compañiasFarmaceuticas );
+        contratos = new JButton("Contratos");
+        contratos.setSize(300,20);
+        toolBar.add(contratos);
 
         RegistrosMedicos = new JButton("Registros de Medicos");
         RegistrosMedicos.setSize(200,20);
         toolBar.add(RegistrosMedicos );
 
+        comFarmaceuticas= new JButton("Compañias Farmaceuticas");
+        comFarmaceuticas.setSize(200,20);
+        toolBar.add(comFarmaceuticas );
+
         add(toolBar);
-
-
-        ScrollPane sc = new ScrollPane();
-        compañiasFarmaceuticas.addActionListener(new ActionListener() {
+        //****************Contratos***********************
+        contratos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                menuDespegable.show(compañiasFarmaceuticas,0, compañiasFarmaceuticas.getHeight());
+                menuDespegableContratos.show(contratos,0, contratos.getHeight());
             }
         });
-        menuDespegable= new JPopupMenu();
+        menuDespegableContratos = new JPopupMenu();
         Contratos = new JMenuItem("Contratos Registrados");
         NewContrato = new JMenuItem("Nuevo Contrato");
         NewContrato.setBackground(new Color(123, 254, 31));
 
-        menuDespegable.add(NewContrato );
-        menuDespegable.add(Contratos );
+        menuDespegableContratos.add(NewContrato );
+        menuDespegableContratos.add(Contratos );
+
 
         Contratos.addActionListener(this);
         NewContrato.addActionListener(this);
+
+
+//********************Compañias Farmaceuticas*********************
+        comFarmaceuticas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                menuDespegableComFarmaceuticas.show(comFarmaceuticas,0, comFarmaceuticas.getHeight());
+            }
+        });
+
+        menuDespegableComFarmaceuticas = new JPopupMenu();
+
+        AltasComFarmaceutica = new JMenuItem("Agregar Compañia Farmaceutica");
+        AltasComFarmaceutica.setBackground(new Color(123, 254, 31));
+
+        menuDespegableComFarmaceuticas.add(AltasComFarmaceutica);
+
+        AltasComFarmaceutica.addActionListener(this);
+
+
+
+
 
         nuevoCOntrato = pnc.AgregarpanelNuevoContrato();
 
@@ -80,6 +108,14 @@ JScrollPane nuevoCOntrato;
              add(nuevoCOntrato);
             revalidate();
             repaint();
+        }if (e.getSource()==AltasComFarmaceutica){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new Altas_CompañiasFarmaceuticas();
+                }
+            });
+
         }
     }
 }

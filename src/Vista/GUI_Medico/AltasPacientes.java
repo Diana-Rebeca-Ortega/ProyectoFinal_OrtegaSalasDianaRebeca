@@ -231,7 +231,7 @@ public class AltasPacientes extends JFrame implements ActionListener {
             setVisible(false);
             for (   int i =1; i <= filasAñadidas;i++  ){
                 System.out.println(i+" añadido");
-                String sql = "DELETE FROM alumnos WHERE Num_Control='"+ tablaPacientesAltas.getValueAt(tablaPacientesAltas.getRowCount()-i, 0)+"' ";
+                String sql = "DELETE FROM pacientes WHERE ID_Paciente_SSN='"+ tablaPacientesAltas.getValueAt(tablaPacientesAltas.getRowCount()-i, 0)+"' ";
                 conexionBD.ejecutarInstruccionLMD(sql);
             }//for
         }

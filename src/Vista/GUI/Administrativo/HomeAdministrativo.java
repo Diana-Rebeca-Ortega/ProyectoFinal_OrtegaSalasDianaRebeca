@@ -5,6 +5,7 @@ import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasF
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
 import Vista.GUI.Administrativo.ABCC_Supervisores.AltasSupervisores;
 import Vista.GUI.Administrativo.ABCC_Supervisores.BajasSupervisores;
+import Vista.GUI.Administrativo.ABCC_Supervisores.CambiosSupervisores;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +24,8 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
     JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica;
     JMenuItem AltasSupervisores, BajasSupervisores, CambiosSupervisores, ConsultasSupervisores;
     JPopupMenu menuDespegableContratos, menuDespegableComFarmaceuticas, menuSupervisores;
+
+
     PanelNuevoContrato pnc = new PanelNuevoContrato();
     public  HomeAdministrativo(){
         setTitle("ADMINISTRATIVO");
@@ -182,6 +185,13 @@ JScrollPane nuevoCOntrato;
                 @Override
                 public void run() {
                     new BajasSupervisores();
+                }
+            });
+        }if (e.getSource()==CambiosSupervisores){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new CambiosSupervisores();
                 }
             });
         }

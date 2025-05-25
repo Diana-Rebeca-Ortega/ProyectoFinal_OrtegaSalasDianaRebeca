@@ -21,4 +21,13 @@ public class SupervisorDAO {
         String sql = "DELETE FROM supervisores WHERE NSS='"+numSeguroSocial+"' ";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
+    //*******************************CAMBIOS*****************************
+    public boolean cambiarSupervisor(Supervisor supervisor){
+        sql = "UPDATE supervisores SET Nombre='"+
+                supervisor.getNombre()+"',PApellido='"+
+                supervisor.getPrimerApellido()+"', SApellido='"+
+                supervisor.getSegundoApellido()+"'  WHERE NSS='"+
+                supervisor.getNumSSN()+"'; ";
+        return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
+    }
 }

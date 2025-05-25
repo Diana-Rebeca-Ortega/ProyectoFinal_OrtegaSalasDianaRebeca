@@ -17,21 +17,19 @@ public class MedicoDAO {
 
 
     //***************************************ALTAS*******************************
-
     public boolean agregarMedico(Medico medico){
         // System.out.println("numcontrol"+alumno.getNumControl());
         String sql = "INSERT INTO medicos VALUES('"+medico.getNumSSN()+"','"+medico.getNombre()+"','"+medico.getPrimerApellido()+"','"+medico.getSegundoApellido()+"','"+medico.getEspecialidad()+"','"+medico.getAñosExperiencia()+"')";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
 
-/*
     //*******************************BAJAS/*****************************
-    public  boolean eliminarAlumnos (String numControl){
-        String sql = "DELETE FROM alumnos WHERE Num_Control='"+numControl+"' ";
+    public  boolean eliminarMedicos (String medico){
+        String sql = "DELETE FROM medicos WHERE  NSS='"+medico+"' ";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
 
-
+/*
     //*******************************CAMBIOS*****************************
     public boolean cambiarAlumno( Alumno alumno){
         String sql = "UPDATE alumnos SET Nombre='" + alumno.getNombre() +"'," +

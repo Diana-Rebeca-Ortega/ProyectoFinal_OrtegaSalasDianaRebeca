@@ -4,6 +4,7 @@ import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Altas_CompañiasF
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.AltasMedicoss;
+import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.BajasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.AltasSupervisores;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.BajasSupervisores;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.CambiosSupervisores;
@@ -151,7 +152,7 @@ public class HomeFarmacia extends JFrame implements ActionListener {
 
         AltasMedicos = new JMenuItem("Altas Medicos");
         AltasMedicos.setBackground(new Color(123, 254, 31));
-        BajasMedicos = new JMenuItem("Altas Medicos");
+        BajasMedicos = new JMenuItem("Bajas Medicos");
         BajasMedicos.setBackground(new Color(255, 22, 22));
         CambiosMedicos= new JMenuItem("Modificaciones Medicos");
         CambiosMedicos.setBackground(new Color(255, 147, 22));
@@ -230,6 +231,13 @@ JScrollPane nuevoCOntrato;
                 @Override
                 public void run() {
                     new AltasMedicoss();
+                }
+            });
+        } if (e.getSource()==BajasMedicos){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new BajasMedicoss();
                 }
             });
         }

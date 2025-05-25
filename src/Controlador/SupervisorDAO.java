@@ -16,4 +16,9 @@ public class SupervisorDAO {
         String sql = "INSERT INTO supervisores VALUES('"+supervisor.getNumSSN()+"','"+supervisor.getNombre()+"','"+supervisor.getPrimerApellido()+"','"+supervisor.getSegundoApellido()+"' )";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
+    //*******************************BAJAS/*****************************
+    public  boolean eliminarSupervisor(String numSeguroSocial){
+        String sql = "DELETE FROM supervisores WHERE NSS='"+numSeguroSocial+"' ";
+        return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
+    }
 }

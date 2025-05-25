@@ -4,6 +4,7 @@ import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFar
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
 import Vista.GUI.Administrativo.ABCC_Supervisores.AltasSupervisores;
+import Vista.GUI.Administrativo.ABCC_Supervisores.BajasSupervisores;
 
 import javax.swing.*;
 import java.awt.*;
@@ -176,7 +177,15 @@ JScrollPane nuevoCOntrato;
                     new AltasSupervisores();
                 }
             });
+        }if (e.getSource()==BajasSupervisores){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new BajasSupervisores();
+                }
+            });
         }
+
 
 
 

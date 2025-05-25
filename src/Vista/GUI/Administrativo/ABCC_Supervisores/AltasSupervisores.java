@@ -1,8 +1,6 @@
 package Vista.GUI.Administrativo.ABCC_Supervisores;
 
-import Controlador.ComFarmaceuticaDAO;
 import Controlador.SupervisorDAO;
-import Modelo.CompanniaFarmaceutica;
 import Modelo.ResultSetTableModel;
 import Modelo.Supervisor;
 import conexionBD.ConexionBD;

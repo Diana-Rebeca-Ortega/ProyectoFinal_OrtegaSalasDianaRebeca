@@ -1,6 +1,5 @@
 package Controlador;
 
-import Modelo.Paciente;
 import Modelo.Supervisor;
 import conexionBD.ConexionBD;
 

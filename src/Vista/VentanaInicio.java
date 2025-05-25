@@ -1,8 +1,8 @@
 package Vista;
 
-import Vista.GUI.Administrativo.HomeAdministrativo;
+import Vista.GUI.FarmaciaSucursal.HomeFarmacia;
+import Vista.GUI_Administrativo.HomeAdministrativo;
 import Vista.GUI_Medico.HomeMedico;
-import Vista.GUI_Medico.LoginMedico;
 import Vista.GUI_Paciente.HomePaciente;
 
 import javax.imageio.ImageIO;
@@ -18,6 +18,7 @@ class VentanaLogin extends JFrame  {
     public VentanaLogin() {
 
         setTitle("FARMACIA RX");
+        getContentPane().setBackground(new Color(254,254,254,255));
         setSize(390,500);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
@@ -25,7 +26,6 @@ class VentanaLogin extends JFrame  {
         BufferedImage image;
         try {
             image = ImageIO.read(new File("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\LogoRX.png"));
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -42,7 +42,7 @@ class VentanaLogin extends JFrame  {
         add(txtIntroduccion2);
 
         JButton btnPaciente = new JButton("PACIENTE");
-        btnPaciente.setBounds(130, 140, 100,30);
+        btnPaciente.setBounds(getWidth()/2-50, 120, 100,30);
         add(btnPaciente);
         btnPaciente.addActionListener(new ActionListener() {
             @Override
@@ -55,7 +55,7 @@ class VentanaLogin extends JFrame  {
                         }});}}});
 
         JButton btnMedico = new JButton("MEDICO");
-        btnMedico.setBounds(130, 240, 100,30);
+        btnMedico.setBounds(getWidth()/2-50, 180, 100,30);
         add(btnMedico);
         btnMedico.addActionListener(new ActionListener() {
             @Override
@@ -67,8 +67,8 @@ class VentanaLogin extends JFrame  {
                             new HomeMedico();
                         }});}}});
 
-        JButton btnFarmacia = new JButton("ADMINISTRATIVO");
-        btnFarmacia.setBounds(110, 340, 150,30);
+        JButton btnFarmacia = new JButton("FARMACIA SUCURSAL");
+        btnFarmacia.setBounds(getWidth()/2-100, 240, 200,30);
         add(btnFarmacia);
         btnFarmacia.addActionListener(new ActionListener() {
             @Override
@@ -77,8 +77,22 @@ class VentanaLogin extends JFrame  {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
+                            new HomeFarmacia();
+                        }});}}});
+
+        JButton btnAdmi = new JButton("ADMINISTRATIVO");
+        btnAdmi.setBounds(getWidth()/2-75, 300, 150,30);
+        add(btnAdmi);
+        btnAdmi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()== btnAdmi){
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
                             new HomeAdministrativo();
                         }});}}});
+
 
 
     }//VentanaPantallaCompleta

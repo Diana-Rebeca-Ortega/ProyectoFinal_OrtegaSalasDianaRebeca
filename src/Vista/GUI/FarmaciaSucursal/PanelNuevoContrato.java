@@ -1,4 +1,4 @@
-package Vista.GUI.Administrativo;
+package Vista.GUI.FarmaciaSucursal;
 
 import javax.swing.*;
 import java.awt.*;

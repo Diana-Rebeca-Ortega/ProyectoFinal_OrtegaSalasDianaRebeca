@@ -1,8 +1,7 @@
-package Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas;
+package Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas;
 
 import Controlador.ComFarmaceuticaDAO;
 import Modelo.CompanniaFarmaceutica;
-import Modelo.Paciente;
 
 import javax.swing.*;
 import java.awt.*;

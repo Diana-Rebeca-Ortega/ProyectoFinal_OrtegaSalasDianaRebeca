@@ -1,45 +1,51 @@
-package Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas;
+package Vista.GUI.FarmaciaSucursal.ABCC_Supervisores;
 
-import Controlador.ComFarmaceuticaDAO;
-import Modelo.CompanniaFarmaceutica;
+import Controlador.SupervisorDAO;
 import Modelo.ResultSetTableModel;
+import Modelo.Supervisor;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionListener {
+public class CambiosSupervisores extends JFrame implements ActionListener {
     JPanel panelNaranja, panelAmarillo;
-    JTable tablaComFarCambios;
-    JTextField cajaNombreCom, cajaTelefono;
-    JLabel texNombreFarmacias, txtTelefono ;
+    JTable tablaSupervisoresModificaiones;
+    JTextField cajaSSN,cajaNombre, cajaApPaterno, cajaApMaterno;
+    JLabel texNSS, txtNombre, txtApellidoPaterno, txtApellidoMaterno   ;
     JButton btnBuscar, btnBorrar, btnGuardarCambios, btnCancelar;
 
-    public Cambios_CompañiasFarmaceuticas() {
+
+    public CambiosSupervisores() {
         getContentPane().setLayout(null);
-        setTitle("Modificar Compañias Farmaceuticas");
+        setTitle("Modificar Supervisor");
         setSize(900,580);
         setLocationRelativeTo(null);//locacion en la ventana
         setVisible(true);
 
-        tablaComFarCambios = new JTable();
-        tablaComFarCambios.setModel(new javax.swing.table.DefaultTableModel(
+        tablaSupervisoresModificaiones = new JTable();
+        tablaSupervisoresModificaiones.setModel(new DefaultTableModel(
                 new Object[][]{
-                        {null, null},
-                        {null, null},
-                        {null, null},
-                        {null, null},
-                        {null, null}},
+                        {null, null, null,null},
+                        {null, null, null,null },
+                        {null, null, null,null},
+                        {null, null, null,null},
+                        {null, null, null,null}
+                },
                 new String[]{
-                        "Nombre Compañia", "Telefono"
-                }) {boolean[] canEdit = new boolean[]{
-                    false, false};public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        "NSS", "Nombre", "Primer Apellido","Segundo Apellido"
+                }) {
+            boolean[] canEdit = new boolean[]{
+                    false, false
+            };
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
-            }});
-        actualizarTabla(tablaComFarCambios);
-
+            }
+        });
+        actualizarTabla(tablaSupervisoresModificaiones);
         //PANEL  Amarillo
         panelAmarillo = new JPanel();
         panelAmarillo.setLayout(null);
@@ -47,8 +53,7 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
         panelAmarillo.setBounds(10, getHeight()-210, 870, 200);
 
 // Agregar la tabla a un JScrollPane
-        JScrollPane scrollPane = new JScrollPane(tablaComFarCambios
-        );
+        JScrollPane scrollPane = new JScrollPane(tablaSupervisoresModificaiones);
         scrollPane.setBounds(10, 10, 825, 180);
         panelAmarillo.add(scrollPane);
 
@@ -61,25 +66,25 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
         panelNaranja.setLayout(null);
         panelNaranja.setBackground(new Color(255, 97, 0 ));
         panelNaranja.setBounds(0, 0, getWidth(), 30);
-        JLabel texBAJAS = new JLabel("    MODIFICACIONES COMPAÑIAS FARMACEUTICAS:");
-        texBAJAS.setBounds(10, 0, 400, 20);
-        texBAJAS.setForeground(Color.WHITE);
-        panelNaranja.add(texBAJAS);
+        JLabel texCambios = new JLabel("    MODIFICACIONES SUPERVISORES:");
+        texCambios.setBounds(10, 0, 290, 20);
+        texCambios.setForeground(Color.WHITE);
+        panelNaranja.add(texCambios);
         add(panelNaranja);
 
-        texNombreFarmacias = new JLabel("Nombre Compañia:");
-        texNombreFarmacias.setBounds(40, 40, 230, 20);
-        texNombreFarmacias.setFont(new Font("Arial", Font.BOLD, 13));
-        add(texNombreFarmacias);
+        texNSS = new JLabel("NO. Seguro Social:");
+        texNSS.setBounds(40, 40, 230, 20);
+        texNSS.setFont(new Font("Arial", Font.BOLD, 13));
+        add(texNSS);
 
         JLabel  linea = new JLabel("------------------------------------------------------------------------------------------------------------------------------------------------");
         linea.setBounds(3, 80, 700, 20);
         linea.setBackground(new Color(139, 166, 169 ));
         add(linea);
 
-        cajaNombreCom = new JTextField();
-        cajaNombreCom.setBounds(190, 40, 200, 20);
-        add(cajaNombreCom);
+        cajaSSN = new JTextField();
+        cajaSSN.setBounds(190, 40, 200, 20);
+        add(cajaSSN);
 
         btnBuscar = new JButton();
         btnBuscar.addActionListener(this);
@@ -98,6 +103,8 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
         btnGuardarCambios.addActionListener(this);
         btnCancelar.addActionListener(this);
 
+
+
         btnBorrar.setBounds(getWidth()-150, 130, 100, 20);
         add(btnBorrar);
         btnGuardarCambios.setBounds(getWidth()-180, 160, 170, 20);
@@ -105,21 +112,36 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
         btnCancelar.setBounds(getWidth()-150, 190, 100, 20);
         add(btnCancelar);
 
-        txtTelefono = new JLabel("Telefono:");
-        txtTelefono.setBounds( 40, 100, 300, 20);
-        add(txtTelefono);
+        txtNombre = new JLabel("NOMBRE:");
+        txtApellidoPaterno= new JLabel("APELLIDO PATERNO:");
+        txtApellidoMaterno = new JLabel("APELLIDO MATERNO:");
 
-        cajaTelefono = new JTextField();
-        cajaTelefono.setBounds(110, 100, 200, 18);
-        add(cajaTelefono);
+        txtNombre.setBounds( 40, 100, 300, 20);
+        txtApellidoPaterno.setBounds( 40, 130, 300, 20);
+        txtApellidoMaterno.setBounds( 40, 160, 300, 20);
 
-        actualizarTabla(tablaComFarCambios
-        );
+        add(txtNombre);
+        add(txtApellidoPaterno);
+        add(txtApellidoMaterno);
+
+        cajaNombre = new JTextField();
+        cajaNombre.setBounds(110, 100, 200, 18);
+        add(cajaNombre);
+
+        cajaApPaterno = new JTextField();
+        cajaApPaterno.setBounds(170, 130, 200, 18);
+        add(cajaApPaterno);
+
+        cajaApMaterno = new JTextField();
+        cajaApMaterno.setBounds(185, 160, 200, 18);
+        add(cajaApMaterno);
+
+        actualizarTabla(tablaSupervisoresModificaiones);
     }//constructor
     public void actualizarTabla(JTable tabla) {
         final String Driver_Controlador = "com.mysql.cj.jdbc.Driver";
         final String URL = "jdbc:mysql://localhost:3306/farmaciarx";
-        final String CONSULTA = " select * from compañiasfarmaceuticas;";
+        final String CONSULTA = " select * from supervisores;";
         //el final se refiere a que son constantes
         try {
             ResultSetTableModel modelo = new ResultSetTableModel(Driver_Controlador, URL, CONSULTA);
@@ -133,42 +155,33 @@ public class Cambios_CompañiasFarmaceuticas extends JFrame implements ActionLis
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(btnBorrar)) {//***************************************************************
-            cajaNombreCom.setText("");
-            cajaTelefono.setText("");
+            cajaSSN.setText("");
+            cajaApPaterno.setText("");
+            cajaApMaterno.setText("");
+            cajaNombre.setText("");
         }
-        ComFarmaceuticaDAO cfDAO = new ComFarmaceuticaDAO();
-
+        SupervisorDAO supervisorDAO = new SupervisorDAO();
         if (e.getSource().equals(btnGuardarCambios)) {
-            if (cajaTelefono.getText().length() != 10) {
-                JOptionPane.showMessageDialog(null, "Los números telefonicos deben contar con 10 digitos");
-            } else {
-
-                if (cajaNombreCom.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No has ingresado El nombre de la compañia ");
-                } else {
-                    CompanniaFarmaceutica cf = new CompanniaFarmaceutica(cajaNombreCom.getText(), cajaTelefono.getText());
-                    if (cfDAO.cambiarComFar(cf)) {
-                        actualizarTabla(tablaComFarCambios
-                        );
-                        System.out.println("Registro modificado CORRECTAMENTE");
-                    } else{
-                        cajaNombreCom.setText("");
-                        System.out.println("ERROR en la modificacion del registro lindo ");
-                    JOptionPane.showMessageDialog(null, "Solo se permiten cadenas numericas para el registro de telefonos");
-                    }
-                }
-            }
+            Supervisor a1 = new Supervisor(cajaSSN.getText(), cajaNombre.getText(),cajaApPaterno.getText(),
+                    cajaApMaterno.getText() );
+            if (supervisorDAO.cambiarSupervisor(a1)) {
+                actualizarTabla(tablaSupervisoresModificaiones);
+                System.out.println("Registro modificado CORRECTAMENTE desde la Ven_Inicio");
+            }else
+                System.out.println("ERROR en la modificacion del registro lindo desde la Ven_Inicio");
         }
-
 
         if (e.getSource().equals(btnBuscar)) {//**************************************************************************
             System.out.println("buscar datos");
-            System.out.println(cajaNombreCom.getText());
+            System.out.println(cajaSSN.getText());
             int registro = 1;
-            for (int i = 0; i < tablaComFarCambios.getRowCount(); i++) {// muestra cuantas filas hay
-                if (tablaComFarCambios.getValueAt(i, 0).equals(cajaNombreCom.getText())) {///tabla.getValueAt(fila,columna)
-                    cajaTelefono.setText(tablaComFarCambios.getValueAt(i, 1) + "");
+            for (int i = 0; i < tablaSupervisoresModificaiones.getRowCount(); i++) {// muestra cuantas filas hay
+                if (tablaSupervisoresModificaiones.getValueAt(i, 0).equals(cajaSSN.getText())) {///tabla.getValueAt(fila,columna)
+                    cajaNombre.setText(tablaSupervisoresModificaiones.getValueAt(i, 1) + "");
+                    cajaApPaterno.setText(tablaSupervisoresModificaiones.getValueAt(i, 2) + "");
+                    cajaApMaterno.setText(tablaSupervisoresModificaiones.getValueAt(i, 3) + "");
                     registro = registro * 0;
+
                 }
             }
             if (registro == 1) {

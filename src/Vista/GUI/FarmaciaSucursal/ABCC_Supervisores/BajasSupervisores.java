@@ -1,6 +1,5 @@
-package Vista.GUI.Administrativo.ABCC_Supervisores;
+package Vista.GUI.FarmaciaSucursal.ABCC_Supervisores;
 
-import Controlador.PacienteDAO;
 import Controlador.SupervisorDAO;
 import Modelo.ResultSetTableModel;
 

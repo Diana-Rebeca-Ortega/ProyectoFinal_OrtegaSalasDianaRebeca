@@ -3,10 +3,10 @@ package Vista;
 import javax.swing.*;
 import java.awt.*;
 
-public class VentanaAdministracion extends JFrame {
+public class VentanaSucursal extends JFrame {
     JMenuBar menuBar;
     JMenu menuMedicos;
-    public VentanaAdministracion(){
+    public VentanaSucursal(){
         setTitle("Administración de Farmacia");
         setSize(570,700);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro

@@ -1,18 +1,18 @@
-package Vista.GUI.Administrativo;
+package Vista.GUI.FarmaciaSucursal;
 
-import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
-import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
-import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
-import Vista.GUI.Administrativo.ABCC_Supervisores.AltasSupervisores;
-import Vista.GUI.Administrativo.ABCC_Supervisores.BajasSupervisores;
-import Vista.GUI.Administrativo.ABCC_Supervisores.CambiosSupervisores;
+import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
+import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
+import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
+import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.AltasSupervisores;
+import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.BajasSupervisores;
+import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.CambiosSupervisores;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomeAdministrativo extends JFrame implements ActionListener {
+public class HomeFarmacia extends JFrame implements ActionListener {
     JToolBar toolBar;
     private JLabel encabezado, lugar;
     private  JPanel panelEncabezado;
@@ -27,7 +27,7 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
 
 
     PanelNuevoContrato pnc = new PanelNuevoContrato();
-    public  HomeAdministrativo(){
+    public HomeFarmacia(){
         setTitle("ADMINISTRATIVO");
         setSize(1080,560);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro

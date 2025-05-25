@@ -3,6 +3,7 @@ package Vista.GUI.Administrativo;
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.Administrativo.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
+import Vista.GUI.Administrativo.ABCC_Supervisores.AltasSupervisores;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +17,11 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
     JButton contratos;
     JButton RegistrosMedicos;
     JButton comFarmaceuticas;
+    JButton supervisores;
     JMenuItem Contratos, NewContrato;
     JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica;
-    JPopupMenu menuDespegableContratos, menuDespegableComFarmaceuticas;
+    JMenuItem AltasSupervisores, BajasSupervisores, CambiosSupervisores, ConsultasSupervisores;
+    JPopupMenu menuDespegableContratos, menuDespegableComFarmaceuticas, menuSupervisores;
     PanelNuevoContrato pnc = new PanelNuevoContrato();
     public  HomeAdministrativo(){
         setTitle("ADMINISTRATIVO");
@@ -75,10 +78,8 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
         menuDespegableContratos.add(NewContrato );
         menuDespegableContratos.add(Contratos );
 
-
         Contratos.addActionListener(this);
         NewContrato.addActionListener(this);
-
 
 //********************Compañias Farmaceuticas*********************
         comFarmaceuticas.addActionListener(new ActionListener() {
@@ -104,11 +105,36 @@ public class HomeAdministrativo extends JFrame implements ActionListener {
         AltasComFarmaceutica.addActionListener(this);
         CambiosComFarmaceuticas.addActionListener(this);
         ConsultasComFarmaceutica.addActionListener(this);
+//*****************************Supervisores*******************
+        supervisores = new JButton("Supervisores");
+        supervisores.setSize(200,20);
+        toolBar.add(supervisores );
+        supervisores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuSupervisores.show(supervisores,0, supervisores.getHeight());
+            }
+        });
+        menuSupervisores = new JPopupMenu();
 
+        AltasSupervisores  = new JMenuItem("Agregar Supervisores");
+        AltasSupervisores.setBackground(new Color(123, 254, 31));
+        BajasSupervisores  = new JMenuItem("Eliminar Supervisores");
+        BajasSupervisores.setBackground(new Color(255, 22, 22));
+        CambiosSupervisores  = new JMenuItem("Cambios Supervisores");
+        CambiosSupervisores.setBackground(new Color(255, 147, 22));
+        ConsultasSupervisores  = new JMenuItem("Consultas Supervisores");
+        ConsultasSupervisores.setBackground(new Color(22, 156, 255));
 
+        AltasSupervisores.addActionListener(this);
+        BajasSupervisores.addActionListener(this);
+        CambiosSupervisores.addActionListener(this);
+        ConsultasSupervisores.addActionListener(this);
 
-
-        nuevoCOntrato = pnc.AgregarpanelNuevoContrato();
+        menuSupervisores.add(AltasSupervisores);
+        menuSupervisores.add(BajasSupervisores);
+        menuSupervisores.add(CambiosSupervisores);
+        menuSupervisores.add(ConsultasSupervisores);
 
     }
 JScrollPane nuevoCOntrato;
@@ -118,7 +144,9 @@ JScrollPane nuevoCOntrato;
              add(nuevoCOntrato);
             revalidate();
             repaint();
-        }if (e.getSource()==AltasComFarmaceutica){
+        }
+        //****************COMPAÑIAS FARMACEUTICAS*****************
+        if (e.getSource()==AltasComFarmaceutica){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -140,6 +168,17 @@ JScrollPane nuevoCOntrato;
                 }
             });
         }
+        //*************************SUPERVISORES***********************
+        if (e.getSource()==AltasSupervisores){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new AltasSupervisores();
+                }
+            });
+        }
+
+
 
     }
 }

@@ -3,6 +3,7 @@ package Vista.GUI.FarmaciaSucursal;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
+import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.AltasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.AltasSupervisores;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.BajasSupervisores;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.CambiosSupervisores;
@@ -23,12 +24,12 @@ public class HomeFarmacia extends JFrame implements ActionListener {
     JMenuItem Contratos, NewContrato;
     JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica;
     JMenuItem AltasSupervisores, BajasSupervisores, CambiosSupervisores, ConsultasSupervisores;
-    JPopupMenu menuDespegableContratos, menuDespegableComFarmaceuticas, menuSupervisores;
-
+    JPopupMenu menuDespegableContratos, menuMedicos, menuDespegableComFarmaceuticas, menuSupervisores;
+    JMenuItem AltasMedicos, BajasMedicos, CambiosMedicos, ConsultasMedicos;
 
     PanelNuevoContrato pnc = new PanelNuevoContrato();
     public HomeFarmacia(){
-        setTitle("ADMINISTRATIVO");
+        setTitle("FARMACIA SUCURSAL");
         setSize(1080,560);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
@@ -139,6 +140,34 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         menuSupervisores.add(BajasSupervisores);
         menuSupervisores.add(CambiosSupervisores);
         menuSupervisores.add(ConsultasSupervisores);
+//*********************Medicos ***********************************
+        RegistrosMedicos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuMedicos.show(RegistrosMedicos,0, RegistrosMedicos.getHeight());
+            }
+        });
+        menuMedicos = new JPopupMenu();
+
+        AltasMedicos = new JMenuItem("Altas Medicos");
+        AltasMedicos.setBackground(new Color(123, 254, 31));
+        BajasMedicos = new JMenuItem("Altas Medicos");
+        BajasMedicos.setBackground(new Color(255, 22, 22));
+        CambiosMedicos= new JMenuItem("Modificaciones Medicos");
+        CambiosMedicos.setBackground(new Color(255, 147, 22));
+        ConsultasMedicos= new JMenuItem("Consultas Medicos");
+        ConsultasMedicos.setBackground(new Color(22, 156, 255));
+
+        menuMedicos.add(AltasMedicos);
+        menuMedicos.add(BajasMedicos);
+        menuMedicos.add(CambiosMedicos);
+        menuMedicos.add(ConsultasMedicos);
+
+        AltasMedicos.addActionListener(this);
+        BajasMedicos.addActionListener(this);
+        CambiosMedicos.addActionListener(this);
+        ConsultasMedicos.addActionListener(this);
+
 
     }
 JScrollPane nuevoCOntrato;
@@ -195,7 +224,15 @@ JScrollPane nuevoCOntrato;
                 }
             });
         }
-
+        //***************MEDICOS****************************
+        if (e.getSource()==AltasMedicos){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new AltasMedicoss();
+                }
+            });
+        }
 
 
 

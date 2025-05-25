@@ -27,5 +27,18 @@ public class FarmaciaDAO {
                 System.out.println("reistris : "+tamaño);
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
-
+    //*******************************CAMBIOS*****************************
+    public boolean cambiarFarmacia(Farmacia farmacia){
+        sql = "UPDATE farmacias SET  Telefono='"+
+                farmacia.getTelefono()+"',Estado='"+
+                farmacia.getEstado()+"', Municipio='"+
+                farmacia.getMunicipio()+"',Colonia='"+
+                farmacia.getColonia()+"', Calle='"+
+                farmacia.getCalle()+"', CP='"+
+                farmacia.getCP()+"',No_Local='"+
+                farmacia.getNoLocal()+"',  NombreFarmacia='"+
+                farmacia.getNombreFarmacia()+"'  WHERE ID_Farmacia='"+
+                farmacia.getID_Farmacia()+"'; ";
+        return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
+    }
 }

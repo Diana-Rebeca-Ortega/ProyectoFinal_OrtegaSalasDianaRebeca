@@ -1,7 +1,4 @@
 package Vista.GUI_Administrativo;
-
-import Vista.GUI_Medico.CambiosPacientes;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -50,7 +47,7 @@ public class HomeAdministrativo  extends JFrame implements ActionListener {
         add(toolBar);
 
         AltasFarmacias.addActionListener(this);
-
+        CambiosFarmacias.addActionListener(this);
     }
 
     @Override
@@ -60,6 +57,13 @@ public class HomeAdministrativo  extends JFrame implements ActionListener {
                 @Override
                 public void run() {
                     new AltasFarmacias();
+                }
+            });
+        } if (e.getSource()==CambiosFarmacias){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new CambiosFarmacias();
                 }
             });
         }

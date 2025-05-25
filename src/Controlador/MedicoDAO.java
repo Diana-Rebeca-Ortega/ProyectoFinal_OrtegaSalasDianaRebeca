@@ -29,17 +29,17 @@ public class MedicoDAO {
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
 
-/*
+
     //*******************************CAMBIOS*****************************
-    public boolean cambiarAlumno( Alumno alumno){
-        String sql = "UPDATE alumnos SET Nombre='" + alumno.getNombre() +"'," +
-                " PrimerAP='" + alumno.getPrimerApellido() +"', SegundoAP='" + alumno.getSegundoApellido() +"'," +
-                " Edad='"+alumno.getEdad()+"', Semestre='"+alumno.getSemestre()+"', Carrera='"+alumno.getCarrera()+"'" +
-                " WHERE Num_Control='" + alumno.getNumControl() + "'";
+    public boolean cambiarMedico( Medico medico){
+        String sql = "UPDATE medicos SET Nombre='" + medico.getNombre() +"'," +
+                " PApellido='" + medico.getPrimerApellido() +"',  SApellido='" + medico.getSegundoApellido() +"'," +
+                " Especialidad='"+medico.getEspecialidad()+"', AñosExperiencia='"+medico.getAñosExperiencia()+
+                " WHERE NSS='" + medico.getNumSSN() + "'";
         return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
     }
 
-
+/*
     //*******************************CONSULTAS/*****************************
     public Alumno mostrarAlumno(String filtro, String tipoBusqueda){
         String sql= "";

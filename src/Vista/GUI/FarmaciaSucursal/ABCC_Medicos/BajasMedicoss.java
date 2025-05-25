@@ -1,7 +1,6 @@
 package Vista.GUI.FarmaciaSucursal.ABCC_Medicos;
 
 import Controlador.MedicoDAO;
-import Controlador.PacienteDAO;
 import Modelo.ResultSetTableModel;
 
 import javax.swing.*;

@@ -48,6 +48,7 @@ public class HomeAdministrativo  extends JFrame implements ActionListener {
 
         AltasFarmacias.addActionListener(this);
         CambiosFarmacias.addActionListener(this);
+        ConsultasFarmacias.addActionListener(this);
     }
 
     @Override
@@ -64,6 +65,13 @@ public class HomeAdministrativo  extends JFrame implements ActionListener {
                 @Override
                 public void run() {
                     new CambiosFarmacias();
+                }
+            });
+        }if (e.getSource()==ConsultasFarmacias){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new ConsultasFarmacias();
                 }
             });
         }

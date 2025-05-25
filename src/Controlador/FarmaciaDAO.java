@@ -41,4 +41,56 @@ public class FarmaciaDAO {
                 farmacia.getID_Farmacia()+"'; ";
         return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
     }
+    //*******************************CONSULTAS/*****************************
+    public Farmacia mostrarFarmacia(String filtro, String tipoBusqueda){
+        String sql= "";
+
+        if (tipoBusqueda.equals("Uno")){
+            sql = "select * from  farmacias ORDER BY ID_Farmacia DESC LIMIT 0,1;";}
+        if (tipoBusqueda.equals("Ultimo")){
+            sql = "select * from  farmacias ORDER BY ID_Farmacia DESC LIMIT "+filtro+",1;";}
+
+
+        if (tipoBusqueda.equals("ID"))
+            sql = "SELECT * FROM  farmacias WHERE ID_Farmacia='"+filtro+"'";
+        if (tipoBusqueda.equals("Telefono"))
+            sql = "SELECT * FROM  farmacias WHERE Telefono='"+filtro+"'";
+        if (tipoBusqueda.equals("Estado")){
+            sql = "SELECT * FROM  farmacias WHERE Estado='"+filtro+"'";}
+        if (tipoBusqueda.equals("Municipio")){
+            sql = "SELECT * FROM  farmacias WHERE Municipio='"+filtro+"'";}
+        if (tipoBusqueda.equals("Colonia")){
+            sql = "SELECT * FROM  farmacias WHERE Colonia='"+filtro+"'";}
+        if (tipoBusqueda.equals("Calle")){
+            sql = "SELECT * FROM  farmacias WHERE  Calle='"+filtro+"'";}
+        if (tipoBusqueda.equals("CP")){
+            sql = "SELECT * FROM  farmacias WHERE CP='"+filtro+"'";}
+        System.out.println(sql);
+        ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
+        Farmacia a = null;
+        try {
+            if(rs.next()) {//busca al menos un registro con el filtro seleciionado
+                String id = rs.getString(1);
+                int tel = rs.getInt(2);
+                String es = rs.getString(3);
+                String mu = rs.getString(4);
+                String co = rs.getString(5);
+                String ca = rs.getString(6);
+                int cp = rs.getInt(7);
+                int nl = rs.getInt(8);
+                String no = rs.getString(9);
+
+                a = new Farmacia(id,tel,es,mu,co,ca,cp,nl,no);
+                System.out.println("Si encontramos registros");
+            }else
+                System.out.println("NO se encontró el registro"); //!!!!!
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("hay una exeption");
+        }
+        return a;
+    }
+
+
 }

@@ -2,16 +2,16 @@ package Modelo;
 
 public class Farmacia {
     private String ID_Farmacia;
-    private String Telefono;
+    private int Telefono;
     private String Estado;
     private String Municipio;
     private  String Colonia;
     private String Calle;
-    private String CP;
+    private int CP;
     private int NoLocal;
     private  String NombreFarmacia;
 
-    public Farmacia(String ID_Farmacia, String telefono, String estado, String municipio, String colonia, String calle, String CP, int noLocal, String nombreFarmacia) {
+    public Farmacia(String ID_Farmacia, int telefono, String estado, String municipio, String colonia, String calle, int CP, int noLocal, String nombreFarmacia) {
         this.ID_Farmacia = ID_Farmacia;
         Telefono = telefono;
         Estado = estado;
@@ -31,11 +31,11 @@ public class Farmacia {
         this.ID_Farmacia = ID_Farmacia;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return Telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         Telefono = telefono;
     }
 
@@ -71,11 +71,11 @@ public class Farmacia {
         Calle = calle;
     }
 
-    public String getCP() {
+    public int getCP() {
         return CP;
     }
 
-    public void setCP(String CP) {
+    public void setCP(int CP) {
         this.CP = CP;
     }
 

@@ -1,9 +1,7 @@
 package Vista.GUI_Administrativo;
 
 import Controlador.FarmaciaDAO;
-import Controlador.PacienteDAO;
 import Modelo.Farmacia;
-import Modelo.Paciente;
 import Modelo.ResultSetTableModel;
 import conexionBD.ConexionBD;
 
@@ -14,9 +12,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class AltasFarmacias extends JFrame implements ActionListener {
-    JTextField Municipio, ID_Farmacia, Estado,  Telefono;
-    JTextField cajaCalle, CP, cajaNoLocal, NombreFar;
-    JComboBox comboColonia;
+    JTextField  ID_Farmacia,  Telefono;
+    JTextField cajaCalle, CP, cajaNoLocal, NombreFar, Colonia;
+    JComboBox  Estado, Municipio;
     JTable tablaFarmaciasAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
@@ -82,6 +80,11 @@ public class AltasFarmacias extends JFrame implements ActionListener {
 
         ID_Farmacia = new JTextField("");
         ID_Farmacia.setBounds(160, 33, 200, 15);
+
+        FarmaciaDAO farDAO = new FarmaciaDAO();
+        String idCompuesto= String.format("%04d",  farDAO.tamañoTablas() );
+        ID_Farmacia.setText(idCompuesto);
+        ID_Farmacia.setEditable(false);
         add(ID_Farmacia);
 
         JLabel texTelefono = new JLabel("Telefono:");
@@ -96,34 +99,53 @@ public class AltasFarmacias extends JFrame implements ActionListener {
         texEstado.setBounds(20, 80, 300, 20);
         add(texEstado);
 
-        Estado = new JTextField("");
-        Estado.setBounds(150, 85, 200, 15);
+        Estado = new JComboBox();
+        Estado.addItem("Elige Estado...");
+        Estado.addItem("Durango");
+        Estado.addItem("Zacatecas");
+        Estado.addItem("Jalisco");
+
+        Estado.setBounds(150, 85, 200, 20);
         add(Estado);
 
         JLabel texApMunicipio = new JLabel("Municipio:");
         texApMunicipio.setBounds(20, 110, 300, 20);
         add(texApMunicipio);
 
-        Municipio = new JTextField("");
-        Municipio.setBounds(150, 115, 200, 15);
+        Municipio = new JComboBox();
+        Municipio.addItem("Elige Municipio...");
+        Estado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Municipio.removeAllItems();
+                Municipio.addItem("Elige Municipio...");
+                if (Estado.getSelectedItem().equals("Durango")){
+                    Municipio.addItem("Canatlán");
+                    Municipio.addItem("Canelas");
+                    Municipio.addItem("Cuencamé");
+                }else if (Estado.getSelectedItem().equals("Zacatecas")){
+                    Municipio.addItem("Jerez");
+                    Municipio.addItem("Zacatecas");
+                }else if (Estado.getSelectedItem().equals("Jalisco")){
+                    Municipio.addItem("Puerto Vallarta");
+                }
+            }
+        });
+
+        Municipio.setBounds(150, 115, 200, 20);
         add(Municipio);
 
         JLabel texColonia = new JLabel("Colonia:");
         texColonia.setBounds(20, 135, 300, 20);
         add(texColonia);
 
-        comboColonia = new JComboBox<String>();
-        comboColonia.addItem("Elige EDAD...");
-        for(int i =1; i <=100;i++){
-            comboColonia.addItem(i);
-        }
-        comboColonia.setBounds(100, 135,300,20);
-        add(comboColonia);
+        Colonia = new JTextField();
+        Colonia.setBounds(100, 135,300,20);
+        add(Colonia);
 
         JLabel texCalle = new JLabel("Calle:");
         texCalle.setBounds(20, 160, 300, 20);
         add(texCalle);
-
 
         cajaCalle = new JTextField();
         cajaCalle.setBounds(100, 160, 300, 20);
@@ -150,7 +172,7 @@ public class AltasFarmacias extends JFrame implements ActionListener {
         add(texNombreFarmacia);
 
         NombreFar = new JTextField();
-        NombreFar.setBounds(100, 235, 300, 20);
+        NombreFar.setBounds(130, 235, 300, 20);
         add(NombreFar);
 
         btnCAceptar = new JButton("AGREGAR");
@@ -191,37 +213,54 @@ public class AltasFarmacias extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCAceptar) {
-            try {
-                Farmacia far = new Farmacia (ID_Farmacia.getText(), Telefono.getText(), Estado.getText(),
-                        Municipio.getText(),
-                        comboColonia.getSelectedItem()+"", cajaCalle.getText(),
-                        CP.getText(), Integer.parseInt(cajaNoLocal.getText()), NombreFar.getText());
+            try{
+
+            int tel =Integer.parseInt(Telefono.getText()) ;
+            int cp =Integer.parseInt(CP.getText()) ;
+            int nl = Integer.parseInt(cajaNoLocal.getText());
+            if (String.valueOf(tel).length()!=10){
+                JOptionPane.showMessageDialog(null,  "Los números telefonicos deben contar con 10 digitos");
+            }else {
+            if (String.valueOf(cp).length()!=5){
+                    JOptionPane.showMessageDialog(null,  "Los Codigos Postales deben contar con 5 digitos");
+            } else {
+                if (Estado.getSelectedItem().equals("Elige Estado...")){
+                    JOptionPane.showMessageDialog(null,  "No has seleccionado un ESTADO");
+                }else{
+                    if (Municipio.getSelectedItem().equals("Elige Municipio...")){
+                        JOptionPane.showMessageDialog(null,  "No has seleccionado un MUNICIPIO");
+                    }else {
 
                 FarmaciaDAO farDAO = new FarmaciaDAO();
-                if (ID_Farmacia.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null,  "No has ingresado un NSS ");
-                }else{
+                String idCompuesto= String.format("%04d",  farDAO.tamañoTablas() );
+
+                Farmacia far = new Farmacia (idCompuesto, tel , Estado.getSelectedItem()+"",
+                        Municipio.getSelectedItem()+"",
+                        Colonia.getText(), cajaCalle.getText(),
+                        cp,nl, NombreFar.getText());
+
                     if (farDAO.agregarFarmacia(far)) {
                         filasAñadidas++;
                         actualizarTabla(tablaFarmaciasAltas);
+                        FarmaciaDAO farmDAO = new FarmaciaDAO();
+                        String idActualizado= String.format("%04d",  farmDAO.tamañoTablas() );
+                        ID_Farmacia.setText(idActualizado);
                         System.out.println("FELICIDADES: se agrego una nueva Farmacia a la BDD (desde la ventanaInicio)");
                     }else {
                         System.out.println("ERROR: no se pudo agregar un nuevo Farmacia a la BDD (desde la ventanaInicio)");
                     }
-                }
-            }catch (Exception exception ){
-                if (comboColonia.getSelectedItem().equals("Elige EDAD...")){
-                    JOptionPane.showMessageDialog(null,  "No has elegido una edad ");
-                }
+                } }
             }
-
+            }
+            }catch (Exception exception){
+                JOptionPane.showMessageDialog(null,  "En los campos Telefono, CP y NO.Local solo se admiten Números");
+            }
         }//if si es el btm aceptar
         if (e.getSource() == btnBorrar) {//**********************************************************************
-            ID_Farmacia.setText("");
-            Estado.setText("");
-            Municipio.setText("");
+            Estado.setSelectedIndex(0);
+            Municipio.setSelectedIndex(0);
             Telefono.setText("");
-            comboColonia.setSelectedIndex(0);
+            Colonia.setText("");
             cajaCalle.setText("");
             CP.setText("");
             cajaNoLocal.setText("");

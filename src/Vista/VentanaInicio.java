@@ -3,6 +3,7 @@ package Vista;
 import Vista.GUI.FarmaciaSucursal.HomeFarmacia;
 import Vista.GUI_Administrativo.HomeAdministrativo;
 import Vista.GUI_Medico.HomeMedico;
+import Vista.GUI_Medico.LoginMedico;
 import Vista.GUI_Paciente.HomePaciente;
 
 import javax.imageio.ImageIO;
@@ -60,11 +61,12 @@ class VentanaLogin extends JFrame  {
         btnMedico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
                 if (e.getSource()==btnMedico){
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            new HomeMedico();
+                            new LoginMedico();
                         }});}}});
 
         JButton btnFarmacia = new JButton("FARMACIA SUCURSAL");
@@ -115,13 +117,24 @@ class VentanaPrincipal extends  JFrame implements ActionListener{
 
         panelEncabezado = new JPanel();
         panelEncabezado.setLayout(null);
-        panelEncabezado.setBackground(Color.cyan);
+        panelEncabezado.setBackground(new Color(255,255,255,255));
         panelEncabezado.setBounds( 0,0,1080,100);
 
         encabezado = new JLabel();
-        encabezado.setBounds(300,0,800,100);
-        encabezado.setIcon(new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\EncabezadoFarmaciasSimilares.png"));
+        encabezado.setBounds(0,0,800,100);
+        Image im = new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\logoTituloFRX.png").getImage();
+
+        Image ie = im.getScaledInstance(400,50, Image.SCALE_SMOOTH);
+        encabezado.setIcon(new ImageIcon(ie));
         panelEncabezado.add(encabezado);
+
+
+        JLabel slogan = new JLabel();
+        slogan.setBounds(20,60, 260,50);
+        Image im2 = new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\sloganRX.png").getImage();
+        Image ie2 = im2.getScaledInstance(260,25, Image.SCALE_SMOOTH);
+        slogan.setIcon(new ImageIcon( ie2));
+        panelEncabezado.add(slogan);
         add(panelEncabezado);
 
         menuBar = new JMenuBar();

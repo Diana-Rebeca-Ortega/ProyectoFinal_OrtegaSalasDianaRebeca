@@ -2,7 +2,11 @@ package Controlador;
 
 //importar otros paquetes
 import Modelo.Medico;
+import Modelo.Paciente;
 import conexionBD.ConexionBD;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 //importar librerias
@@ -12,7 +16,8 @@ import conexionBD.ConexionBD;
 //DAO - DATA ACCESSS OBJECT
 public class MedicoDAO {
     ConexionBD conexionBD = new ConexionBD();
-
+    String sql ="";
+    ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);;
     //MMMMMMMMMMMMMMMMMMMMMMETODOS ABCCccccccccccccccccccccccccccccccccc
 
 
@@ -38,52 +43,56 @@ public class MedicoDAO {
                 " WHERE NSS='" + medico.getNumSSN() + "'";
         return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
     }
+    //************************************TAMAÑO REGISTROS***********
+    public int tamañoTablas (){
+        sql = "select count(*) from medicos";
+        rs= conexionBD.ejecutarInstruccionSQL(sql);
+        int tamaño=0;
+        try {
+            if (rs.next()){
+                tamaño = rs.getInt(1);
+                System.out.println("reistris : "+tamaño);
+            }
+        } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
 
-/*
+
     //*******************************CONSULTAS/*****************************
-    public Alumno mostrarAlumno(String filtro, String tipoBusqueda){
+    public Medico mostrarMedico(String filtro, String tipoBusqueda){
         String sql= "";
-        if (tipoBusqueda.equals("Nombre")){
-            sql = "SELECT * FROM alumnos WHERE Nombre='"+filtro+"'";
-        }
-        if (tipoBusqueda.equals("PrimerAP")){
-            sql = "SELECT * FROM alumnos WHERE PrimerAP='"+filtro+"'";
-        }
-        if (tipoBusqueda.equals("SegundoAP")){
-            sql = "SELECT * FROM alumnos WHERE SegundoAP='"+filtro+"'";
-        }
-        if (tipoBusqueda.equals("Edad")){
-            sql = "SELECT * FROM alumnos WHERE Edad='"+filtro+"'";
-        }
-        if (tipoBusqueda.equals("Semestre")){
-            sql = "SELECT * FROM alumnos WHERE Semestre='"+filtro+"'";
-        }
-        if (tipoBusqueda.equals("Carrera")){
-            sql = "SELECT * FROM alumnos WHERE Carrera='"+filtro+"'";
-        }
-        if (tipoBusqueda.equals("TODOS")){
-            sql = "SELECT * FROM alumnos WHERE Nombre='"+filtro+"', PrimerAP='"+filtro+"'" +
-                    "SegundoAP='"+filtro+"'" +
-                    "Edad='"+filtro+"'" +
-                    "Semestre='"+filtro+"'" +
-                    "Carrera='"+filtro+"'";
-        }
 
+        if (tipoBusqueda.equals("Uno")){
+            sql = "select * from medicos ORDER BY NSS DESC LIMIT 0,1;";}
+        if (tipoBusqueda.equals("Ultimo")){
+            sql = "select * from medicos ORDER BY NSS DESC LIMIT "+filtro+",1;";}
+
+
+        if (tipoBusqueda.equals("ID"))
+            sql = "SELECT * FROM medicos WHERE NSS='"+filtro+"'";
+        if (tipoBusqueda.equals("Nombre"))
+            sql = "SELECT * FROM medicos WHERE Nombre='"+filtro+"'";
+        if (tipoBusqueda.equals("PApellido")){
+            sql = "SELECT * FROM medicos WHERE PApellido='"+filtro+"'";}
+        if (tipoBusqueda.equals("SApellido")){
+            sql = "SELECT * FROM medicos WHERE SApellido='"+filtro+"'";}
+        if (tipoBusqueda.equals("Edad")){
+            sql = "SELECT * FROM medicos WHERE Especialidad='"+filtro+"'";}
+        if (tipoBusqueda.equals("calle")){
+            sql = "SELECT * FROM medicos WHERE  AñosExperiencia='"+filtro+"'";}
         System.out.println(sql);
         ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
-        Alumno a = null;
+        Medico a = null;
         try {
             if(rs.next()) {//busca al menos un registro con el filtro seleciionado
-                String nc = rs.getString(1);
-                String n = rs.getString("Nombre");
+                String id = rs.getString(1);
+                String n = rs.getString(2);
                 String pa = rs.getString(3);
-                String sa = rs.getString("SegundoAP");
-                byte e = rs.getByte(5);
-                byte s = rs.getByte(6);
-                String c = rs.getString(7);
-                a = new Alumno(nc, n, pa, sa, e, s, c);
+                String sa = rs.getString(4);
+                String e = rs.getString(5);
+                Byte ae = rs.getByte(6);
+
+
+                a = new Medico(id,n,pa,sa,e,ae);
                 System.out.println("Si encontramos registros");
-                System.out.println("ayuda" +a);
             }else
                 System.out.println("NO se encontró el registro"); //!!!!!
 
@@ -93,31 +102,4 @@ public class MedicoDAO {
         }
         return a;
     }
-/*
-    public ArrayList mostrarAlumnos(String filtro){
-        ArrayList<Alumno> listaAlumnos = new ArrayList<>();
-       //String sql = "SELECT * FROM Alumnos";
-        String sql4 = "SELECT * FROM Alumnos WHERE Semestre='"+filtro+"'";
-        ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql4);
-        try {
-            rs.next();
-            do {
-                String nc = rs.getString(1);
-                String n = rs.getString("Nombre");
-                String pa = rs.getString(3);
-                String sa = rs.getString("SegundoAP");
-                byte e = rs.getByte(5);
-                byte s = rs.getByte(6);
-                String c = rs.getString(7);
-
-                Alumno a = new Alumno(nc, n, pa, sa, e, s, c);
-                listaAlumnos.add(a);
-            }while (rs.next());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listaAlumnos;
-    }
-*/
-
 }

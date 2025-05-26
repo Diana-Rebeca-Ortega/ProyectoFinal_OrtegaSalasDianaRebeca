@@ -126,7 +126,7 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
         add(texAñosExp);
 
         comboEdad = new JComboBox<String>();
-        comboEdad.addItem("Elige EDAD...");
+        comboEdad.addItem("Elige Años de Experiencia...");
         for (int i =0; i<70; i++){
             comboEdad.addItem(i+1);
         }
@@ -195,7 +195,7 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
                     }
                 }
             }catch (Exception exception ){
-                if (comboEdad.getSelectedItem().equals("Elige EDAD...")){
+                if (comboEdad.getSelectedItem().equals("Elige Años de Experiencia...")){
                     JOptionPane.showMessageDialog(null,  "No has elegido una edad ");
                 }
             }

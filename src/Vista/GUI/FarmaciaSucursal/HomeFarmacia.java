@@ -6,6 +6,7 @@ import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_Compañ
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.AltasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.BajasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.CambiosMedicoss;
+import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.ConsultasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.AltasSupervisores;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.BajasSupervisores;
 import Vista.GUI.FarmaciaSucursal.ABCC_Supervisores.CambiosSupervisores;
@@ -246,6 +247,13 @@ JScrollPane nuevoCOntrato;
                 @Override
                 public void run() {
                     new CambiosMedicoss();
+                }
+            });
+        }if (e.getSource()==ConsultasMedicos){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new ConsultasMedicoss();
                 }
             });
         }

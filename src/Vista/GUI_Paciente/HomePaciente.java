@@ -1,7 +1,5 @@
 package Vista.GUI_Paciente;
 
-import Vista.GUI_Medico.AsignarConsulta;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

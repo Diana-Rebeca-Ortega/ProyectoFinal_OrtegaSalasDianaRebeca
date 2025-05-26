@@ -1,6 +1,10 @@
 package Vista.GUI_Medico;
 
 import Modelo.Medico;
+import Vista.GUI_Medico.ABCC_Pacientes.AltasPacientes;
+import Vista.GUI_Medico.ABCC_Pacientes.BajasPacientes;
+import Vista.GUI_Medico.ABCC_Pacientes.CambiosPacientes;
+import Vista.GUI_Medico.ABCC_Pacientes.ConsultasPacientes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +15,7 @@ import java.awt.event.WindowEvent;
 
 public class HomeMedico extends JFrame implements ActionListener {
     private JPopupMenu menuDespegable;
-    PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica();
+    PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica;
    PanelMenuPerfilMedico panelMenuPerfilMedico = new PanelMenuPerfilMedico();
     JPanel ac ;
     JPanel mp;
@@ -30,6 +34,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         setLayout(null);
         setVisible(true);
 
+        PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica(m);
         toolBar = new JToolBar();
         toolBar.setBounds(0, 0, 1080,50);
 
@@ -220,14 +225,14 @@ public class HomeMedico extends JFrame implements ActionListener {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new  AltasPacientes();
+                    new AltasPacientes();
                 }
             });
         }if(e.getSource()==menuBajas){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new  BajasPacientes();
+                    new BajasPacientes();
                 }
             });
         }
@@ -235,14 +240,14 @@ public class HomeMedico extends JFrame implements ActionListener {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new  ConsultasPacientes();
+                    new ConsultasPacientes();
                 }
             });
         }if(e.getSource()==menuCambios){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new  CambiosPacientes();
+                    new CambiosPacientes();
                 }
             });
         }if(e.getSource()==cerrado){

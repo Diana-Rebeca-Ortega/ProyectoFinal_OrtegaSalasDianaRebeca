@@ -1,7 +1,9 @@
 package Vista.GUI_Medico;
 
 import Controlador.PacienteDAO;
+import Modelo.Medico;
 import Modelo.Paciente;
+import Vista.GUI_Medico.ConsultasMedicas.AsignarConsulta_Altas;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,9 +29,16 @@ public class PanelMenuItemAsignarConsultaMedica implements ActionListener {
     JLabel txtNO;
     JLabel txtCP ;
     JButton btnAsignarConsulta;
+    JButton btnCancelar;
+    Medico me ;
+    Paciente pa;
+
+    public PanelMenuItemAsignarConsultaMedica(Medico me) {
+        this.me = me;
+    }
 
     public JPanel agregar_panelAsignarConsulta(JToolBar toolBar,
-    JButton btnCancelar){
+                                               JButton btnCancelar){
 
 
 //*******************Panel Asignar Consulta ***************************
@@ -119,6 +128,7 @@ public class PanelMenuItemAsignarConsultaMedica implements ActionListener {
                 if(pacienteDAO.mostrarPaciente(cajaBuscarPaciente.getText(), "ID")==null){
                     JOptionPane.showMessageDialog(null,  "No se encontraron registros");
                 }else{
+
                     btnAsignarConsulta.setEnabled(true);
                     Paciente ob1 = pacienteDAO.mostrarPaciente(cajaBuscarPaciente.getText(), "ID");
                     txtSSNConsulta.setText("SSN:     "+ob1.getNumSSN());
@@ -130,16 +140,26 @@ public class PanelMenuItemAsignarConsultaMedica implements ActionListener {
                     txtColonia.setText("Calle:     "+ob1.getCalle());
                     txtCP.setText("NO.Casa:     "+ob1.getNo_Casa());
                     txtNO.setText("Codigo Postal:     "+ob1.getCP());
-
+                    pa = ob1;
                 }//else
         }
         if(e.getSource()==btnAsignarConsulta){
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new AsignarConsulta();
+                    new AsignarConsulta_Altas(me, pa );
                 }
             });
+        }if (e.getSource() == btnCancelar){
+            txtSSNConsulta.setText("SSN:     ");
+            txtNombree.setText("Nombre:     ");
+            txtAPuno.setText("A.Paterno:     ");
+            txtAPdos.setText("A.Materno:     ");
+            txtEdaad.setText("Edad:     ");
+            txtCalle.setText("Colonia:     ");
+            txtColonia.setText("Calle:     ");
+            txtCP.setText("NO.Casa:     ");
+            txtNO.setText("Codigo Postal:     ");
         }
     }
 }

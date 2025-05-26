@@ -1,4 +1,4 @@
-package Vista.GUI_Medico;
+package Vista.GUI_Medico.ABCC_Pacientes;
 
 import Controlador.PacienteDAO;
 import Modelo.ResultSetTableModel;

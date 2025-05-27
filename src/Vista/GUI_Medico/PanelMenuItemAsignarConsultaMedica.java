@@ -41,10 +41,10 @@ public class PanelMenuItemAsignarConsultaMedica implements ActionListener {
                                                JButton btnCancelar){
 
 
-//*******************Panel Asignar Consulta ***************************
+//*******************Panel ASIGNAR Consulta ***************************
     panelAsignarConsulta = new JPanel();
         panelAsignarConsulta.setBounds(5,toolBar.getHeight()+5,1050,470);
-        panelAsignarConsulta.setBackground(new Color(225, 253, 207));
+        panelAsignarConsulta.setBackground(new Color(180, 228, 165));
         panelAsignarConsulta.setLayout(null);
 
     JLabel txtAsignarConsulta = new JLabel();

@@ -1,4 +1,4 @@
-package Vista.GUI_Medico;
+package Vista.GUI_Medico.ConsultasMedicas;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

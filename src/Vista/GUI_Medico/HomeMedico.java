@@ -5,6 +5,7 @@ import Vista.GUI_Medico.ABCC_Pacientes.AltasPacientes;
 import Vista.GUI_Medico.ABCC_Pacientes.BajasPacientes;
 import Vista.GUI_Medico.ABCC_Pacientes.CambiosPacientes;
 import Vista.GUI_Medico.ABCC_Pacientes.ConsultasPacientes;
+import Vista.GUI_Medico.ConsultasMedicas.AsistenciaConsulta;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,8 @@ public class HomeMedico extends JFrame implements ActionListener {
     private JPopupMenu menuDespegable;
     PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica;
    PanelMenuPerfilMedico panelMenuPerfilMedico = new PanelMenuPerfilMedico();
-    JPanel ac ;
+    JPanel ac_asignarConsulta;
+    JPanel acm_asistenciaConsulta;
     JPanel mp;
     JButton  btnCancelar;
     JMenuItem persona, perfil, menuAltas, menuBajas, menuCambios,menuConsultas,
@@ -37,12 +39,13 @@ public class HomeMedico extends JFrame implements ActionListener {
         setVisible(true);
 
         PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica(m);
+       PanelMenuItemAsistenciaConsulta panelMenuItemAsistenciaConsulta = new PanelMenuItemAsistenciaConsulta(m);
         toolBar = new JToolBar();
         toolBar.setBounds(0, 0, 1080,50);
 
-        ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar,btnCancelar);
+        ac_asignarConsulta = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar,btnCancelar);
         mp= panelMenuPerfilMedico.añadirPanelPerfilMedico(toolBar, m);
-
+        acm_asistenciaConsulta = panelMenuItemAsistenciaConsulta.agregar_panelAsistenciaConsulta(toolBar, btnCancelar );
 
         JButton btnToolBarAjustes = new JButton();
         JButton btnToolBarPerfil = new JButton();
@@ -71,6 +74,9 @@ public class HomeMedico extends JFrame implements ActionListener {
          asignarConsulta = new JMenuItem("Asignar Consulta Medica");
          solicitudesConsultasPacientes = new JMenuItem("Solicitudes de consultas de pacientes en línea");
          asistenciaConsultas = new JMenuItem("Atender consulta (Asistencia)");
+
+         asignarConsulta.setBackground(new Color(180, 228, 165));
+         asistenciaConsultas.setBackground(new Color(251, 207, 253 ));
 
         agendarConsultas.add(asignarConsulta);
         agendarConsultas.add(solicitudesConsultasPacientes);
@@ -193,31 +199,34 @@ public class HomeMedico extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==perfil){
             add(mp, BorderLayout.CENTER);
-            remove(ac);
+            remove(ac_asignarConsulta);
+            remove(acm_asistenciaConsulta);
             remove(panelCambioContraseña);
             revalidate();
             repaint();
         }
         if(e.getSource()==asignarConsulta){//menuitem
-            add(ac, BorderLayout.CENTER);
+            add(ac_asignarConsulta, BorderLayout.CENTER);
+            remove(acm_asistenciaConsulta);
             remove(mp);
             remove(panelCambioContraseña);
             revalidate();
             repaint();
         }
         if(e.getSource()==asistenciaConsultas){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new  AsistenciaConsulta();
-                }
-            });
+            add(acm_asistenciaConsulta, BorderLayout.CENTER);
+            remove(ac_asignarConsulta);
+            remove(mp);
+            remove(panelCambioContraseña);
+            revalidate();
+            repaint();
         }
 
         if (e.getSource()==cambiarContraseña){
             add(panelCambioContraseña, BorderLayout.CENTER);
             remove(mp);
-            remove(ac);
+            remove(ac_asignarConsulta);
+            remove(acm_asistenciaConsulta);
             revalidate();
             repaint();
         }

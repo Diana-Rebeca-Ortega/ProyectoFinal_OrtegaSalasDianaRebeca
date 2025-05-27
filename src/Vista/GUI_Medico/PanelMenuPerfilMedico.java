@@ -22,7 +22,7 @@ public class PanelMenuPerfilMedico {
         formatoPerfilMedico( txtUsuario,"usuario:", 25,90,100,50,"Tahoma",11 , panelPerfil  );
 
         JLabel txtSSN = new JLabel();
-        formatoPerfilMedico(txtSSN, "SSN (Número de Seguro Social):", 73,120,300,20,"Verdana",14,panelPerfil);
+        formatoPerfilMedico(txtSSN, "SSN (Número de Seguro Social):", 73,90,300,20,"Verdana",14,panelPerfil);
 
         JLabel txtSSNRes = new JLabel();
         formatoPerfilMedicoRes(txtSSNRes, m.getNumSSN(), 73,120,300,20,"Verdana",14,panelPerfil);

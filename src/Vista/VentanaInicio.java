@@ -1,11 +1,13 @@
 package Vista;
 
+import Modelo.Paciente;
 import Vista.GUI.FarmaciaSucursal.HomeFarmacia;
 import Vista.GUI.FarmaciaSucursal.Login_FarmaciaSucursal;
 import Vista.GUI_Administrativo.HomeAdministrativo;
 import Vista.GUI_Medico.HomeMedico;
 import Vista.GUI_Medico.LoginMedico;
 import Vista.GUI_Paciente.HomePaciente;
+import Vista.GUI_Paciente.LoginPaciente;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -53,7 +55,7 @@ class VentanaLogin extends JFrame  {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            new HomePaciente();
+                            new LoginPaciente();
                         }});}}});
 
         JButton btnMedico = new JButton("MEDICO");

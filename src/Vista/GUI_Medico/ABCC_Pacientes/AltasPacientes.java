@@ -1,6 +1,9 @@
 package Vista.GUI_Medico.ABCC_Pacientes;
 
+import Controlador.MedicoCabeceraDAO;
 import Controlador.PacienteDAO;
+import Modelo.Medico;
+import Modelo.MedicoCabecera;
 import Modelo.Paciente;
 import Modelo.ResultSetTableModel;
 import conexionBD.ConexionBD;
@@ -20,7 +23,9 @@ public class AltasPacientes extends JFrame implements ActionListener {
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
     ConexionBD conexionBD = new ConexionBD();
-    public AltasPacientes(){
+    Medico medic ;
+    public AltasPacientes(Medico m ){
+        medic = m;
         setTitle("Altas Pacientes");
         setSize(900,530);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
@@ -196,13 +201,18 @@ public class AltasPacientes extends JFrame implements ActionListener {
                     comboEDAD.getSelectedItem()+""), cajaCalle.getText(),
             cajaColonia.getText(), cajaNoCasa.getText(), cajaCP.getText());
 
-            PacienteDAO pacienteDAO = new PacienteDAO();
+                PacienteDAO pacienteDAO = new PacienteDAO();
+                MedicoCabeceraDAO medicoCabeceraDAO = new MedicoCabeceraDAO();
                 if (cajaSSN.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null,  "No has ingresado un NSS ");
                 }else{
             if (pacienteDAO.agregarPaciente(p)) {
                 filasAñadidas++;
                 actualizarTabla(tablaPacientesAltas);
+                //medicO Cabecera
+                medicoCabeceraDAO.agregarMedicCabecera( medic,p  );
+               // Medico mediquito = medicoCabeceraDAO.buscar_NSS_MedicCabecera( p);
+
                 System.out.println("FELICIDADES: se agrego un nuevo Paciente a la BDD (desde la ventanaInicio)");
             }else {
                 System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD (desde la ventanaInicio)");

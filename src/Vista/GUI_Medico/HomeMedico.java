@@ -19,16 +19,17 @@ public class HomeMedico extends JFrame implements ActionListener {
    PanelMenuPerfilMedico panelMenuPerfilMedico = new PanelMenuPerfilMedico();
     JPanel ac ;
     JPanel mp;
-    JPanel as;
     JButton  btnCancelar;
     JMenuItem persona, perfil, menuAltas, menuBajas, menuCambios,menuConsultas,
             asignarConsulta, solicitudesConsultasPacientes,asistenciaConsultas,
             cerrado, cambiarContraseña;
     JMenu privacidad;
-    JPanel panelPerfil, panelCambioContraseña, panelAsistencia, panelAsignarConsulta;
+    JPanel  panelCambioContraseña, panelAsistencia, panelAsignarConsulta;
     JButton btnSig;
     JToolBar toolBar;
+    Medico medic ;
     public HomeMedico(Medico m ){
+        medic= m;
         setTitle("MEDICO");
         setSize(1080,560);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
@@ -38,6 +39,10 @@ public class HomeMedico extends JFrame implements ActionListener {
         PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica(m);
         toolBar = new JToolBar();
         toolBar.setBounds(0, 0, 1080,50);
+
+        ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar,btnCancelar);
+        mp= panelMenuPerfilMedico.añadirPanelPerfilMedico(toolBar, m);
+
 
         JButton btnToolBarAjustes = new JButton();
         JButton btnToolBarPerfil = new JButton();
@@ -172,8 +177,7 @@ public class HomeMedico extends JFrame implements ActionListener {
                 });
             }
         });
-        ac = panelMenuItemAsignarConsultaMedica.agregar_panelAsignarConsulta(toolBar,btnCancelar);
-        mp= panelMenuPerfilMedico.añadirPanelPerfilMedico(toolBar, m);
+
         solicitudesConsultasPacientes.addActionListener(this);
     }
 
@@ -191,7 +195,6 @@ public class HomeMedico extends JFrame implements ActionListener {
             add(mp, BorderLayout.CENTER);
             remove(ac);
             remove(panelCambioContraseña);
-            //remove(as);
             revalidate();
             repaint();
         }
@@ -199,7 +202,6 @@ public class HomeMedico extends JFrame implements ActionListener {
             add(ac, BorderLayout.CENTER);
             remove(mp);
             remove(panelCambioContraseña);
-            //remove(as);
             revalidate();
             repaint();
         }
@@ -232,7 +234,7 @@ public class HomeMedico extends JFrame implements ActionListener {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new AltasPacientes();
+                    new AltasPacientes (medic  );
                 }
             });
         }if(e.getSource()==menuBajas){

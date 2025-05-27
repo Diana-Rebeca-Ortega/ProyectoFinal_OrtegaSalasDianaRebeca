@@ -27,7 +27,7 @@ public class PanelNuevoContrato extends JFrame  implements  ActionListener{
     String farmac ;
     String fechaInicios, fechaFin;
 
-public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
+public JPanel AgregarpanelNuevoContrato(Farmacia farmacia){
      panelNewContrato = new JPanel();
     panelNewContrato.setBounds(5,100,1050,470);
     panelNewContrato.setBackground(new Color(225, 253, 207));
@@ -229,7 +229,8 @@ public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
     sp = new JScrollPane(panelNewContrato);
     sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     sp.setBounds(5,100,1050,470);
-    return  sp;
+    //return  sp;
+    return panelNewContrato;
 }
     public void formatoLetra(JLabel etiqueta, String texto, int x, int y ,
                                     int width, int heith, String letra, int tamLetra, JPanel pan){

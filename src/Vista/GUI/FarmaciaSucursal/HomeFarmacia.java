@@ -27,7 +27,7 @@ public class HomeFarmacia extends JFrame implements ActionListener {
     JButton RegistrosMedicos;
     JButton comFarmaceuticas;
     JButton supervisores;
-    JMenuItem Contratos, NewContrato;
+    JMenuItem ContratosRegistros, NewContrato;
     JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica, BajasComFarmaceutica;
     JMenu Medicamentos;
     JMenuItem AltasMedicamentos, BajasMedicamentos, CambiosMedicamentos, ConsultasMedicamentos;
@@ -35,7 +35,9 @@ public class HomeFarmacia extends JFrame implements ActionListener {
     JPopupMenu menuDespegableContratos, menuMedicos, menuDespegableComFarmaceuticas, menuSupervisores;
     JMenuItem AltasMedicos, BajasMedicos, CambiosMedicos, ConsultasMedicos;
     PanelNuevoContrato pnc = new PanelNuevoContrato();
+    PanelRegistrosContratos pr = new PanelRegistrosContratos();
     Farmacia farmacic;
+    JPanel nuevoContrato, registrosContratos;
     public HomeFarmacia(Farmacia farmacia){
         farmacic=farmacia;
 
@@ -44,6 +46,9 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
+
+        nuevoContrato =pnc.AgregarpanelNuevoContrato( farmacia);
+        registrosContratos= pr.Agregar_panelRegistros(farmacia);
 
         panelEncabezado = new JPanel();
         panelEncabezado.setLayout(null);
@@ -112,14 +117,14 @@ public class HomeFarmacia extends JFrame implements ActionListener {
             }
         });
         menuDespegableContratos = new JPopupMenu();
-        Contratos = new JMenuItem("Contratos Registrados");
+        ContratosRegistros = new JMenuItem("Contratos Registrados");
         NewContrato = new JMenuItem("Nuevo Contrato");
         NewContrato.setBackground(new Color(123, 254, 31));
 
         menuDespegableContratos.add(NewContrato );
-        menuDespegableContratos.add(Contratos );
+        menuDespegableContratos.add(ContratosRegistros);
 
-        Contratos.addActionListener(this);
+        ContratosRegistros.addActionListener(this);
         NewContrato.addActionListener(this);
 
 //********************Compañias Farmaceuticas*********************
@@ -316,7 +321,14 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         }
         //********************Contratos****************
         if (e.getSource()==NewContrato){
-            add(pnc.AgregarpanelNuevoContrato(farmacic));
+            add(nuevoContrato, BorderLayout.CENTER);
+            remove( registrosContratos);
+            revalidate();
+            repaint();
+
+        }if (e.getSource()== ContratosRegistros){
+            add(registrosContratos, BorderLayout.CENTER);
+            remove( nuevoContrato);
             revalidate();
             repaint();
         }

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class AsistenciaConsulta extends JFrame implements ActionListener {
     JButton btnGenerarReceta;
-    public AsistenciaConsulta(){
+    public  AsistenciaConsulta(){
         setTitle("Atender Paciente");
         setSize(900,700);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro

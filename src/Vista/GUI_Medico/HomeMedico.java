@@ -19,6 +19,7 @@ public class HomeMedico extends JFrame implements ActionListener {
    PanelMenuPerfilMedico panelMenuPerfilMedico = new PanelMenuPerfilMedico();
     JPanel ac ;
     JPanel mp;
+    JPanel as;
     JButton  btnCancelar;
     JMenuItem persona, perfil, menuAltas, menuBajas, menuCambios,menuConsultas,
             asignarConsulta, solicitudesConsultasPacientes,asistenciaConsultas,
@@ -190,6 +191,7 @@ public class HomeMedico extends JFrame implements ActionListener {
             add(mp, BorderLayout.CENTER);
             remove(ac);
             remove(panelCambioContraseña);
+            //remove(as);
             revalidate();
             repaint();
         }
@@ -197,14 +199,19 @@ public class HomeMedico extends JFrame implements ActionListener {
             add(ac, BorderLayout.CENTER);
             remove(mp);
             remove(panelCambioContraseña);
+            //remove(as);
             revalidate();
             repaint();
         }
         if(e.getSource()==asistenciaConsultas){
-            add(panelAsistencia, BorderLayout.CENTER);
-            revalidate();
-            repaint();
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new  AsistenciaConsulta();
+                }
+            });
         }
+
         if (e.getSource()==cambiarContraseña){
             add(panelCambioContraseña, BorderLayout.CENTER);
             remove(mp);

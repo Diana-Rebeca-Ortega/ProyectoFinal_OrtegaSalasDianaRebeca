@@ -1,5 +1,6 @@
 package Vista.GUI.FarmaciaSucursal;
 
+import Modelo.Farmacia;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
@@ -30,7 +31,10 @@ public class HomeFarmacia extends JFrame implements ActionListener {
     JPopupMenu menuDespegableContratos, menuMedicos, menuDespegableComFarmaceuticas, menuSupervisores;
     JMenuItem AltasMedicos, BajasMedicos, CambiosMedicos, ConsultasMedicos;
     PanelNuevoContrato pnc = new PanelNuevoContrato();
-    public HomeFarmacia(){
+    Farmacia farmacic;
+    public HomeFarmacia(Farmacia farmacia){
+        farmacic=farmacia;
+
         setTitle("FARMACIA SUCURSAL");
         setSize(1080,560);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
@@ -47,10 +51,35 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         encabezado.setBounds(19,3,800,60);
         encabezado.setIcon(new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\logoTituloFRX.png"));
         panelEncabezado.add(encabezado);
+        ImageIcon  ImagenMunicipio = null;
+        if (farmacia.getMunicipio().equals("Jerez")){
+             ImagenMunicipio = new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\RX_Municipios\\jerez,zacatecas.png");
+        }else if (farmacia.getMunicipio().equals("Zacatecas")  ){
+            ImagenMunicipio = new ImageIcon(
+                 "C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\RX_Municipios\\zac,zac.png"
+                    );
+        }else if (farmacia.getMunicipio().equals("Canatlán")  ){
+            ImagenMunicipio = new ImageIcon(
+                  "C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\RX_Municipios\\canatlan,durango.png"
+            );
+        }else if (farmacia.getMunicipio().equals("Canelas")  ){
+            ImagenMunicipio = new ImageIcon(
+             "C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\RX_Municipios\\canelas,durango.png"
+            );
+        }else if (farmacia.getMunicipio().equals("Cuencamé")  ){
+            ImagenMunicipio = new ImageIcon(
+               "C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\RX_Municipios\\cuencame,durango.png"
+            );
+        }else if (farmacia.getMunicipio().equals("Puerto Vallarta")  ){
+            ImagenMunicipio = new ImageIcon(
+             "C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\RX_Municipios\\ptoVallarta.png"
+            );
+        }
+
 
         lugar = new JLabel();
-        lugar.setBounds(getWidth()-200,10,200,30);
-        lugar.setIcon(new ImageIcon("C:\\Users\\Marcelo\\Documents\\000SEXTO\\practicas2025IntelliJ\\Farmacia_ProyectoFinal\\src\\Vista\\Iconos\\jerezZ.png"));
+        lugar.setBounds(getWidth()-400,10,400,30);
+        lugar.setIcon(ImagenMunicipio);
         panelEncabezado.add(lugar);
         add(panelEncabezado);
 
@@ -255,7 +284,7 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         }
         //********************Contratos****************
         if (e.getSource()==NewContrato){
-            add(pnc.AgregarpanelNuevoContrato());
+            add(pnc.AgregarpanelNuevoContrato(farmacic));
             revalidate();
             repaint();
         }

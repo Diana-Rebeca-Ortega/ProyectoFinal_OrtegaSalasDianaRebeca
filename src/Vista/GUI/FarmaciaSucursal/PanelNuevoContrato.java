@@ -4,6 +4,7 @@ import Controlador.ComFarmaceuticaDAO;
 import Controlador.ContratoDAO;
 import Controlador.SupervisorDAO;
 import Modelo.CompanniaFarmaceutica;
+import Modelo.Farmacia;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class PanelNuevoContrato extends JFrame{
     JComboBox Mes, year, Dia,  Mes2, year2, Dia2, compañiasNombres ,comboNombresSupervisores ;
     List<String> listaNomCom, supervisores;
     String NSSSupervisores;
-public JScrollPane AgregarpanelNuevoContrato(){
+public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
      panelNewContrato = new JPanel();
     panelNewContrato.setBounds(5,100,1050,470);
     panelNewContrato.setBackground(new Color(225, 253, 207));
@@ -34,7 +35,7 @@ public JScrollPane AgregarpanelNuevoContrato(){
    formatoLetra(txtIDContrato,"ID_Contrato:  "+ format.format(n), 30, 50,200,20, "Arial", 15, panelNewContrato);
 
     JLabel txtIDFarmacia =new JLabel();
-    formatoLetra(txtIDFarmacia,"ID_Farmacia:", 30, 70,100,20, "Arial", 15, panelNewContrato);
+    formatoLetra(txtIDFarmacia,"ID_Farmacia:   " +farmacia.getID_Farmacia() , 30, 70,200,20, "Arial", 15, panelNewContrato);
 
     JLabel txtNombreCompañia =new JLabel();
     formatoLetra(txtNombreCompañia,"Nombre de la Compañia:", 30, 100,200,20, "Arial", 13, panelNewContrato);

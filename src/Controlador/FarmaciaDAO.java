@@ -6,6 +6,8 @@ import conexionBD.ConexionBD;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FarmaciaDAO {
     ConexionBD conexionBD = new ConexionBD();
@@ -16,6 +18,30 @@ public class FarmaciaDAO {
         String sql = "INSERT INTO farmacias VALUES('"+far.getID_Farmacia()+"','"+far.getTelefono()+"','"+far.getEstado()+"','"+far.getMunicipio()+"','"+far.getColonia()+"','"+far.getCalle()+"','"+far.getCP()+"','"+far.getNoLocal()+"','"+far.getNombreFarmacia()+"' )";
         return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
     }
+    //***********************Buscar Sucursales *******************
+    public List<String> buscarSucursalesFarmacias(String Municipio) {
+        //Solo para el login
+
+        sql =  "select * from  farmacias  where Municipio = '"+Municipio+"';";
+        rs = conexionBD.ejecutarInstruccionSQL(sql);
+        List<String> sucu = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                sucu.add(rs.getString(9));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return sucu;
+    }
+
+
     //************************************TAMAÑO REGISTROS***********
     public int tamañoTablas (){
         sql = "select count(*) from farmacias";
@@ -65,6 +91,8 @@ public class FarmaciaDAO {
             sql = "SELECT * FROM  farmacias WHERE  Calle='"+filtro+"'";}
         if (tipoBusqueda.equals("CP")){
             sql = "SELECT * FROM  farmacias WHERE CP='"+filtro+"'";}
+        if (tipoBusqueda.equals("Nombre")){
+            sql = "SELECT * FROM  farmacias WHERE NombreFarmacia='"+filtro+"'";}
         System.out.println(sql);
         ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
         Farmacia a = null;

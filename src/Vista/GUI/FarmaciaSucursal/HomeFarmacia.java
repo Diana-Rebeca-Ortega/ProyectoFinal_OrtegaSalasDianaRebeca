@@ -5,6 +5,7 @@ import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Altas_CompañiasF
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicamentos.Altas_Medicamentos;
+import Vista.GUI.FarmaciaSucursal.ABCC_Medicamentos.Bajas_Medicamentos;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.AltasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.BajasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.CambiosMedicoss;
@@ -326,6 +327,13 @@ public class HomeFarmacia extends JFrame implements ActionListener {
                 @Override
                 public void run() {
                     new Altas_Medicamentos();
+                }
+            });
+        }if (e.getSource()==BajasMedicamentos){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new Bajas_Medicamentos();
                 }
             });
         }

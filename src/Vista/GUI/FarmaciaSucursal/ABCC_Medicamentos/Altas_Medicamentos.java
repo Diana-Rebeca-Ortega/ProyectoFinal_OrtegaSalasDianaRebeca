@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Altas_Medicamentos extends JFrame implements ActionListener {
@@ -75,12 +76,15 @@ public class Altas_Medicamentos extends JFrame implements ActionListener {
         panelMENTA.add(scrollPane);
 
         add(panelMENTA);
-
-        JLabel texID_Registro = new JLabel("ID_Registro:");
+        MedicamentosDAO medicamentosDAO = new MedicamentosDAO();
+        int n = medicamentosDAO.tamañoTablas();
+        DecimalFormat format = new DecimalFormat("0000");
+        JLabel texID_Registro = new JLabel("ID_Registro:  ");
         texID_Registro.setBounds(20, 30, 300, 20);
         add(texID_Registro);
 
-        cajaID_Registro = new JTextField("");
+        cajaID_Registro = new JTextField(format.format(n));
+        cajaID_Registro.setEditable(false);
         cajaID_Registro.setBounds(20, 50, 200, 15);
         add(cajaID_Registro);
 
@@ -163,7 +167,6 @@ public class Altas_Medicamentos extends JFrame implements ActionListener {
                     }
         }//if si es el btm aceptar
         if (e.getSource() == btnBorrar) {//**********************************************************************
-            cajaID_Registro.setText("");
             cajaFormula.setText("");
             cajaNombreComercial.setText("");
             cajaNombreCompañia.setSelectedIndex(0);

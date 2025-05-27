@@ -29,7 +29,6 @@ public class HomeFarmacia extends JFrame implements ActionListener {
     JMenuItem AltasSupervisores, BajasSupervisores, CambiosSupervisores, ConsultasSupervisores;
     JPopupMenu menuDespegableContratos, menuMedicos, menuDespegableComFarmaceuticas, menuSupervisores;
     JMenuItem AltasMedicos, BajasMedicos, CambiosMedicos, ConsultasMedicos;
-
     PanelNuevoContrato pnc = new PanelNuevoContrato();
     public HomeFarmacia(){
         setTitle("FARMACIA SUCURSAL");
@@ -42,6 +41,7 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         panelEncabezado.setLayout(null);
         panelEncabezado.setBackground(new Color(255,255,255));
         panelEncabezado.setBounds( 0,0,1080,60);
+
 
         encabezado = new JLabel();
         encabezado.setBounds(19,3,800,60);
@@ -173,14 +173,10 @@ public class HomeFarmacia extends JFrame implements ActionListener {
 
 
     }
-JScrollPane nuevoCOntrato;
+    //JScrollPane sp =   pnc.AgregarpanelNuevoContrato();
+//JScrollPane nuevoCOntrato;
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==NewContrato){
-             add(nuevoCOntrato);
-            revalidate();
-            repaint();
-        }
         //****************COMPAÑIAS FARMACEUTICAS*****************
         if (e.getSource()==AltasComFarmaceutica){
             SwingUtilities.invokeLater(new Runnable() {
@@ -257,8 +253,12 @@ JScrollPane nuevoCOntrato;
                 }
             });
         }
-
-
+        //********************Contratos****************
+        if (e.getSource()==NewContrato){
+            add(pnc.AgregarpanelNuevoContrato());
+            revalidate();
+            repaint();
+        }
 
     }
 }

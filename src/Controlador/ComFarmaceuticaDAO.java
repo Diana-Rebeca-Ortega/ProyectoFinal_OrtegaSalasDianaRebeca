@@ -6,6 +6,8 @@ import conexionBD.ConexionBD;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ComFarmaceuticaDAO {
     ConexionBD conexionBD = new ConexionBD();
@@ -33,6 +35,28 @@ public class ComFarmaceuticaDAO {
                 System.out.println("reistris : "+tamaño);
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
+
+    //************************************ NOMBRES DE ComFARMACEUTICAS ***********
+    public List<String> NombresCompañiasFarmaceuticas() {
+        sql = "select NombreCompania from compañiasfarmaceuticas";
+        rs = conexionBD.ejecutarInstruccionSQL(sql);
+        List<String> companias = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                companias.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return companias;
+    }
+
 
 
     //*******************************CONSULTAS/*****************************

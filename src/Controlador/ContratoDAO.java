@@ -1,5 +1,7 @@
 package Controlador;
 
+import Modelo.Contrato;
+import Modelo.Medico;
 import conexionBD.ConexionBD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,4 +23,9 @@ public class ContratoDAO {
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
 
+   ///*********************ALTAS CONTRATOS
+    public boolean agregarContrato(Contrato contrato){
+        String sql = "INSERT INTO contratos VALUES('"+contrato.getID_Contrato()+"','"+contrato.getNombre_ComFarmaceutica()+"','"+contrato.getID_Farmacia()+"','"+contrato.getFechaInicio()+"','"+contrato.getFechaFin()+"','"+contrato.getSSN_Supervisor()+"');";
+        return  conexionBD.ejecutarInstruccionLMD(sql);//retorta 0, 1 o 2... false o true
+    }
 }

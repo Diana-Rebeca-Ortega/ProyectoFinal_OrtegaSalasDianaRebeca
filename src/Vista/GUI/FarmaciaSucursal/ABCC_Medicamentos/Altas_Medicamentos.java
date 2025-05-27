@@ -76,12 +76,14 @@ public class Altas_Medicamentos extends JFrame implements ActionListener {
         panelMENTA.add(scrollPane);
 
         add(panelMENTA);
-        MedicamentosDAO medicamentosDAO = new MedicamentosDAO();
-        int n = medicamentosDAO.tamañoTablas();
-        DecimalFormat format = new DecimalFormat("0000");
+
         JLabel texID_Registro = new JLabel("ID_Registro:  ");
         texID_Registro.setBounds(20, 30, 300, 20);
         add(texID_Registro);
+
+        MedicamentosDAO medicamentosDAO = new MedicamentosDAO();
+        int n = medicamentosDAO.tamañoTablas();
+        DecimalFormat format = new DecimalFormat("0000");
 
         cajaID_Registro = new JTextField(format.format(n));
         cajaID_Registro.setEditable(false);
@@ -162,6 +164,9 @@ public class Altas_Medicamentos extends JFrame implements ActionListener {
                         filasAñadidas++;
                         actualizarTabla(tablaMedicamentosAltas);
                         System.out.println("FELICIDADES: se agrego ");
+                        int n = medicamentosDAO.tamañoTablas();
+                        DecimalFormat format = new DecimalFormat("0000");
+                        cajaID_Registro.setText(format.format(n));
                     }else {
                         System.out.println("ERROR: no se pudo agregar  ");
                     }

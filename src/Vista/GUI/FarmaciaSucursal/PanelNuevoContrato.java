@@ -4,6 +4,7 @@ import Controlador.ComFarmaceuticaDAO;
 import Controlador.ContratoDAO;
 import Controlador.SupervisorDAO;
 import Modelo.CompanniaFarmaceutica;
+import Modelo.Contrato;
 import Modelo.Farmacia;
 
 import javax.swing.*;
@@ -13,12 +14,19 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class PanelNuevoContrato extends JFrame{
+public class PanelNuevoContrato extends JFrame  implements  ActionListener{
     JPanel panelNewContrato;
     JScrollPane sp ;
     JComboBox Mes, year, Dia,  Mes2, year2, Dia2, compañiasNombres ,comboNombresSupervisores ;
     List<String> listaNomCom, supervisores;
     String NSSSupervisores;
+    JButton generarContrato, borrar;
+    DecimalFormat format = new DecimalFormat("0000");
+    JLabel txtIDContrato =new JLabel();
+    String idcontrato ;
+    String farmac ;
+    String fechaInicios, fechaFin;
+
 public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
      panelNewContrato = new JPanel();
     panelNewContrato.setBounds(5,100,1050,470);
@@ -30,8 +38,9 @@ public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
 
     ContratoDAO contratoDAO = new ContratoDAO();
  int n = contratoDAO.tamañoTablas();
-    DecimalFormat format = new DecimalFormat("0000");
-   JLabel txtIDContrato =new JLabel();
+     txtIDContrato =new JLabel();
+    idcontrato= format.format(n)+"";
+    farmac = String.valueOf(  farmacia.getID_Farmacia());
    formatoLetra(txtIDContrato,"ID_Contrato:  "+ format.format(n), 30, 50,200,20, "Arial", 15, panelNewContrato);
 
     JLabel txtIDFarmacia =new JLabel();
@@ -44,6 +53,7 @@ public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
     listaNomCom = cfDAO.NombresCompañiasFarmaceuticas();
 
     compañiasNombres = new JComboBox();
+    compañiasNombres.addItem("Elije una Compañia");
     for (int i =0; i<cfDAO.tamañoTablas(); i++ ){
         compañiasNombres.addItem(listaNomCom.get(i));
     }
@@ -115,7 +125,7 @@ public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
     Dia.setBounds(320,120,50,20);
     panelNewContrato.add(Dia);
 
-    JLabel txtFechaFin =new JLabel();
+   JLabel txtFechaFin =new JLabel();
     formatoLetra(txtFechaFin,"Fin Contrato:", 30, 140,200,20, "Arial", 13, panelNewContrato);
 
     year2 = new JComboBox( );
@@ -203,7 +213,17 @@ public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
     formatoLetra(txtNSS_Supervisor,"NSS Supervisor:", 30, 200,200,20, "Arial", 13, panelNewContrato);
 
     JLabel txtMedicamentos = new JLabel();
-    formatoLetra(txtMedicamentos,"Medicamentos:", 30, 240,200,20, "Arial", 13, panelNewContrato);
+   // formatoLetra(txtMedicamentos,"Medicamentos:", 30, 240,200,20, "Arial", 13, panelNewContrato);
+
+    generarContrato = new JButton("GENERAR CONTRATO");
+    generarContrato.setBounds(30,400, 200,20);
+    panelNewContrato.add(generarContrato);
+    generarContrato.addActionListener(this);
+
+    borrar = new JButton("BORRAR");
+    borrar.setBounds(260,400, 200,20);
+    panelNewContrato.add(borrar);
+    borrar.addActionListener(this);
 
 
     sp = new JScrollPane(panelNewContrato);
@@ -217,5 +237,46 @@ public JScrollPane AgregarpanelNuevoContrato(Farmacia farmacia){
         etiqueta.setBounds(x,y,width,heith);
         etiqueta.setFont(new Font(letra, Font.BOLD,tamLetra));
         pan.add(etiqueta);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+            if (e.getSource()==generarContrato){
+                fechaInicios =  ""+year.getSelectedItem()+"-"+Mes.getSelectedItem()+"-"+ Dia.getSelectedItem();
+                fechaFin =  ""+year2.getSelectedItem()+"-"+Mes2.getSelectedItem()+"-"+ Dia2.getSelectedItem();
+
+                Contrato contrato= new Contrato (
+                        idcontrato,
+                        compañiasNombres.getSelectedItem()+"" ,
+                        farmac,
+                        fechaInicios,
+                        fechaFin,
+                        NSSSupervisores);
+                System.out.println( idcontrato);
+                System.out.println( compañiasNombres.getSelectedItem()+"");
+                System.out.println( farmac);
+                System.out.println( fechaInicios);
+                System.out.println( fechaFin);
+                System.out.println( NSSSupervisores);
+
+                ContratoDAO contratoDAO = new ContratoDAO();
+                if (contratoDAO.agregarContrato(contrato)) {
+                    System.out.println("FELICIDADES: se agrego ");
+                    int n = contratoDAO.tamañoTablas();
+                    idcontrato= format.format(n)+"";
+                    txtIDContrato.setText( "ID_Contrato:  "+ idcontrato);
+                }else {
+                    System.out.println("ERROR: no se pudo agregar  ");
+                }
+
+            }if (e.getSource()==borrar){
+        comboNombresSupervisores.setSelectedIndex(0);
+        compañiasNombres.setSelectedIndex(0);
+        year.setSelectedIndex(0);
+        Mes.setSelectedIndex(0);
+            year2.setSelectedIndex(0);
+            Mes2.setSelectedIndex(0);
+
+        }
     }
 }

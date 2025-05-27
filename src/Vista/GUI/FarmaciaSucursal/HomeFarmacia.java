@@ -4,6 +4,7 @@ import Modelo.Farmacia;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Altas_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Cambios_CompañiasFarmaceuticas;
 import Vista.GUI.FarmaciaSucursal.ABCC_CompañiasFarmaceuticas.Consultas_CompañiasFarmaceuticas;
+import Vista.GUI.FarmaciaSucursal.ABCC_Medicamentos.Altas_Medicamentos;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.AltasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.BajasMedicoss;
 import Vista.GUI.FarmaciaSucursal.ABCC_Medicos.CambiosMedicoss;
@@ -26,7 +27,9 @@ public class HomeFarmacia extends JFrame implements ActionListener {
     JButton comFarmaceuticas;
     JButton supervisores;
     JMenuItem Contratos, NewContrato;
-    JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica;
+    JMenuItem AltasComFarmaceutica, CambiosComFarmaceuticas, ConsultasComFarmaceutica, BajasComFarmaceutica;
+    JMenu Medicamentos;
+    JMenuItem AltasMedicamentos, BajasMedicamentos, CambiosMedicamentos, ConsultasMedicamentos;
     JMenuItem AltasSupervisores, BajasSupervisores, CambiosSupervisores, ConsultasSupervisores;
     JPopupMenu menuDespegableContratos, menuMedicos, menuDespegableComFarmaceuticas, menuSupervisores;
     JMenuItem AltasMedicos, BajasMedicos, CambiosMedicos, ConsultasMedicos;
@@ -134,14 +137,42 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         CambiosComFarmaceuticas.setBackground(new Color(255, 147, 22));
         ConsultasComFarmaceutica= new JMenuItem("Consultas Compañia Farmaceutica");
         ConsultasComFarmaceutica.setBackground(new Color(22, 156, 255));
+        BajasComFarmaceutica= new JMenuItem("Eliminar Compañia Farmaceutica");
+        BajasComFarmaceutica.setBackground(new Color(255, 22, 22));
+        Medicamentos= new JMenu("Medicamentos");
+
+        AltasMedicamentos= new JMenuItem("Agregar Medicamentos");
+        AltasMedicamentos.setBackground(new Color(123, 254, 31));
+        CambiosMedicamentos= new JMenuItem("Modificaciones Medicamentos");
+        CambiosMedicamentos.setBackground(new Color(255, 147, 22));
+        ConsultasMedicamentos= new JMenuItem("Consultas Medicamentos");
+        ConsultasMedicamentos.setBackground(new Color(22, 156, 255));
+        BajasMedicamentos= new JMenuItem("Eliminar Medicamentos");
+        BajasMedicamentos.setBackground(new Color(255, 22, 22));
+
+
+        Medicamentos.add(AltasMedicamentos);
+        Medicamentos.add(CambiosMedicamentos);
+        Medicamentos.add(ConsultasMedicamentos);
+        Medicamentos.add(BajasMedicamentos);
+
+        AltasMedicamentos.addActionListener(this);
+        CambiosMedicamentos.addActionListener(this);
+        ConsultasMedicamentos.addActionListener(this);
+        BajasMedicamentos.addActionListener(this);
 
         menuDespegableComFarmaceuticas.add(AltasComFarmaceutica);
         menuDespegableComFarmaceuticas.add(CambiosComFarmaceuticas);
         menuDespegableComFarmaceuticas.add(ConsultasComFarmaceutica);
+        menuDespegableComFarmaceuticas.add(BajasComFarmaceutica);
+
+        menuDespegableComFarmaceuticas.add(Medicamentos);
 
         AltasComFarmaceutica.addActionListener(this);
         CambiosComFarmaceuticas.addActionListener(this);
         ConsultasComFarmaceutica.addActionListener(this);
+        BajasComFarmaceutica.addActionListener(this);
+        Medicamentos.addActionListener(this);
 //*****************************Supervisores*******************
         supervisores = new JButton("Supervisores");
         supervisores.setSize(200,20);
@@ -288,6 +319,15 @@ public class HomeFarmacia extends JFrame implements ActionListener {
             revalidate();
             repaint();
         }
+        //********************Medicinas***************
 
+        if (e.getSource()==AltasMedicamentos){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new Altas_Medicamentos();
+                }
+            });
+        }
     }
 }

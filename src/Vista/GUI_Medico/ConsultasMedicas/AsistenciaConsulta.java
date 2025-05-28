@@ -1,33 +1,46 @@
 package Vista.GUI_Medico.ConsultasMedicas;
 
+import Modelo.Consulta;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AsistenciaConsulta extends JFrame implements ActionListener {
     JButton btnGenerarReceta;
-    public  AsistenciaConsulta(){
+    JRadioButton radioSi = new JRadioButton("Si");
+    JRadioButton radioNo = new JRadioButton("No");
+    JComboBox comboNoAtendido = new JComboBox();
+    public  AsistenciaConsulta(Consulta consulta){
         setTitle("Atender Paciente");
         setSize(900,700);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
 
-        JLabel txtTitulo = new JLabel(">>>Paciente<<<");
-        txtTitulo.setBounds(20,20,300,40);
+        JLabel txtTitulo = new JLabel(">>>NNS Paciente<<<");
+        txtTitulo.setBounds(20,10,300,40);
         add( txtTitulo);
+
+        JLabel paciente = new JLabel(consulta.getID_Paciente()+"" );
+        paciente.setBounds(20,30,300,40);
+        add( paciente);
 
         JLabel txtCitas = new JLabel("Motivo");
         txtCitas.setBounds(20,50,300,40);
         add( txtCitas);
+
+        JLabel txtMotivo = new JLabel(consulta.getMorivo());
+        txtMotivo.setBounds(20,70,300,40);
+        add( txtMotivo);
 
         JLabel txtsiOnoAtendido = new JLabel("¿El paciente fue atendido?");
         txtsiOnoAtendido.setBounds(20,200,300,40);
         add( txtsiOnoAtendido);
 
         ButtonGroup bg = new ButtonGroup();
-        JRadioButton radioSi = new JRadioButton("Si");
-        JRadioButton radioNo = new JRadioButton("No");
+
 
         bg.add(radioNo);
         bg.add(radioSi);
@@ -39,8 +52,8 @@ public class AsistenciaConsulta extends JFrame implements ActionListener {
                 txtnoAtendido.setBounds(20,280,300,20);
                 add( txtnoAtendido);
 
-                JComboBox comboNoAtendido = new JComboBox();
 
+        comboNoAtendido.setEnabled(false);
                 comboNoAtendido.addItem("Elija una opción...");
                 comboNoAtendido.addItem("No asistio a la consulta");
                 comboNoAtendido.addItem("Cancelacion");
@@ -49,18 +62,34 @@ public class AsistenciaConsulta extends JFrame implements ActionListener {
                 add(comboNoAtendido);
 
         add(radioNo);
+        radioNo.addActionListener(this);
+        radioSi.addActionListener(this);
         add(radioSi);
 
         btnGenerarReceta = new JButton("Generar RECETA medica");
         btnGenerarReceta.setBounds(20,500,300,20);
+        btnGenerarReceta.setEnabled(false);
+        btnGenerarReceta.setBackground(new Color(255, 221, 0));
         add( btnGenerarReceta);
         btnGenerarReceta.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource()== radioSi){
+            btnGenerarReceta.setEnabled(true);
+            comboNoAtendido.setEnabled(false);
+        }if (e.getSource()== radioNo){
+            comboNoAtendido.setEnabled(true);
+            btnGenerarReceta.setEnabled(false);
+        }
         if(e.getSource()== btnGenerarReceta){
-
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new GenerarReceta();
+                }
+            });
         }
     }
 }

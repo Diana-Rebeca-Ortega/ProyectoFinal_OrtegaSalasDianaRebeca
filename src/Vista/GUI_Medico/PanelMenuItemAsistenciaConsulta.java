@@ -1,6 +1,8 @@
 package Vista.GUI_Medico;
 
+import Controlador.ConsultaDAO;
 import Controlador.PacienteDAO;
+import Modelo.Consulta;
 import Modelo.Medico;
 import Modelo.Paciente;
 import Modelo.ResultSetTableModel;
@@ -38,7 +40,7 @@ public class PanelMenuItemAsistenciaConsulta  implements ActionListener {
     Medico me ;
     Paciente pa;
     JTable tablaConsultas;
-
+    String ID_Consulta="";
     public PanelMenuItemAsistenciaConsulta(Medico me) {
         this.me = me;
     }
@@ -88,11 +90,26 @@ public class PanelMenuItemAsistenciaConsulta  implements ActionListener {
         tablaConsultas.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                btnAsistenciaConsulta.setEnabled(true);
                 int row = tablaConsultas.rowAtPoint(e.getPoint());
                 int column = tablaConsultas.columnAtPoint(e.getPoint());
                 // Código para ejecutar cuando se hace clic en una celda
                 System.out.println("Clic en la fila " + row + " y columna " + column);
                 System.out.println( tablaConsultas.getRowCount());
+                 ID_Consulta = String.valueOf( tablaConsultas.getValueAt(row, column));
+                Consulta con = conDAO.buscarConsulta( ID_Consulta);
+
+                btnAsistenciaConsulta.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                new AsistenciaConsulta(con );
+                            }
+                        });
+                    }
+                });
             }
 
             @Override
@@ -192,8 +209,7 @@ public class PanelMenuItemAsistenciaConsulta  implements ActionListener {
         etiqueta.setFont(new Font(letra, Font.BOLD,tamLetra));
         pan.add(etiqueta);
     }
-
-
+    ConsultaDAO conDAO= new ConsultaDAO();
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnBuscar){
@@ -201,7 +217,6 @@ public class PanelMenuItemAsistenciaConsulta  implements ActionListener {
             if(pacienteDAO.mostrarPaciente(cajaBuscarPaciente.getText(), "ID")==null){
                 JOptionPane.showMessageDialog(null,  "No se encontraron registros");
             }else{
-                btnAsistenciaConsulta.setEnabled(true);
                 Paciente ob1 = pacienteDAO.mostrarPaciente(cajaBuscarPaciente.getText(), "ID");
                 txtSSNConsulta.setText("SSN:     "+ob1.getNumSSN());
                 txtNombree.setText("Nombre:     "+ob1.getNombre());
@@ -216,14 +231,8 @@ public class PanelMenuItemAsistenciaConsulta  implements ActionListener {
                 actualizarTabla(tablaConsultas, ob1);
             }//else
         }
-        if(e.getSource()== btnAsistenciaConsulta){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new AsistenciaConsulta( );
-                }
-            });
-        }if (e.getSource() == btnRestablecer){
+
+        if (e.getSource() == btnRestablecer){
             System.out.println("cnacelar");
             cajaBuscarPaciente.setText("");
             txtSSNConsulta.setText("SSN:     ");

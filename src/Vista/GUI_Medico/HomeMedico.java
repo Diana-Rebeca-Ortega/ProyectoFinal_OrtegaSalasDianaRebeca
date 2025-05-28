@@ -169,7 +169,7 @@ public class HomeMedico extends JFrame implements ActionListener {
         formatoPerfilMedico(txtSeleccion, "Seleccione la cita a atender", 30,30,300,20,"Arial", 20, panelAsistencia);
 
 
-        btnSig = new JButton("SIGUIENTE");
+        btnSig = new JButton("SIGUIENTEfdsfsfsdfsfsf");
         btnSig.setBounds(30,400,100,20);
         panelAsistencia.add(btnSig);
         btnSig.addActionListener(new ActionListener() {
@@ -178,7 +178,7 @@ public class HomeMedico extends JFrame implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new AsistenciaConsulta();
+                        //new AsistenciaConsulta();
                     }
                 });
             }

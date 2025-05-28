@@ -28,4 +28,28 @@ public class ConsultaDAO {
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
 
+    public Consulta buscarConsulta( String idConsulta ){
+        String sql = "select * from consultas where ID_Consulta ='"+idConsulta+"'";
+        Consulta consulta = null;
+        ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
+        try {
+            if(rs.next()) {//busca al menos un registro con el filtro seleciionado
+                String c = rs.getString(1);
+                String p  = rs.getString(2);
+                String m  = rs.getString(3);
+                String mo = rs.getString(4);
+                String f  = rs.getString(5);
+
+                consulta = new Consulta(c,p,m,mo,f);
+                System.out.println("Si encontramos registros");
+            }else
+                System.out.println("NO se encontró el registro"); //!!!!!
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("hay una exeption");
+        }
+        return  consulta;
+    }
+
 }

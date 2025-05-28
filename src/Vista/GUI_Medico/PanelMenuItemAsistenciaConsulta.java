@@ -64,7 +64,7 @@ public class PanelMenuItemAsistenciaConsulta  implements ActionListener {
 //*******************Panel ASISTENCIA Consulta ***************************
         panelAsistenciaConsulta = new JPanel();
         panelAsistenciaConsulta.setBounds(5,toolBar.getHeight()+5,1050,470);
-        panelAsistenciaConsulta.setBackground(new Color(251, 207, 253));
+        panelAsistenciaConsulta.setBackground(new Color(207, 253, 242));
         panelAsistenciaConsulta.setLayout(null);
 
         tablaConsultas = new JTable();

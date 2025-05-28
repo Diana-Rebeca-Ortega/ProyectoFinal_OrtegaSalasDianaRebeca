@@ -220,10 +220,11 @@ public JPanel AgregarpanelNuevoContrato(Farmacia farmacia){
     panelNewContrato.add(generarContrato);
     generarContrato.addActionListener(this);
 
-    borrar = new JButton("BORRAR");
+    borrar = new JButton("Restablecer");
     borrar.setBounds(260,400, 200,20);
     panelNewContrato.add(borrar);
     borrar.addActionListener(this);
+
 
 
     sp = new JScrollPane(panelNewContrato);
@@ -243,34 +244,67 @@ public JPanel AgregarpanelNuevoContrato(Farmacia farmacia){
     @Override
     public void actionPerformed(ActionEvent e) {
             if (e.getSource()==generarContrato){
-                fechaInicios =  ""+year.getSelectedItem()+"-"+Mes.getSelectedItem()+"-"+ Dia.getSelectedItem();
-                fechaFin =  ""+year2.getSelectedItem()+"-"+Mes2.getSelectedItem()+"-"+ Dia2.getSelectedItem();
+                fechaInicios = "" + year.getSelectedItem() + "-" + Mes.getSelectedItem() + "-" + Dia.getSelectedItem();
+                fechaFin = "" + year2.getSelectedItem() + "-" + Mes2.getSelectedItem() + "-" + Dia2.getSelectedItem();
 
-                Contrato contrato= new Contrato (
-                        idcontrato,
-                        compañiasNombres.getSelectedItem()+"" ,
-                        farmac,
-                        fechaInicios,
-                        fechaFin,
-                        NSSSupervisores);
-                System.out.println( idcontrato);
-                System.out.println( compañiasNombres.getSelectedItem()+"");
-                System.out.println( farmac);
-                System.out.println( fechaInicios);
-                System.out.println( fechaFin);
-                System.out.println( NSSSupervisores);
 
-                ContratoDAO contratoDAO = new ContratoDAO();
-                if (contratoDAO.agregarContrato(contrato)) {
-                    System.out.println("FELICIDADES: se agrego ");
-                    int n = contratoDAO.tamañoTablas();
-                    idcontrato= format.format(n)+"";
-                    txtIDContrato.setText( "ID_Contrato:  "+ idcontrato);
+
+                if ( comboNombresSupervisores.getSelectedItem().equals("Elije una Compañia") ){
+                    JOptionPane.showMessageDialog(null,  "No has seleccionado una Compañia");
                 }else {
-                    System.out.println("ERROR: no se pudo agregar  ");
-                }
+                    if (year.getSelectedItem().equals("YYYY")||
+                            Mes.getSelectedItem().equals("MM")) {
+                        JOptionPane.showMessageDialog(null,  "No has seleccionado fecha Inicio");
+                    }else {
+                        if (year2.getSelectedItem().equals("YYYY")||
+                                Mes2.getSelectedItem().equals("MM")) {
+                            JOptionPane.showMessageDialog(null,  "No has seleccionado fecha Fin");
+                        }else {
+                            if (fechaInicios.compareTo(fechaFin)>0){
+                                JOptionPane.showMessageDialog(null,  "No existe logica para las Fechas");
+                            }
+                            if (fechaInicios.equals(fechaFin)){
+                                JOptionPane.showMessageDialog(null,  "Las fecha no pueden ser iguales");
+                            }
+                           if (fechaInicios.compareTo(fechaFin)<0){
+                               if (comboNombresSupervisores.getSelectedItem().equals("Selecciona Supervisor ...")){
+                                   JOptionPane.showMessageDialog(null,  "No has seleccionado Supervisor");
+                               }else {
 
-            }if (e.getSource()==borrar){
+                            Contrato contrato = new Contrato(
+                                    idcontrato,
+                                    compañiasNombres.getSelectedItem() + "",
+                                    farmac,
+                                    fechaInicios,
+                                    fechaFin,
+                                    NSSSupervisores);
+                            System.out.println(idcontrato);
+                            System.out.println(compañiasNombres.getSelectedItem() + "");
+                            System.out.println(farmac);
+                            System.out.println(fechaInicios);
+                            System.out.println(fechaFin);
+                            System.out.println(NSSSupervisores);
+
+                            ContratoDAO contratoDAO = new ContratoDAO();
+                            if (contratoDAO.agregarContrato(contrato)) {
+                                JOptionPane.showMessageDialog(null,  "FELICIDADES:Registro realizado con exito!!!");
+                                System.out.println("FELICIDADES: se agrego ");
+                                int n = contratoDAO.tamañoTablas();
+                                idcontrato = format.format(n) + "";
+                                txtIDContrato.setText("ID_Contrato:  " + idcontrato);
+                            } else {
+                                System.out.println("ERROR: no se pudo agregar  ");
+                            }
+
+
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+
+            if (e.getSource()==borrar){
         comboNombresSupervisores.setSelectedIndex(0);
         compañiasNombres.setSelectedIndex(0);
         year.setSelectedIndex(0);

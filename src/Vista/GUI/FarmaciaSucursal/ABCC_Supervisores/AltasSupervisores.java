@@ -144,25 +144,29 @@ public class AltasSupervisores  extends JFrame implements ActionListener {
             if (e.getSource() == btnCAceptar) {
                     if (cajaNSS.getText().length()!=11){
                     JOptionPane.showMessageDialog(null,  "El NSS debe tener 10 caracteres");
-
                 }else {
                     Supervisor supervisor = new Supervisor (cajaNSS.getText(),cajaNombre.getText(), cajaprimerApellido.getText(),  cajaSegundoApellido.getText());
                     SupervisorDAO supervisorDAO = new SupervisorDAO();
                     if (cajaNSS.getText().isEmpty()){
                         JOptionPane.showMessageDialog(null,  "No has ingresado el NSS");
                     }else{
-                        if (supervisorDAO.agregarSupervisor(supervisor)) {
-                            filasAñadidas++;
-                            actualizarTabla(tablaSupervisoresAltas);
-                            System.out.println("FELICIDADES: se agrego un nuevo supervisor a la BDD");
+                        if (comprobacionNumero( cajaNSS.getText())==false){
+                            JOptionPane.showMessageDialog(null,  "El NSS debe tener puros numeros ");
                         }else {
-                            System.out.println("ERROR: no se pudo agregar un nuevo supervisor a la BDD ");
+                            if (supervisorDAO.agregarSupervisor(supervisor)) {
+                                filasAñadidas++;
+                                actualizarTabla(tablaSupervisoresAltas);
+                                System.out.println("FELICIDADES: se agrego un nuevo supervisor a la BDD");
+                            } else {
+                                System.out.println("ERROR: no se pudo agregar un nuevo supervisor a la BDD ");
+                            }
                         }
                     }
                 }
 
 
             }//if si es el btm aceptar
+
             if (e.getSource() == btnBorrar) {//**********************************************************************
                 cajaNSS.setText("");
                 cajaSegundoApellido.setText("");
@@ -177,5 +181,12 @@ public class AltasSupervisores  extends JFrame implements ActionListener {
                 }//for
             }
         }
-
+    public  boolean comprobacionNumero( String cajita){
+        try {
+            Long.parseLong(cajita);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

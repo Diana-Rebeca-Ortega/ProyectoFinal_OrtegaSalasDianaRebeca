@@ -16,7 +16,6 @@ public class Login_FarmaciaSucursal extends JFrame implements ActionListener {
         JComboBox Estado, Municipio, Sucursales ;
         JPanel panelLogin;
         JButton btnIniciarSesion;
-        MedicoDAO medicoDAO = new MedicoDAO();
         JTextField cajaSSNContraseña, cajaSSN;
         JLabel txtUsuarioMalo;
         public Login_FarmaciaSucursal(){
@@ -25,7 +24,7 @@ public class Login_FarmaciaSucursal extends JFrame implements ActionListener {
             setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
             setLayout(null);
             setVisible(true);
-            getContentPane().setBackground(new Color(147, 203, 220));
+            getContentPane().setBackground(new Color(157, 220, 147));
 
             JLabel txtLogin = new JLabel("FARMACIAS RX (sucursal)");
             txtLogin.setFont(new Font("font", Font.PLAIN, 24));
@@ -36,8 +35,8 @@ public class Login_FarmaciaSucursal extends JFrame implements ActionListener {
             panelLogin = new JPanel();
             panelLogin.setLayout(null);
             panelLogin.setBounds(20, 120,500,400);
-            panelLogin.setBackground(new Color(185, 229, 232));
-            panelLogin.setBorder(BorderFactory.createLineBorder(  new Color( 96, 139, 193)));
+            panelLogin.setBackground(new Color(201, 232, 185));
+            panelLogin.setBorder(BorderFactory.createLineBorder(  new Color(52, 181, 23)));
 
             JLabel txt = new JLabel("Porfavor seleccione la Sucursal de la Farmacia para Iniciar Sesion");
             txt.setFont(new Font( "Agency FB", Font.BOLD, 18));
@@ -120,20 +119,32 @@ public class Login_FarmaciaSucursal extends JFrame implements ActionListener {
 
 
             btnIniciarSesion = new JButton("Iniciar Sesion");
-            btnIniciarSesion.setBounds(100,panelLogin.getHeight()-40,300,20);
+            btnIniciarSesion.setBounds(100,panelLogin.getHeight()-50,300,20);
             panelLogin.add(btnIniciarSesion);
             btnIniciarSesion.addActionListener(this);
             add(panelLogin);
+
+            txtUsuarioMalo = new JLabel("La farmacia no existe");
+            txtUsuarioMalo.setFont(new Font("Arial", Font.PLAIN, 10));
+            txtUsuarioMalo.setForeground(new Color(255, 8, 8));
+            txtUsuarioMalo.setBounds(150, panelLogin.getHeight()- 25, 200,20);
+
         }
 
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            //////////////////////////////////////////////INICIAR SESION
 FarmaciaDAO farmaciaDAO = new FarmaciaDAO();
             Farmacia fa = farmaciaDAO.mostrarFarmacia(Sucursales.getSelectedItem()+"", "Nombre" );
+            if (fa==null) {
+                panelLogin.add(txtUsuarioMalo);
+                repaint();
+            }else {
+
+
             if (e.getSource()==btnIniciarSesion){
+                setVisible(false);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -141,6 +152,8 @@ FarmaciaDAO farmaciaDAO = new FarmaciaDAO();
                         }
                     });
                 }
-            }
+           }
+        }
+           }
 
-}
+

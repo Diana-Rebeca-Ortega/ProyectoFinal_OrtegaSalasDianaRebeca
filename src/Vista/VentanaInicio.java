@@ -47,10 +47,12 @@ class VentanaLogin extends JFrame  {
 
         JButton btnPaciente = new JButton("PACIENTE");
         btnPaciente.setBounds(getWidth()/2-50, 120, 100,30);
+        btnPaciente.setBackground(new Color(250, 220, 28));
         add(btnPaciente);
         btnPaciente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
                 if (e.getSource()==btnPaciente){
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
@@ -60,6 +62,7 @@ class VentanaLogin extends JFrame  {
 
         JButton btnMedico = new JButton("MEDICO");
         btnMedico.setBounds(getWidth()/2-50, 180, 100,30);
+        btnMedico.setBackground(new Color(14, 157, 255));
         add(btnMedico);
         btnMedico.addActionListener(new ActionListener() {
             @Override
@@ -70,14 +73,18 @@ class VentanaLogin extends JFrame  {
                         @Override
                         public void run() {
                             new LoginMedico();
-                        }});}}});
+                        }});}}
+                  }
+        );
 
         JButton btnFarmacia = new JButton("FARMACIA SUCURSAL");
         btnFarmacia.setBounds(getWidth()/2-100, 240, 200,30);
+        btnFarmacia.setBackground(new Color(123, 255, 0));
         add(btnFarmacia);
         btnFarmacia.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
                 if (e.getSource()==btnFarmacia){
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
@@ -87,19 +94,18 @@ class VentanaLogin extends JFrame  {
 
         JButton btnAdmi = new JButton("ADMINISTRATIVO");
         btnAdmi.setBounds(getWidth()/2-75, 300, 150,30);
+        btnAdmi.setBackground(new Color(255, 38, 192));
         add(btnAdmi);
         btnAdmi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
                 if (e.getSource()== btnAdmi){
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             new HomeAdministrativo();
                         }});}}});
-
-
-
     }//VentanaPantallaCompleta
 
 }

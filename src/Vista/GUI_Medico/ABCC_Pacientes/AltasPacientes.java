@@ -3,7 +3,6 @@ package Vista.GUI_Medico.ABCC_Pacientes;
 import Controlador.MedicoCabeceraDAO;
 import Controlador.PacienteDAO;
 import Modelo.Medico;
-import Modelo.MedicoCabecera;
 import Modelo.Paciente;
 import Modelo.ResultSetTableModel;
 import conexionBD.ConexionBD;
@@ -16,7 +15,8 @@ import java.sql.SQLException;
 
 public class AltasPacientes extends JFrame implements ActionListener {
 
-    JTextField cajaApMaterno, cajaSSN, cajaApPaterno,  cajaNombres ;
+    JTextField cajaApMaterno, cajaApPaterno,  cajaNombres ;
+    JTextField cajaSSN;
     JTextField cajaCalle, cajaColonia, cajaNoCasa, cajaCP;
     JComboBox comboEDAD ;
     JTable tablaPacientesAltas;
@@ -195,12 +195,18 @@ public class AltasPacientes extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCAceptar) {
+            if (cajaSSN.getText().length()!=11){
+                JOptionPane.showMessageDialog(null,  "Los NSS deben tener 11 caracteres");
+            }else{
+                System.out.println(cajaSSN.getText());
+                if ( comprobacionNumero(cajaSSN.getText().trim())==false) {
+                    JOptionPane.showMessageDialog(null,  "El NSS solo debe tener numeros");
+                }else {
             try {
             Paciente p = new Paciente (cajaSSN.getText(), cajaNombres.getText(),cajaApPaterno.getText(),
             cajaApMaterno.getText(), Byte.parseByte(
                     comboEDAD.getSelectedItem()+""), cajaCalle.getText(),
             cajaColonia.getText(), cajaNoCasa.getText(), cajaCP.getText());
-
                 PacienteDAO pacienteDAO = new PacienteDAO();
                 MedicoCabeceraDAO medicoCabeceraDAO = new MedicoCabeceraDAO();
                 if (cajaSSN.getText().isEmpty()){
@@ -212,10 +218,12 @@ public class AltasPacientes extends JFrame implements ActionListener {
                 //medicO Cabecera
                 medicoCabeceraDAO.agregarMedicCabecera( medic,p  );
                // Medico mediquito = medicoCabeceraDAO.buscar_NSS_MedicCabecera( p);
-
                 System.out.println("FELICIDADES: se agrego un nuevo Paciente a la BDD (desde la ventanaInicio)");
             }else {
                 System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD (desde la ventanaInicio)");
+                JOptionPane.showMessageDialog(null,  "No se puede hacer el registro porque el NSS ya fue Registrado");
+
+
             }
                 }
             }catch (Exception exception ){
@@ -224,6 +232,9 @@ public class AltasPacientes extends JFrame implements ActionListener {
                 }
             }
 
+
+                }//si nss es un numero
+            }//else 11 dihitos
         }//if si es el btm aceptar
         if (e.getSource() == btnBorrar) {//**********************************************************************
             cajaSSN.setText("");
@@ -244,6 +255,14 @@ public class AltasPacientes extends JFrame implements ActionListener {
                 String sql = "DELETE FROM pacientes WHERE ID_Paciente_SSN='"+ tablaPacientesAltas.getValueAt(tablaPacientesAltas.getRowCount()-i, 0)+"' ";
                 conexionBD.ejecutarInstruccionLMD(sql);
             }//for
+        }
+    }
+    public  boolean comprobacionNumero( String cajita){
+        try {
+            Long.parseLong(cajita);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 }

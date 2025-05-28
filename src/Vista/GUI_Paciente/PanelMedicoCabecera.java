@@ -16,7 +16,7 @@ public class PanelMedicoCabecera {
     public  JPanel agregarPanelMedicoCabecera( Paciente p ){
         panPersonalPaciente = new JPanel();
         panPersonalPaciente.setBounds(5,100,1050,470);
-        panPersonalPaciente.setBackground(new Color(225, 253, 207));
+        panPersonalPaciente.setBackground(new Color(253, 237, 207));
         panPersonalPaciente.setLayout(null);
         String NSSmediquito = medicoCabeceraDAO.buscar_NSS_MedicCabecera( p);
 

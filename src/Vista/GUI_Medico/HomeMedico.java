@@ -37,6 +37,8 @@ public class HomeMedico extends JFrame implements ActionListener {
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
+        getContentPane().setBackground(new Color(173, 204, 255, 255));
+
 
         PanelMenuItemAsignarConsultaMedica panelMenuItemAsignarConsultaMedica = new PanelMenuItemAsignarConsultaMedica(m);
        PanelMenuItemAsistenciaConsulta panelMenuItemAsistenciaConsulta = new PanelMenuItemAsistenciaConsulta(m);
@@ -79,7 +81,7 @@ public class HomeMedico extends JFrame implements ActionListener {
          asistenciaConsultas.setBackground(new Color(251, 207, 253 ));
 
         agendarConsultas.add(asignarConsulta);
-        agendarConsultas.add(solicitudesConsultasPacientes);
+       // agendarConsultas.add(solicitudesConsultasPacientes);
         agendarConsultas.add(asistenciaConsultas);
 
          privacidad = new JMenu("Privacidad");

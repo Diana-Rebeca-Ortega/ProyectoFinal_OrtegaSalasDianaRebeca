@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class AltasMedicoss  extends JFrame implements ActionListener {
 
     JTextField cajaApMaterno, cajaSSN, cajaApPaterno,  cajaNombres ;
-    JComboBox comboEspecialidad, comboEdad;
+    JComboBox comboEspecialidad, comboAñosExperiencia;
     JTable tablaMedicosAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
@@ -125,13 +125,13 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
         texAñosExp.setBounds(20, 160, 300, 20);
         add(texAñosExp);
 
-        comboEdad = new JComboBox<String>();
-        comboEdad.addItem("Elige Años de Experiencia...");
+        comboAñosExperiencia = new JComboBox<String>();
+        comboAñosExperiencia.addItem("Elige Años de Experiencia...");
         for (int i =0; i<70; i++){
-            comboEdad.addItem(i+1);
+            comboAñosExperiencia.addItem(i+1);
         }
-        comboEdad.setBounds(150, 160, 300, 20);
-        add(comboEdad);
+        comboAñosExperiencia.setBounds(150, 160, 300, 20);
+        add(comboAñosExperiencia);
 
         btnCAceptar = new JButton("AGREGAR");
         btnCAceptar.setBounds(getWidth()-120, 50, 100, 20);
@@ -171,35 +171,41 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCAceptar) {
-            try {
-                Medico m = new Medico (cajaSSN.getText(), cajaNombres.getText(),cajaApPaterno.getText(),
-                        cajaApMaterno.getText(),
-                        comboEspecialidad.getSelectedItem()+"", Byte.parseByte(
-                        comboEdad.getSelectedItem()+"")
-                        );
 
-                MedicoDAO medicoDAO = new MedicoDAO();
-                if (cajaSSN.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null,  "No has ingresado un NSS ");
-                }else{
-                    if (comboEspecialidad.getSelectedItem()=="Elige Especialidad..."){
-                        JOptionPane.showMessageDialog(null,  "El campo de ESPECIALIDAD se encuentra vacio");
-                    }else{
-                    if (medicoDAO.agregarMedico(m)) {
-                        filasAñadidas++;
-                        actualizarTabla(tablaMedicosAltas);
-                        System.out.println("FELICIDADES: se agrego un nuevo Paciente a la BDD (desde la ventanaInicio)");
+            if (cajaSSN.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,  "No has ingresado un NSS ");
+            }else {
+                if (cajaSSN.getText().length()!=11) {
+                    JOptionPane.showMessageDialog(null, "El NSS debe tener 11 digitos");
+                } else {
+                    if (comprobacionNumero(cajaSSN.getText())==false){
+                        JOptionPane.showMessageDialog(null, "El NSS debe tener puros numeros");
                     }else {
-                        System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD (desde la ventanaInicio)");
+                    try {
+                        Medico m = new Medico(cajaSSN.getText(), cajaNombres.getText(), cajaApPaterno.getText(),
+                                cajaApMaterno.getText(),
+                                comboEspecialidad.getSelectedItem() + "", Byte.parseByte(
+                                comboAñosExperiencia.getSelectedItem() + "")
+                        );
+                        MedicoDAO medicoDAO = new MedicoDAO();
+                        if (medicoDAO.agregarMedico(m)) {
+                            filasAñadidas++;
+                            actualizarTabla(tablaMedicosAltas);
+                            System.out.println("FELICIDADES: se agrego un nuevo Paciente a la BDD (desde la ventanaInicio)");
+                        } else {
+                            System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD (desde la ventanaInicio)");
+                        }
+                    } catch (Exception exception) {
+                        if (comboEspecialidad.getSelectedItem().equals("Elige Especialidad...")) {
+                            JOptionPane.showMessageDialog(null, "No has elegido años de experiencia ");
+                        }
+                        if (comboAñosExperiencia.getSelectedItem().equals("Elige Años de Experiencia...")) {
+                            JOptionPane.showMessageDialog(null, "No has elegido Especialidad");
+                        }
                     }
                     }
-                }
-            }catch (Exception exception ){
-                if (comboEdad.getSelectedItem().equals("Elige Años de Experiencia...")){
-                    JOptionPane.showMessageDialog(null,  "No has elegido una edad ");
                 }
             }
-
         }//if si es el btm aceptar
         if (e.getSource() == btnBorrar) {//**********************************************************************
             cajaSSN.setText("");
@@ -207,7 +213,7 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
             cajaApMaterno.setText("");
             cajaNombres.setText("");
             comboEspecialidad.setSelectedIndex(0);
-            comboEdad.setSelectedIndex(0);
+            comboAñosExperiencia.setSelectedIndex(0);
 
         }if (e.getSource() == btnCancelar) {//**************************************************************
             filasOriginales= tablaMedicosAltas.getRowCount()- filasAñadidas;
@@ -217,6 +223,14 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
                 String sql = "DELETE FROM medicos WHERE NSS='"+ tablaMedicosAltas.getValueAt(tablaMedicosAltas.getRowCount()-i, 0)+"' ";
                 conexionBD.ejecutarInstruccionLMD(sql);
             }//for
+        }
+    }
+    public  boolean comprobacionNumero( String cajita){
+        try {
+            Long.parseLong(cajita);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 }

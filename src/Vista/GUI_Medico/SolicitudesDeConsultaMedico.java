@@ -1,6 +1,7 @@
 package Vista.GUI_Medico;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class SolicitudesDeConsultaMedico extends JFrame {
     JTable tablaSolicitudes;
@@ -10,6 +11,7 @@ public class SolicitudesDeConsultaMedico extends JFrame {
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
+        getContentPane().setBackground(new Color(139, 174, 225));
 
 
 

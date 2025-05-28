@@ -4,6 +4,7 @@ import Controlador.PacienteDAO;
 import Modelo.Medico;
 import Modelo.Paciente;
 import Vista.GUI_Medico.HomeMedico;
+import Vista.VentanaInicio;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class LoginPaciente  extends JFrame implements ActionListener {
             setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
             setLayout(null);
             setVisible(true);
-            getContentPane().setBackground(new Color(147, 203, 220));
+            getContentPane().setBackground(new Color(220, 214, 147));
 
             JLabel txtLogin = new JLabel("BIENVENIDO PACIENTE ");
             txtLogin.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -34,8 +35,8 @@ public class LoginPaciente  extends JFrame implements ActionListener {
             panelLogin = new JPanel();
             panelLogin.setLayout(null);
             panelLogin.setBounds(20, 120,500,400);
-            panelLogin.setBackground(new Color(185, 229, 232));
-            panelLogin.setBorder(BorderFactory.createLineBorder(  new Color( 96, 139, 193)));
+            panelLogin.setBackground(new Color(227, 232, 185));
+            panelLogin.setBorder(BorderFactory.createLineBorder(  new Color(193, 125, 96)));
 
             JLabel txtSSN = new JLabel("Ingrese Usuario (SSN)");
             txtSSN.setBounds(170,30,150,20);

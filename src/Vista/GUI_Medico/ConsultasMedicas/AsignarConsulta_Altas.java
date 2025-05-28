@@ -13,9 +13,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.Year;
 
 public class AsignarConsulta_Altas extends JFrame  implements ActionListener {
-    JButton btnAceptar, btnCancelar;
+    JButton btnAceptar, btnCancelar, btnRestablecer;
     JLabel txtPacienteSSNRes;
     JLabel txtNNSMedicoRes, txtPacienteSSN  ;
     JTextArea motivo;
@@ -221,8 +222,14 @@ public class AsignarConsulta_Altas extends JFrame  implements ActionListener {
         btnAceptar.addActionListener(this);
 
         btnCancelar = new JButton("CANCELAR");
-        btnCancelar.setBounds(290,380,100,20);
+        btnCancelar.setBounds(230,380,100,20);
         add(btnCancelar);
+
+
+        btnRestablecer = new JButton("Restablecer");
+        btnRestablecer.setBounds(370,380,150,20);
+        add(btnRestablecer);
+        btnRestablecer.addActionListener(this);
 
         btnCancelar.addActionListener(this);
 
@@ -231,6 +238,16 @@ public class AsignarConsulta_Altas extends JFrame  implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btnAceptar){
+            if ( year.getSelectedItem().equals("YYYY")||
+                    Mes.getSelectedItem().equals("MM")
+            ){
+                JOptionPane.showMessageDialog(null,  "La fecha esta incompleta");
+            }else {
+                if ( Hora.getSelectedItem().equals("HH")||
+                        Mes.getSelectedItem().equals("MM")
+                ){
+                    JOptionPane.showMessageDialog(null,  "La Hora esta incompleta");
+                }else {
             String fecha = ""+year.getSelectedItem()+"-"+Mes.getSelectedItem()+"-"+ Dia.getSelectedItem()+" "+ Hora.getSelectedItem()+":"+ Min.getSelectedItem()+":00";
             ConsultaDAO consultaDAO = new ConsultaDAO();
             String IDConsulta = String.format("%04d",  consultaDAO.tamañoTablas());
@@ -243,8 +260,18 @@ public class AsignarConsulta_Altas extends JFrame  implements ActionListener {
             }else {
                 System.out.println("ERROR: no se pudo agregar un nuevo Consulta a la BDD (desde la ventanaInicio)");
             }
-        }if(e.getSource()== btnCancelar){
+        }
+            }
+        }
+        if(e.getSource()== btnCancelar){
             dispose();
+        }if(e.getSource()== btnRestablecer){
+            motivo.setText("");
+            year.setSelectedIndex(1);
+            Mes.setSelectedIndex(1);
+            Hora.setSelectedIndex(1);
+            Min.setSelectedIndex(1);
+
         }
     }
 }

@@ -11,7 +11,7 @@ public class PanelInformacionPersonal extends JFrame {
     public  JPanel agregarPanelPerfil(Paciente p ){
         panPersonalPaciente = new JPanel();
         panPersonalPaciente.setBounds(5,100,1050,470);
-        panPersonalPaciente.setBackground(new Color(225, 253, 207));
+        panPersonalPaciente.setBackground(new Color(253, 251, 207));
         panPersonalPaciente.setLayout(null);
 
 

@@ -8,11 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePaciente  extends JFrame implements ActionListener{
-
+    private ImageIcon fondo;
     private JPopupMenu menuDespegable;
     PanelInformacionPersonal ip = new PanelInformacionPersonal( );
     PanelMedicoCabecera mca = new PanelMedicoCabecera();
     JPanel ac, mc;
+    JMenuItem cerrandolo;
     JMenuItem perfil, menuDatosPersonales, medicoCabecera, historialConsultas, SolicitarConsulta;
     public HomePaciente(Paciente paciente){
 
@@ -21,6 +22,7 @@ public class HomePaciente  extends JFrame implements ActionListener{
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
+        getContentPane().setBackground(new Color(255, 252, 206, 255));
 
         JToolBar toolBar = new JToolBar();
         toolBar.setBounds(0, 0, 1080,50);
@@ -41,23 +43,26 @@ public class HomePaciente  extends JFrame implements ActionListener{
         });
 
         menuDespegable= new JPopupMenu();
-        perfil = new JMenuItem("Paciente: Diana Rebeca");
+        perfil = new JMenuItem("Paciente: "+ paciente.getNombre());
         menuDatosPersonales = new JMenuItem("Información de Perfil");
         medicoCabecera = new JMenuItem("Médico de cabecera");
         historialConsultas = new JMenuItem("Historial de Consultas");
         SolicitarConsulta = new JMenuItem("Solicitar Consulta");
         perfil.setEnabled(false);
+        cerrandolo= new JMenuItem("Cerrar Sesion");
 
         menuDespegable.add(perfil);
         menuDespegable.add(menuDatosPersonales);
         menuDespegable.add(medicoCabecera);
-        menuDespegable.add(historialConsultas);
-        menuDespegable.add(SolicitarConsulta);
+        menuDespegable.add(cerrandolo);
+        //menuDespegable.add(historialConsultas);
+       // menuDespegable.add(SolicitarConsulta);
 
         SolicitarConsulta.addActionListener(this);
         menuDatosPersonales.addActionListener(this);
         historialConsultas.addActionListener(this);
         medicoCabecera.addActionListener(this);
+        cerrandolo.addActionListener(this);
 
         ac= new JPanel();
         mc= new JPanel();
@@ -69,6 +74,12 @@ public class HomePaciente  extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==cerrandolo){
+            int res = JOptionPane.showConfirmDialog(null,"¿Estas seguro de que quieres cerrar sesion?", "Cerrando Sesion",JOptionPane.YES_NO_OPTION);
+            if(res==JOptionPane.YES_OPTION){
+                dispose();
+            }
+        }
 
         if(e.getSource()==SolicitarConsulta){
             SwingUtilities.invokeLater(new Runnable() {

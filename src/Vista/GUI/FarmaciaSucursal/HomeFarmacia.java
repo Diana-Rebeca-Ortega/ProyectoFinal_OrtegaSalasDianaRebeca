@@ -46,6 +46,7 @@ public class HomeFarmacia extends JFrame implements ActionListener {
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
+        getContentPane().setBackground(new Color(160, 255, 156, 255));
 
         nuevoContrato =pnc.AgregarpanelNuevoContrato( farmacia);
         registrosContratos= pr.Agregar_panelRegistros(farmacia);

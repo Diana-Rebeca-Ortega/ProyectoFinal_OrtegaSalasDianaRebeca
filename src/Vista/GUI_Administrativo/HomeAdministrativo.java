@@ -15,8 +15,10 @@ public class HomeAdministrativo  extends JFrame implements ActionListener {
     setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
     setLayout(null);
     setVisible(true);
+    getContentPane().setBackground(new Color(234, 191, 236, 255));
 
-    panelEncabezado = new JPanel();
+
+        panelEncabezado = new JPanel();
     panelEncabezado.setLayout(null);
     panelEncabezado.setBackground(new Color(255,255,255));
     panelEncabezado.setBounds( 0,0,1080,60);

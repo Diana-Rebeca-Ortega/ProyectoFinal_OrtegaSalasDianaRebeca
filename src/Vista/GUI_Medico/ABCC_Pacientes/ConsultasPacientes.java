@@ -603,6 +603,7 @@ public class ConsultasPacientes extends JFrame implements ActionListener {
                     cajaEdad.setSelectedIndex(0);
                     cajaApMaterno.setText("");
                     cajaCalle.setText("");
+                    cajaColonia.setText("");
                     tablaPacientesModificaiones.setValueAt(null, 0,0);
                     tablaPacientesModificaiones.setValueAt(null, 0,1);
                     tablaPacientesModificaiones.setValueAt(null, 0,2);

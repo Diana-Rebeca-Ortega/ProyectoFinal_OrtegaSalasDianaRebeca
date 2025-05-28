@@ -11,7 +11,7 @@ public class PanelMenuPerfilMedico {
         //**********************Panel del Perfil Personal*****************************
         panelPerfil = new JPanel();
         panelPerfil.setBounds(5,toolBar.getHeight()+5,1050,470);
-        panelPerfil.setBackground(new Color(225, 253, 207));
+        panelPerfil.setBackground(new Color(207, 218, 253));
         panelPerfil.setLayout(null);
 
         JLabel txtPerfil = new JLabel();

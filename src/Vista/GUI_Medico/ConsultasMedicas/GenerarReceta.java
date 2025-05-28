@@ -21,7 +21,7 @@ public class GenerarReceta  extends JFrame  implements ActionListener {
     JTable tablaMedicamentos;
     JComboBox buscador;
     List<String> listaMedicinas ;
-    JButton btnAgregar;
+    JButton btnAgregar, btnRestablecer;
     JLabel txtIDRecetaRes;
     JLabel txtIDMedicoRes;
     JLabel txtIDPacienteRes;
@@ -120,6 +120,11 @@ public class GenerarReceta  extends JFrame  implements ActionListener {
         add(btnAgregar);
         btnAgregar.addActionListener(this);
 
+        btnRestablecer = new JButton("Restablecer");
+        btnRestablecer.setBounds(530, 250, 135, 20);
+        add(btnRestablecer);
+        btnRestablecer.addActionListener(this);
+
         JLabel txtIndicaciones = new JLabel("Indicaciones:");
         txtIndicaciones.setBounds( 30, 430, 200,20);
         add( txtIndicaciones);
@@ -144,11 +149,15 @@ public class GenerarReceta  extends JFrame  implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
     if ( e.getSource()== btnAgregar){
+        if (buscador.getSelectedItem().equals("Elige medicamento")){
+
+        }else {
         String nmComercial = String.valueOf(buscador.getSelectedItem());
         buscador.removeItem(nmComercial);
         medicinas= nmComercial+"," +medicinas;
         RecetaDAO recetaDAO = new RecetaDAO();
         recetaDAO.actualizarTabla( tablaMedicamentos,  nmComercial );
+        }
     }if (e.getSource()==recetaTerminado){
             RecetaDAO recetaDAO = new RecetaDAO();
         if (recetaDAO.agregarReceta( txtIDRecetaRes.getText(),txtIDMedicoRes.getText(),
@@ -156,7 +165,19 @@ public class GenerarReceta  extends JFrame  implements ActionListener {
             JOptionPane.showMessageDialog(null, "La receta se genero correctamente", "PROCESO EXITOSO!!!", JOptionPane.INFORMATION_MESSAGE);
         dispose();
         }
-
+        }
+        if ( e.getSource()== btnRestablecer){
+            MedicamentosDAO medicamentosDAO = new MedicamentosDAO();
+            indocaciones.setText("");
+            buscador.removeAllItems();
+            DefaultTableModel modelo = (DefaultTableModel) tablaMedicamentos.getModel();
+            modelo.setRowCount(0);
+            buscador.addItem("Elige medicamento");
+            for (int i =0; i < medicamentosDAO.tamañoTablas(); i++){
+                buscador.addItem( listaMedicinas.get(i));
+            }
+            buscador.setBounds(30, 250, 300, 20);
+            add( buscador);
 
         }
     }

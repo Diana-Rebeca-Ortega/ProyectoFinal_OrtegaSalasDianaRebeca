@@ -85,7 +85,6 @@ public class LoginMedico extends JFrame implements ActionListener {
                     repaint();
                 }else{
                     //JOptionPane.showMessageDialog(null,  "SI se encontraron registros");
-                    medicoDAO.mostrarMedico(cajaSSN.getText(), "ID");
 
                    Medico medico = medicoDAO.mostrarMedico(cajaSSN.getText(), "ID");
                     setVisible(false);

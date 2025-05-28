@@ -28,7 +28,6 @@ public class PacienteDAO {
         try {
             if (rs.next()){
                 tamaño = rs.getInt(1);
-                System.out.println("reistris : "+tamaño);
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
 

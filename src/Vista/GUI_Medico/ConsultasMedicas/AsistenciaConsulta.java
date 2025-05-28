@@ -12,12 +12,16 @@ public class AsistenciaConsulta extends JFrame implements ActionListener {
     JRadioButton radioSi = new JRadioButton("Si");
     JRadioButton radioNo = new JRadioButton("No");
     JComboBox comboNoAtendido = new JComboBox();
+    String idPaciente, idMedico;
     public  AsistenciaConsulta(Consulta consulta){
         setTitle("Atender Paciente");
         setSize(900,700);
         setLocationRelativeTo(null);//locacion en la ventana con el fondo de pastillas para que aparezca en el centro
         setLayout(null);
         setVisible(true);
+
+        idPaciente = consulta.getID_Paciente();
+        idMedico = consulta.getID_Medico();
 
         JLabel txtTitulo = new JLabel(">>>NNS Paciente<<<");
         txtTitulo.setBounds(20,10,300,40);
@@ -87,7 +91,7 @@ public class AsistenciaConsulta extends JFrame implements ActionListener {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new GenerarReceta();
+                    new GenerarReceta(idMedico, idPaciente);
                 }
             });
         }

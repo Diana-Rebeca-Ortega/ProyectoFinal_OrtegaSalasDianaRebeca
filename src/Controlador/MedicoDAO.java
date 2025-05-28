@@ -18,7 +18,6 @@ public class MedicoDAO {
     ConexionBD conexionBD = new ConexionBD();
     String sql ="";
     ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);;
-    //MMMMMMMMMMMMMMMMMMMMMMETODOS ABCCccccccccccccccccccccccccccccccccc
 
 
     //***************************************ALTAS*******************************

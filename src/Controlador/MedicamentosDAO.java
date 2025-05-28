@@ -6,6 +6,8 @@ import conexionBD.ConexionBD;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedicamentosDAO {
 
@@ -33,5 +35,39 @@ public class MedicamentosDAO {
                 System.out.println("reistris : "+tamaño);
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
+    //************************************ NOMBRES DE COMERCIALES ***********
+    public List<String> NombresComerciales() {
+        sql = "select NombreComercial from Medicamentos";
+        rs = conexionBD.ejecutarInstruccionSQL(sql);
+        List<String> nomComercial = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                nomComercial.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return nomComercial;
+    }
 
+    public String obtenerFormula (String nombreComercial ){
+        final String sql = "select Formula from Medicamentos where NombreComercial = '" + nombreComercial + "'";
+        ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
+
+        try {
+            if (rs.next()) {
+                return rs.getString("Formula");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

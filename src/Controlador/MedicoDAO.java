@@ -15,7 +15,7 @@ import java.sql.SQLException;
 //CLASE CONTROLADOERA DEL MODELO ALUMNO
 //DAO - DATA ACCESSS OBJECT
 public class MedicoDAO {
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD =  ConexionBD.getInstance();
     String sql ="";
     ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);;
 

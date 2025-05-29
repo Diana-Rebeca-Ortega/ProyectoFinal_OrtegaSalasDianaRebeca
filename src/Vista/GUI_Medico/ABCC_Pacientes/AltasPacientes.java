@@ -22,7 +22,7 @@ public class AltasPacientes extends JFrame implements ActionListener {
     JTable tablaPacientesAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD =  ConexionBD.getInstance();
     Medico medic ;
     public AltasPacientes(Medico m ){
         medic = m;

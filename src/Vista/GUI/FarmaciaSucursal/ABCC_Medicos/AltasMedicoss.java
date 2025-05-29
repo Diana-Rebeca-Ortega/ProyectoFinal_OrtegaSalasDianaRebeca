@@ -18,7 +18,7 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
     JTable tablaMedicosAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD =  ConexionBD.getInstance();
     public AltasMedicoss(){
         setTitle("Altas Medicos");
         setSize(900,530);

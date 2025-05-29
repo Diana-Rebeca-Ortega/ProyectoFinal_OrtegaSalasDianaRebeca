@@ -18,7 +18,7 @@ public class AltasFarmacias extends JFrame implements ActionListener {
     JTable tablaFarmaciasAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD = ConexionBD.getInstance();
     public AltasFarmacias(){
         setTitle("Altas Farmacias");
         setSize(900,530);

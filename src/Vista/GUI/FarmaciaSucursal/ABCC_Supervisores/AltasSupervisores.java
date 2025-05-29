@@ -17,7 +17,7 @@ public class AltasSupervisores  extends JFrame implements ActionListener {
         JTable tablaSupervisoresAltas;
         JButton btnCAceptar, btnBorrar, btnCancelar;
         JPanel panelVerde, panelMENTA;
-        ConexionBD conexionBD = new ConexionBD();
+        ConexionBD conexionBD =  ConexionBD.getInstance();
         public AltasSupervisores(){
             setTitle("Altas Supervisores");
             setSize(900,530);

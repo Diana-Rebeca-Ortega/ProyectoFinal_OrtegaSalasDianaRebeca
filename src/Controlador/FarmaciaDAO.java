@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FarmaciaDAO {
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD = ConexionBD.getInstance();
     String sql ="";
     ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);;
     //***************************************ALTAS*******************************

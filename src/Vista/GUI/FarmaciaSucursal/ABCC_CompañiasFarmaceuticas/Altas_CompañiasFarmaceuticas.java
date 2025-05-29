@@ -19,7 +19,7 @@ public class Altas_CompañiasFarmaceuticas extends JFrame implements ActionListe
     JTable tablaComFarAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD =  ConexionBD.getInstance();
     public Altas_CompañiasFarmaceuticas(){
         setTitle("Altas Compañias Farmaceuticas");
         setSize(900,530);

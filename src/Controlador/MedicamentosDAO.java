@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MedicamentosDAO {
 
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD = ConexionBD.getInstance();
     String sql ="";
     ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);;
     //***************************************ALTAS*******************************

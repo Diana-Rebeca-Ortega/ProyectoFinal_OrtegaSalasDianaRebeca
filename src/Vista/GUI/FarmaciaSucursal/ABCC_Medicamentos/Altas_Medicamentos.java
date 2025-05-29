@@ -21,7 +21,7 @@ public class Altas_Medicamentos extends JFrame implements ActionListener {
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
     List<String> listaNomCom;
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD = ConexionBD.getInstance();
     public Altas_Medicamentos(){
         setTitle("Altas Medicamentos");
         setSize(900,530);

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 
 public class RecetaDAO extends JFrame {
-    ConexionBD conexionBD = new ConexionBD();
+    ConexionBD conexionBD = ConexionBD.getInstance();
     String sql ="";
     ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
     //************************************TAMAÑO REGISTROS***********

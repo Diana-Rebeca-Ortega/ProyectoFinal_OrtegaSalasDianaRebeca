@@ -6,10 +6,11 @@ import java.sql.*;
 
 public class ConexionBD {
     private Connection conexion;
+    private  static ConexionBD instancia;//paso 1  poner una instancia estatica
     private PreparedStatement preparedStatement; //Es mejor ya que evita SQL Injection //la vamos a utiloizar en nuestro proyecto
     private ResultSet rs;
 
-    public ConexionBD() {
+    private ConexionBD() {//paso 2 poner privado su constructor
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 //el localhost es el 127.0.0.1
@@ -25,6 +26,13 @@ public class ConexionBD {
             } catch (ClassNotFoundException e) {
                 System.out.println("ERROR en el conector driver ");
             }
+    }
+
+    public static  ConexionBD getInstance(){//paso 3  metodo estatico para obtener la instancia
+        if (instancia==null){
+            instancia=new ConexionBD();
+        }
+        return instancia;
     }
     public ResultSet ejecutarInstruccionSQL(String sql,  Object... parametros) {
         rs = null;
@@ -56,7 +64,7 @@ public class ConexionBD {
 
     public static void main(String[] args) {
         System.out.println("Magia magia para hacer magia");
-        new ConexionBD();
+         ConexionBD.getInstance();//paso 4 obtener la instancia para poder utilizar los metodos de arriba
     }
 
 }

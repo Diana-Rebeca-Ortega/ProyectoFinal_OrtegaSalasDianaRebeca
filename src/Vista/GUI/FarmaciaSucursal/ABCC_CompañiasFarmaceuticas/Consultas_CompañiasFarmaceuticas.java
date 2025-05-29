@@ -322,8 +322,20 @@ public class Consultas_CompañiasFarmaceuticas extends JFrame implements ActionL
             }
 
             if(e.getSource()==btnBuscar){//*********************************************
-
-                if(radioNombreCF.isSelected()){
+                Thread hiloBusqueda = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CompanniaFarmaceutica ob1 = comFaDAO.mostrarComFar(cajaNombreCF.getText(), "ID");
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                actualizarTablaConsultas(tablaComFarCambios, ob1);
+                            }
+                        });
+                    }
+                });
+/*
+            if(radioNombreCF.isSelected()){
                     if(comFaDAO.mostrarComFar(cajaNombreCF.getText(), "ID")==null){
                         JOptionPane.showMessageDialog(null,  "No se encontraron registros");
                     }else{
@@ -350,8 +362,9 @@ public class Consultas_CompañiasFarmaceuticas extends JFrame implements ActionL
                         actualizarTablaConsultas(tablaComFarCambios, ob1);
                     }
                 }//********************************************************TODOS
+*/
 
-            }//********************************************************************
+            }//****************Boton Buscar *********************************************
             if(e.getSource()==btnBorrar){
                 cajaNombreCF.setText("");
                 cajaTelefono.setText("");

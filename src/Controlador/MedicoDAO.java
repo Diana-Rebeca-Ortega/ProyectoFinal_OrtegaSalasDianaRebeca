@@ -73,9 +73,9 @@ public class MedicoDAO {
             sql = "SELECT * FROM medicos WHERE PApellido='"+filtro+"'";}
         if (tipoBusqueda.equals("SApellido")){
             sql = "SELECT * FROM medicos WHERE SApellido='"+filtro+"'";}
-        if (tipoBusqueda.equals("Edad")){
+        if (tipoBusqueda.equals("espe")){
             sql = "SELECT * FROM medicos WHERE Especialidad='"+filtro+"'";}
-        if (tipoBusqueda.equals("calle")){
+        if (tipoBusqueda.equals("ae")){
             sql = "SELECT * FROM medicos WHERE  AñosExperiencia='"+filtro+"'";}
         System.out.println(sql);
         ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);

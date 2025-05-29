@@ -2,14 +2,17 @@ package Vista.GUI.FarmaciaSucursal.ABCC_Medicos;
 
 import Controlador.MedicoDAO;
 import Modelo.Medico;
+import Modelo.ResultSetTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 public class ConsultasMedicoss extends JFrame implements ActionListener{
     MedicoDAO medicoDAO = new MedicoDAO();
@@ -17,10 +20,11 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
     JTable tablaMedicosModificaiones;
     JLabel texCriterioBusqueda;
     JButton btnBuscar, btnBorrar,btnCancelar;
-    JRadioButton radioTodos, radioNSS, radioNombre, radioAPpaterno, radioAPMaterno, radioEspe, radioAñosExpe;
+    JRadioButton  radioNombre,radioNSS, radioAPpaterno, radioAPMaterno, radioEspe, radioAñosExpe;
     JTextField cajaNSS, cajaNombre, cajaApPaterno, cajaApMaterno;
-
-
+    ButtonGroup bg= new ButtonGroup();
+    JRadioButton radioTodos;
+    ButtonGroup bgDos= new ButtonGroup();
     JButton btnPrimero;
     JButton btnUltimo;
     JButton btnAnterior;
@@ -29,15 +33,6 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
     JComboBox<String> comboEspecialidad, comboEdad;
 
     int pagina=1;
-
-    public void  actualizarRegistros(Medico al){
-        cajaNSS.setText(al.getNumSSN());
-        cajaNombre.setText(al.getNombre());
-        cajaApPaterno.setText(al.getPrimerApellido());
-        cajaApMaterno.setText(al.getSegundoApellido());
-        comboEspecialidad.setSelectedItem(al.getEspecialidad()+"");
-        comboEdad.setSelectedItem(al.getAñosExperiencia()+"");
-    }
 
     public ConsultasMedicoss(){
 
@@ -49,11 +44,8 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         tablaMedicosModificaiones = new JTable();
         tablaMedicosModificaiones.setModel(new DefaultTableModel(
                 new Object[][]{
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
                         {null, null, null, null, null, null}
+
                 },
                 new String[]{
                         "NSS", "NOMBRE", "AP. PATERNO", "AP. MATERNO", "ESPECIALIDAD", "AÑOS DE EXPERIENCIA"
@@ -110,7 +102,7 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
                     buscador.setText(pagina+"");
                     Medico al = medicoDAO.mostrarMedico("","Uno");
                     actualizarTablaConsultas(tablaMedicosModificaiones, al);
-                    actualizarRegistros(al);
+
 
                 }
             }
@@ -125,7 +117,7 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
                     buscador.setText(pagina+"");
                     Medico al = medicoDAO.mostrarMedico(medicoDAO.tamañoTablas()-1+"","Ultimo");
                     actualizarTablaConsultas(tablaMedicosModificaiones, al);
-                    actualizarRegistros(al);
+
                 }
             }
         });
@@ -140,7 +132,7 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
                     buscador.setText(pagina+"");
                     Medico al = medicoDAO.mostrarMedico((pagina-1)+"","Ultimo");
                     actualizarTablaConsultas(tablaMedicosModificaiones, al);
-                    actualizarRegistros(al);
+
                 }
             }
         });
@@ -170,7 +162,7 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
                             }
                             Medico al = medicoDAO.mostrarMedico((pagina-1)+"","Ultimo");
                             actualizarTablaConsultas(tablaMedicosModificaiones, al);
-                           actualizarRegistros(al);
+
                         }}
                 }catch (NumberFormatException e1){
                     JOptionPane.showMessageDialog(null,"ERROR: El buscador de registros solo admite numeros");
@@ -189,8 +181,6 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
                     buscador.setText(pagina+"");
                     Medico al = medicoDAO.mostrarMedico((pagina-1)+"","Ultimo");
                     actualizarTablaConsultas(tablaMedicosModificaiones, al);
-                   actualizarRegistros(al);
-
                 }
             }
         });
@@ -207,7 +197,7 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         panelAzul.setLayout(null);
         panelAzul.setBackground(new Color(26, 32, 234  ));
         panelAzul.setBounds(0, 0, getWidth(), 30);
-        JLabel texBAJAS = new JLabel("    CONSULTAS PACIENTES:");
+        JLabel texBAJAS = new JLabel("    CONSULTAS MEDICOS:");
         texBAJAS.setBounds(10, 0, 300, 20);
         texBAJAS.setForeground(Color.WHITE);
         panelAzul.add(texBAJAS);
@@ -248,40 +238,6 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         radioAñosExpe = new JRadioButton("Años Especialidad:");
 
         radioTodos = new JRadioButton("TODOS");
-        radioTodos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (radioTodos.isSelected()){
-                    radioNSS.setSelected(true);
-                    radioNombre.setSelected(true);
-                    radioAPpaterno.setSelected(true);
-                    radioAPMaterno.setSelected(true);
-                    radioEspe.setSelected(true);
-                    radioAñosExpe.setSelected(true);
-
-                    cajaNSS.setEditable(true);
-                    cajaNombre.setEditable(true);
-                    cajaApPaterno.setEditable(true);
-                    cajaApMaterno.setEditable(true);
-                    comboEspecialidad.setEditable(true);
-                    comboEdad.setEditable(true);
-                }else{
-                    radioNSS.setSelected(false);
-                    radioNombre.setSelected(false);
-                    radioAPpaterno.setSelected(false);
-                    radioAPMaterno.setSelected(false);
-                    radioEspe.setSelected(false);
-                    radioAñosExpe.setSelected(false);
-
-                    cajaNSS.setEditable(false);
-                    cajaNombre.setEditable(false);
-                    cajaApPaterno.setEditable(false);
-                    cajaApMaterno.setEditable(false);
-                    comboEspecialidad.setEditable(false);
-                    comboEdad.setEditable(false);
-                }
-            }
-        });
 
         radioTodos.setBounds(20, 60, 80,20);
         radioNSS.setBounds(100, 60, 80,20);
@@ -298,13 +254,22 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         radioEspe.addActionListener(this);
         radioAñosExpe.addActionListener(this);
 
-        add(radioTodos);
-        add(radioNSS);
-        add(radioNombre);
-        add(radioAPpaterno);
-        add(radioAPMaterno);
-        add(radioEspe);
-        add(radioAñosExpe);
+        bg.add(radioEspe );
+        bg.add(radioAñosExpe );
+        bg.add(radioAPMaterno );
+        bg.add(radioAPpaterno );
+        bg.add(radioNombre );
+        bg.add(radioNSS );
+        bg.add(radioTodos );
+
+        add(radioEspe );
+        add(radioAñosExpe );
+        add(radioAPMaterno );
+        add(radioAPpaterno );
+        add(radioNombre );
+        add(radioNSS );
+        add(radioTodos );
+
 
         //Poner los datos del primer registro al abrir la ventana consultas
         Medico al = medicoDAO.mostrarMedico("","Uno");
@@ -328,12 +293,12 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         comboEdad.setSelectedIndex(  al.getAñosExperiencia());
         ///////////////////////////////////////////////////////////////////
 
-        cajaNSS.setEditable(false);
-        cajaNombre.setEditable(false);
-        cajaApPaterno.setEditable(false);
-        cajaApMaterno.setEditable(false);
-        comboEspecialidad.setEditable(false);
-        comboEdad.setEditable(false);
+        cajaNSS.setEnabled(false);
+        cajaNombre.setEnabled(false);
+        cajaApPaterno.setEnabled(false);
+        cajaApMaterno.setEnabled(false);
+        comboEspecialidad.setEnabled(false);
+        comboEdad.setEnabled(false);
 
         cajaNSS.setBounds(250, 60, 250, 20);
         cajaNombre.setBounds(250, 90, 220, 20);
@@ -351,64 +316,152 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
 
     }//constructor
 
-    public void SeleccionBotones (JRadioButton botonSeleccionado, JTextField a,  ActionEvent E,
-                                  JTextField b, JTextField c, JComboBox d, JComboBox f ,  JTextField g,
-                                  JRadioButton A,  JRadioButton B,  JRadioButton C, JRadioButton D,  JRadioButton F
-    ){
-        if(E.getSource()==botonSeleccionado){
-            if (botonSeleccionado.isSelected()){
-                a.setEditable(true);
-                b.setEditable(false);
-                c.setEditable(false);
-                d.setEditable(false);
-                f.setEditable(false);
-                g.setEditable(false);
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-                A.setSelected(false);
-                B.setSelected(false);
-                C.setSelected(false);
-                D.setSelected(false);
-                F.setSelected(false);
-            }else{
-                a.setEditable(false);
-                b.setEditable(false);
-                c.setEditable(false);
-                d.setEditable(false);
-                f.setEditable(false);
-                g.setEditable(false);
+
+
+//inabilitar les demas espacios de los radiobuttons   ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+        if(e.getSource()==radioNSS){
+            cajaNSS.setEnabled(true);
+            cajaNombre.setEnabled(false);
+            cajaApPaterno.setEnabled(false);
+            cajaApMaterno.setEnabled(false);
+            comboEspecialidad.setEnabled(false);
+            comboEdad. setEnabled(false);
+        }
+        if(e.getSource()==radioNombre){
+            cajaNSS.setEnabled(false);
+            cajaNombre.setEnabled(true);
+            cajaApPaterno.setEnabled(false);
+            cajaApMaterno.setEnabled(false);
+            comboEspecialidad.setEnabled(false);
+            comboEdad. setEnabled(false);
+        }
+        if(e.getSource()==radioAPpaterno){
+            cajaNSS.setEnabled(false);
+            cajaNombre.setEnabled(false);
+            cajaApPaterno.setEnabled(true);
+            cajaApMaterno.setEnabled(false);
+            comboEspecialidad.setEnabled(false);
+            comboEdad. setEnabled(false);
+        }
+
+        if(e.getSource()==radioAPMaterno){
+            cajaNSS.setEnabled(false);
+            cajaNombre.setEnabled(false);
+            cajaApPaterno.setEnabled(false);
+            cajaApMaterno.setEnabled(true);
+            comboEspecialidad.setEnabled(false);
+            comboEdad. setEnabled(false);
+        }
+        if(e.getSource()== radioAñosExpe){
+            cajaNSS.setEnabled(false);
+            cajaNombre.setEnabled(false);
+            cajaApPaterno.setEnabled(false);
+            cajaApMaterno.setEnabled(false);
+            comboEspecialidad.setEnabled(false);
+            comboEdad. setEnabled(true);
+        }
+        if(e.getSource()== radioEspe){
+            cajaNSS.setEnabled(false);
+            cajaNombre.setEnabled(false);
+            cajaApPaterno.setEnabled(false);
+            cajaApMaterno.setEnabled(false);
+            comboEspecialidad.setEnabled(true);
+            comboEdad. setEnabled(false);
+        }
+
+
+        if(e.getSource()==btnBuscar){
+            /*
+            if (radioTodos.isSelected()){
+                actualizarTablaTodos(tablaMedicosModificaiones);
+            }else {
+*/
+                if (radioNSS.isSelected()) {
+                    if (medicoDAO.mostrarMedico(cajaNSS.getText(), "ID") == null) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros");
+                    } else {
+                        Medico ob1 = medicoDAO.mostrarMedico(cajaNSS.getText(), "ID");
+                        actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
+                    }//else
+                }//********************************************************Nombre
+                if (radioNombre.isSelected()) {
+                    if (medicoDAO.mostrarMedico(cajaNombre.getText(), "Nombre") == null) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros");
+                    } else {
+                        Medico ob1 = medicoDAO.mostrarMedico(cajaNombre.getText(), "Nombre");
+                        actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
+                    }
+                }//********************************************************
+                if (radioAPpaterno.isSelected()) {
+                    if (medicoDAO.mostrarMedico(cajaApPaterno.getText(), "PApellido") == null) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros");
+                    } else {
+                        Medico ob1 = medicoDAO.mostrarMedico(cajaApPaterno.getText(), "PApellido");
+                        actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
+                    }
+                }//********************************************************
+
+                if (radioAPMaterno.isSelected()) {
+                    if (medicoDAO.mostrarMedico(cajaApMaterno.getText(), "SApellido") == null) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros");
+                    } else {
+                        Medico ob1 = medicoDAO.mostrarMedico(cajaApMaterno.getText(), "SApellido");
+                        actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
+                    }
+                }//********************************************************
+                if (radioEspe.isSelected()) {
+                    if (medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem() + "", "espe") == null) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros");
+                    } else {
+                        Medico ob1 = medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem() + "", "espe");
+                        actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
+                    }
+                }//********************************************************
+                if (radioAñosExpe.isSelected()) {
+                    if (medicoDAO.mostrarMedico(comboEdad.getSelectedItem() + "", "ae") == null) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros");
+                    } else {
+                        Medico ob1 = medicoDAO.mostrarMedico(comboEdad.getSelectedItem() + "", "ae");
+                        actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
+                    }
+
             }
+            }//********************************************************************
+
+        if(e.getSource().equals(btnBorrar)){
+            cajaNSS.setText("");
+            cajaNombre.setText("");
+            cajaApPaterno.setText("");
+            cajaApMaterno.setText("");
+            comboEspecialidad.setSelectedIndex(0);
+            comboEdad.setSelectedIndex(0);
+
+            System.out.println("La tabla tiene filas"+ tablaMedicosModificaiones.getRowCount() );
+            if ( tablaMedicosModificaiones.getRowCount()>1){
+                System.out.println("Radio todos ");
+                for (int y =0; y < 6; y++){
+                for (int i=0; i< tablaMedicosModificaiones.getRowCount(); i++ ){
+                    System.out.println( "borrar la tupla "+i+" , "+y);
+                    tablaMedicosModificaiones.setValueAt("w", i,y);
+                } }
+            }else {
+                System.out.println("Radio butons ");
+            tablaMedicosModificaiones.setValueAt("a", 0,0);
+            tablaMedicosModificaiones.setValueAt("a", 0,1);
+            tablaMedicosModificaiones.setValueAt("a", 0,3);
+            tablaMedicosModificaiones.setValueAt("a", 0,2);
+            tablaMedicosModificaiones.setValueAt("a", 0,4);
+            tablaMedicosModificaiones.setValueAt("a", 0,5);
+        }
+        }
+        if( e.getSource().equals(btnCancelar)){
+            setVisible(false);
         }
     }
-    public void SeleccionBotonesDos (JRadioButton botonSeleccionado, JComboBox a,  ActionEvent E,
-                                     JComboBox b, JTextField c, JTextField d,  JTextField f ,  JTextField g,
-                                     JRadioButton A,  JRadioButton B,  JRadioButton C, JRadioButton D,  JRadioButton F
-    ){
-        if(E.getSource()==botonSeleccionado){
-            if (botonSeleccionado.isSelected()){
-                a.setEditable(true);
-                b.setEditable(false);
-                c.setEditable(false);
-                d.setEditable(false);
-                f.setEditable(false);
-                g.setEditable(false);
 
-                A.setSelected(false);
-                B.setSelected(false);
-                C.setSelected(false);
-                D.setSelected(false);
-                F.setSelected(false);
-
-            }else{
-                a.setEditable(false);
-                b.setEditable(false);
-                c.setEditable(false);
-                d.setEditable(false);
-                f.setEditable(false);
-                g.setEditable(false);
-
-            }
-        }
-    }
 
     public void actualizarTablaConsultas (JTable t, Medico ob1){
         t.setValueAt(ob1.getNumSSN(), 0,0);
@@ -417,140 +470,19 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         t.setValueAt(ob1.getPrimerApellido(), 0,2);
         t.setValueAt(ob1.getEspecialidad(), 0,4);
         t.setValueAt(ob1.getAñosExperiencia(), 0,5);
-
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-//inabilitar les demas espacios de los radiobuttons   ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-
-        if(e.getSource()==radioNombre){
-            SeleccionBotones(radioNombre,cajaNombre,e, cajaApPaterno, cajaApMaterno,
-                    comboEspecialidad, comboEdad,cajaNSS ,
-                    radioAPpaterno, radioAPMaterno, radioEspe, radioAñosExpe, radioNSS
-            );
+    public void actualizarTablaTodos(JTable tabla) {
+        final String Driver_Controlador = "com.mysql.cj.jdbc.Driver";
+        final String URL = "jdbc:mysql://localhost:3306/farmaciarx";
+        final String CONSULTA = " select * from medicos;";
+        try {
+            ResultSetTableModel modelo = new ResultSetTableModel(Driver_Controlador, URL, CONSULTA);
+            tabla.setModel(modelo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        if(e.getSource()==radioAPpaterno){
-            SeleccionBotones(radioAPpaterno,cajaApPaterno,e,cajaNombre , cajaApMaterno,
-                    comboEspecialidad, comboEdad, cajaNSS,
-                    radioNombre, radioAPMaterno, radioEspe, radioAñosExpe,radioNSS
-            );
-        }
-
-        if(e.getSource()==radioAPMaterno){
-            SeleccionBotones(radioAPMaterno,cajaApMaterno,e,cajaNombre , cajaApPaterno,
-                    comboEspecialidad, comboEdad, cajaNSS,
-                    radioNombre, radioAPpaterno, radioEspe, radioAñosExpe,radioNSS
-            );
-        }
-        if(e.getSource()==radioNSS){
-            SeleccionBotones(radioNSS,cajaNSS,e,cajaNombre , cajaApPaterno,
-                    comboEspecialidad, comboEdad, cajaApMaterno,
-                    radioNombre, radioAPpaterno, radioEspe, radioAñosExpe, radioAPMaterno
-            );
-        }
-        if(e.getSource()== radioAñosExpe){
-            SeleccionBotonesDos(radioAñosExpe, comboEdad,e,comboEspecialidad,
-                    cajaNombre , cajaApPaterno, cajaNSS, cajaApMaterno,
-                    radioNombre, radioAPpaterno, radioEspe,radioNSS
-                    , radioAPMaterno
-            );
-        }
-        if(e.getSource()== radioEspe){
-            SeleccionBotonesDos(radioEspe, comboEspecialidad,e,comboEdad,
-                    cajaNombre , cajaApPaterno, cajaNSS, cajaApMaterno,
-                    radioNombre, radioAPpaterno, radioAñosExpe,radioNSS
-                    , radioAPMaterno
-            );
-        }
-//************************************************************
-        if(e.getSource()==btnBuscar){//*********************************************
-
-            if(radioNSS.isSelected()){
-                if(medicoDAO.mostrarMedico(cajaNSS.getText(), "ID")==null){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else{
-                    Medico ob1 = medicoDAO.mostrarMedico(cajaNSS.getText(), "ID");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }//else
-            }//********************************************************Nombre
-            if(radioNombre.isSelected()){
-                if(medicoDAO.mostrarMedico(cajaNombre.getText(), "Nombre")==null){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else {
-                    Medico ob1 = medicoDAO.mostrarMedico(cajaNSS.getText(), "Nombre");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }
-            }//********************************************************
-            if(radioAPpaterno.isSelected()){
-                if(medicoDAO.mostrarMedico(cajaApPaterno.getText(), "PApellido")==null){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else {
-                    Medico ob1 = medicoDAO.mostrarMedico(cajaApPaterno.getText(), "PApellido");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }
-            }//********************************************************
-
-            if(radioAPMaterno.isSelected()){
-                if(medicoDAO.mostrarMedico(cajaApMaterno.getText(), "SApellido")==null){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else {
-                    Medico ob1 = medicoDAO.mostrarMedico(cajaApMaterno.getText(), "SApellido");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }
-            }//********************************************************
-            if(radioEspe.isSelected()){
-                if(medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem()+"", "Especialidad")==null){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else {
-                    Medico ob1 = medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem()+""+"", "Especialidad");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }
-            }//********************************************************
-            if(radioAñosExpe.isSelected()){
-                if(medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem()+"", "AñosExperiencia")==null){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else {
-                    Medico ob1 = medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem()+"", "AñosExperiencia");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }
-            }
-
-            //********************************************************TODOS
-            if(radioTodos.isSelected()){
-                if(medicoDAO.mostrarMedico(comboEdad.getSelectedItem()+"", "TODOS")==null
-                        && medicoDAO.mostrarMedico(cajaApMaterno.getText()+"", "Semestre")==null
-                        && medicoDAO.mostrarMedico(comboEspecialidad.getSelectedItem()+"", "Edad")==null
-                        && medicoDAO.mostrarMedico(cajaApPaterno.getText(), "SegundoAP")==null
-                        && medicoDAO.mostrarMedico(cajaNombre.getText(), "PrimerAP")==null
-                        &&medicoDAO.mostrarMedico(cajaNSS.getText(), "Nombre")==null
-                ){
-                    JOptionPane.showMessageDialog(null,  "No se encontraron registros");
-                }else {
-                    Medico ob1 = medicoDAO.mostrarMedico(cajaNSS.getText(), "TODOS");
-                    actualizarTablaConsultas(tablaMedicosModificaiones, ob1);
-                }
-            }//********************************************************TODOS
-        }//********************************************************************
-        if(e.getSource()==btnBorrar){
-            cajaNSS.setText("");
-            cajaNombre.setText("");
-            cajaApPaterno.setText("");
-            cajaApMaterno.setText("");
-            comboEspecialidad.setSelectedIndex(0);
-            comboEdad.setSelectedIndex(0);
-            tablaMedicosModificaiones.setValueAt(null, 0,0);
-            tablaMedicosModificaiones.setValueAt(null, 0,1);
-            tablaMedicosModificaiones.setValueAt(null, 0,2);
-            tablaMedicosModificaiones.setValueAt(null, 0,3);
-            tablaMedicosModificaiones.setValueAt(null, 0,4);
-            tablaMedicosModificaiones.setValueAt(null, 0,5);
-            tablaMedicosModificaiones.setValueAt(null, 0,6);
-
-        }
-        if( e.getSource().equals(btnCancelar)){
-            setVisible(false);
-            //aqui podriamos poner un historial q regrese los valores
-        }
-    }
+    }//actualizarTabla*/
 }

@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
 public class Altas_CompañiasFarmaceuticas extends JFrame implements ActionListener {
@@ -167,6 +168,12 @@ public class Altas_CompañiasFarmaceuticas extends JFrame implements ActionListe
                 String sql = "DELETE FROM compañiasfarmaceuticas WHERE NombreCompania='"+ tablaComFarAltas.getValueAt(tablaComFarAltas.getRowCount()-i, 0)+"' ";
                 conexionBD.ejecutarInstruccionLMD(sql);
             }//for
+        }
+    }
+    public void  keyPressed(KeyEvent event){
+        System.out.println(event.getKeyCode());
+        if( event.getKeyCode()==KeyEvent.VK_TAB){
+
         }
     }
 }

@@ -181,6 +181,21 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
                     if (comprobacionNumero(cajaSSN.getText())==false){
                         JOptionPane.showMessageDialog(null, "El NSS debe tener puros numeros");
                     }else {
+                        if (cajaNombres.getText().equals("")){
+                            JOptionPane.showMessageDialog(null, "El Nombre no puede ser null");
+                        }else{
+                            if (comprobacionTieneNumeros(cajaNombres.getText() )==true){
+                                JOptionPane.showMessageDialog(null, "El Registro Nombres solo admite letras");
+                            }else{
+                            if (cajaApPaterno.getText().equals("")){
+                                JOptionPane.showMessageDialog(null, "El Apellido Paterno no puede ser null");
+                            }else{
+                                if (comprobacionTieneNumeros(cajaApPaterno.getText() )==true){
+                                    JOptionPane.showMessageDialog(null, "El Apellido Paterno solo admite letras");
+                                }else{
+                                    if (comprobacionTieneNumeros(cajaApMaterno.getText() )==true){
+                                        JOptionPane.showMessageDialog(null, "El Apellido Materno solo admite letras");
+                                    }else{
                     try {
                         Medico m = new Medico(cajaSSN.getText(), cajaNombres.getText(), cajaApPaterno.getText(),
                                 cajaApMaterno.getText(),
@@ -191,18 +206,21 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
                         if (medicoDAO.agregarMedico(m)) {
                             filasAñadidas++;
                             actualizarTabla(tablaMedicosAltas);
-                            System.out.println("FELICIDADES: se agrego un nuevo Paciente a la BDD (desde la ventanaInicio)");
+                            System.out.println("FELICIDADES: se agrego un nuevo Medico a la BDD (desde la ventanaInicio)");
                         } else {
-                            System.out.println("ERROR: no se pudo agregar un nuevo Paciente a la BDD (desde la ventanaInicio)");
+                            System.out.println("ERROR: no se pudo agregar un nuevo Medico a la BDD (desde la ventanaInicio)");
                         }
                     } catch (Exception exception) {
                         if (comboEspecialidad.getSelectedItem().equals("Elige Especialidad...")) {
-                            JOptionPane.showMessageDialog(null, "No has elegido años de experiencia ");
+                            JOptionPane.showMessageDialog(null, "No has elegido Especialidad  ");
                         }
                         if (comboAñosExperiencia.getSelectedItem().equals("Elige Años de Experiencia...")) {
-                            JOptionPane.showMessageDialog(null, "No has elegido Especialidad");
+                            JOptionPane.showMessageDialog(null, "No has elegido años de experiencia");
                         }
-                    }
+                    }}}
+                            }
+                            }
+                        }
                     }
                 }
             }
@@ -232,5 +250,15 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public boolean comprobacionTieneNumeros(String cajita) {
+        for (int i = 0; i < cajita.length(); i++) {
+            char c = cajita.charAt(i);
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

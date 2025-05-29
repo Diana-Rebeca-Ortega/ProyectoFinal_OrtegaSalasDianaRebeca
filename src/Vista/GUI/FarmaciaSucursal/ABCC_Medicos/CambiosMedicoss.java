@@ -161,6 +161,13 @@ public class CambiosMedicoss extends JFrame implements ActionListener {
         comboAñosExpe.setBounds(170, 220, 200, 18);
         add(comboAñosExpe);
 
+
+        cajaApPaterno.setEnabled(false);
+        cajaApMaterno.setEnabled(false);
+        cajaNombre.setEnabled(false);
+        comboEspecialidad.setEnabled(false);
+        comboAñosExpe.setEnabled(false);
+
         actualizarTabla(tablaPacientesModificaiones);
     }//constructor
     public void actualizarTabla(JTable tabla) {
@@ -183,19 +190,74 @@ public class CambiosMedicoss extends JFrame implements ActionListener {
             cajaApPaterno.setText("");
             cajaApMaterno.setText("");
             cajaNombre.setText("");
+            comboEspecialidad.setSelectedIndex(0);
             comboAñosExpe.setSelectedIndex(0);
+
+            cajaApPaterno.setEnabled(false);
+            cajaApMaterno.setEnabled(false);
+            cajaNombre.setEnabled(false);
+            comboEspecialidad.setEnabled(false);
+            comboAñosExpe.setEnabled(false);
         }
         MedicoDAO medicoDAO = new MedicoDAO();
         if (e.getSource().equals(btnGuardarCambios)) {
-            Medico a1 = new Medico(cajaSSN.getText(), cajaNombre.getText(),cajaApPaterno.getText(),
-                    cajaApMaterno.getText(),
-                    comboEspecialidad.getSelectedItem()+"",    Byte.parseByte(  comboAñosExpe.getSelectedItem()+"" ));
-            if (medicoDAO.cambiarMedico(a1)) {
-                actualizarTabla(tablaPacientesModificaiones);
-                System.out.println("Registro modificado CORRECTAMENTE desde la Ven_Inicio");
-            }else
-                System.out.println("ERROR en la modificacion del registro lindo desde la Ven_Inicio");
-        }
+
+            if (cajaSSN.getText().length()!=11) {
+                JOptionPane.showMessageDialog(null, "El NSS debe tener 11 digitos");
+            } else {
+                if (comprobacionNumero(cajaSSN.getText())==false){
+                    JOptionPane.showMessageDialog(null, "El NSS debe tener puros numeros");
+                }else {
+                    if (cajaNombre.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "El Nombre no puede ser null");
+                    }else{
+                        if (comprobacionTieneNumeros(cajaNombre.getText() )==true){
+                            JOptionPane.showMessageDialog(null, "El Registro Nombres solo admite letras");
+                        }else{
+                            if (cajaApPaterno.getText().equals("")){
+                                JOptionPane.showMessageDialog(null, "El Apellido Paterno no puede ser null");
+                            }else{
+                                if (comprobacionTieneNumeros(cajaApPaterno.getText() )==true){
+                                    JOptionPane.showMessageDialog(null, "El Apellido Paterno solo admite letras");
+                                }else {
+                                    if (comprobacionTieneNumeros(cajaApMaterno.getText()) == true) {
+                                        JOptionPane.showMessageDialog(null, "El Apellido Materno solo admite letras");
+                                    } else {
+                                        if (comboEspecialidad.getSelectedItem().equals("Elige Especialidad...")) {
+                                            JOptionPane.showMessageDialog(null, "No has elegido Especialidad");
+                                        }else {
+                                            if (comboAñosExpe.getSelectedItem().equals("Elige Años de Experiencia...")) {
+                                                JOptionPane.showMessageDialog(null, "No has elegido Años de Experiencia");
+                                            }else {
+
+
+
+
+try {
+
+    Medico a1 = new Medico(cajaSSN.getText(), cajaNombre.getText(), cajaApPaterno.getText(),
+            cajaApMaterno.getText(),
+            comboEspecialidad.getSelectedItem() + "", Byte.parseByte(comboAñosExpe.getSelectedItem() + ""));
+    if (medicoDAO.cambiarMedico(a1)) {
+        actualizarTabla(tablaPacientesModificaiones);
+        System.out.println("Registro modificado CORRECTAMENTE desde la Ven_Inicio");
+    } else
+        System.out.println("ERROR en la modificacion del registro lindo desde la Ven_Inicio");
+}catch (Exception exception){
+    if (comboEspecialidad.getSelectedItem().equals("Elige Especialidad...")) {
+        JOptionPane.showMessageDialog(null, "No has elegido  Especialidad  ");
+    }
+    if (comboAñosExpe.getSelectedItem().equals("Elige Años de Experiencia...")) {
+        JOptionPane.showMessageDialog(null, "No has elegido Años de especialida");
+    }
+}
+
+                                            }
+                                        }
+                                    }
+
+
+                                }}}}}}}
 
         if (e.getSource().equals(btnBuscar)) {//**************************************************************************
             System.out.println("buscar datos");
@@ -214,11 +276,35 @@ public class CambiosMedicoss extends JFrame implements ActionListener {
             }
             if (registro == 1) {
                 JOptionPane.showMessageDialog(null, "No se encontro registro");
+            }else {
+                cajaApPaterno.setEnabled(true);
+                cajaApMaterno.setEnabled(true);
+                cajaNombre.setEnabled(true);
+                comboEspecialidad.setEnabled(true);
+                comboAñosExpe.setEnabled(true);
             }
         }
         if( e.getSource().equals(btnCancelar)){//******************************************************************
             setVisible(false);
             //aqui podriamos poner un historial q regrese los valores
         }
+    }
+    public  boolean comprobacionNumero( String cajita){
+        try {
+            Long.parseLong(cajita);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public boolean comprobacionTieneNumeros(String cajita) {
+        for (int i = 0; i < cajita.length(); i++) {
+            char c = cajita.charAt(i);
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

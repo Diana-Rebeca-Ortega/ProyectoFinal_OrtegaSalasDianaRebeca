@@ -7,12 +7,17 @@ import Modelo.ResultSetTableModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ConsultasMedicoss extends JFrame implements ActionListener{
     MedicoDAO medicoDAO = new MedicoDAO();
@@ -238,6 +243,15 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         radioAñosExpe = new JRadioButton("Años Especialidad:");
 
         radioTodos = new JRadioButton("TODOS");
+        radioTodos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(radioTodos.isSelected()){
+                    actualizarTablaTodos(tablaMedicosModificaiones);
+                }
+            }
+        });
+
 
         radioTodos.setBounds(20, 60, 80,20);
         radioNSS.setBounds(100, 60, 80,20);
@@ -299,6 +313,8 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         cajaApMaterno.setEnabled(false);
         comboEspecialidad.setEnabled(false);
         comboEdad.setEnabled(false);
+
+        ((PlainDocument) cajaNSS.getDocument()).setDocumentFilter(new FiltroSoloNumeros11Digitos());
 
         cajaNSS.setBounds(250, 60, 250, 20);
         cajaNombre.setBounds(250, 90, 220, 20);
@@ -374,12 +390,12 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
 
 
         if(e.getSource()==btnBuscar){
-            /*
-            if (radioTodos.isSelected()){
-                actualizarTablaTodos(tablaMedicosModificaiones);
-            }else {
-*/
-                if (radioNSS.isSelected()) {
+
+            Thread hiloConsulta = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+            if (radioNSS.isSelected()) {
                     if (medicoDAO.mostrarMedico(cajaNSS.getText(), "ID") == null) {
                         JOptionPane.showMessageDialog(null, "No se encontraron registros");
                     } else {
@@ -429,7 +445,11 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
                     }
 
             }
+                }
+            });
+            hiloConsulta.start();
             }//********************************************************************
+
 
         if(e.getSource().equals(btnBorrar)){
             cajaNSS.setText("");
@@ -439,31 +459,44 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
             comboEspecialidad.setSelectedIndex(0);
             comboEdad.setSelectedIndex(0);
 
+            Medico ob1 = medicoDAO.mostrarMedico("", "Uno");
+           pagina=1;
+           buscador.setEnabled(false);
+           btnDespues.setEnabled(true);
+
             System.out.println("La tabla tiene filas"+ tablaMedicosModificaiones.getRowCount() );
             if ( tablaMedicosModificaiones.getRowCount()>1){
                 System.out.println("Radio todos ");
                 for (int y =0; y < 6; y++){
                 for (int i=0; i< tablaMedicosModificaiones.getRowCount(); i++ ){
                     System.out.println( "borrar la tupla "+i+" , "+y);
-                    tablaMedicosModificaiones.setValueAt("w", i,y);
+                    tablaMedicosModificaiones.setValueAt("", i,y);
                 } }
             }else {
                 System.out.println("Radio butons ");
-            tablaMedicosModificaiones.setValueAt("a", 0,0);
-            tablaMedicosModificaiones.setValueAt("a", 0,1);
-            tablaMedicosModificaiones.setValueAt("a", 0,3);
-            tablaMedicosModificaiones.setValueAt("a", 0,2);
-            tablaMedicosModificaiones.setValueAt("a", 0,4);
-            tablaMedicosModificaiones.setValueAt("a", 0,5);
+            tablaMedicosModificaiones.setValueAt("", 0,0);
+            tablaMedicosModificaiones.setValueAt("", 0,1);
+            tablaMedicosModificaiones.setValueAt("", 0,3);
+            tablaMedicosModificaiones.setValueAt("", 0,2);
+            tablaMedicosModificaiones.setValueAt("", 0,4);
+            tablaMedicosModificaiones.setValueAt("", 0,5);
         }
         }
         if( e.getSource().equals(btnCancelar)){
             setVisible(false);
         }
     }
+    public void actualizarTablaTodos(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        modelo.setRowCount(0);
+        List<Medico> medicos = medicoDAO.obtenerTodosLosMedicos();
+        for (Medico medico : medicos) {
+            Object[] fila = {medico.getNumSSN(), medico.getNombre(), medico.getPrimerApellido(), medico.getSegundoApellido(), medico.getEspecialidad(), medico.getAñosExperiencia()};
+            modelo.addRow(fila);
+        }
+    }
 
-
-    public void actualizarTablaConsultas (JTable t, Medico ob1){
+        public void actualizarTablaConsultas (JTable t, Medico ob1){
         t.setValueAt(ob1.getNumSSN(), 0,0);
         t.setValueAt(ob1.getNombre(), 0,1);
         t.setValueAt(ob1.getSegundoApellido(), 0,3);
@@ -472,17 +505,20 @@ public class ConsultasMedicoss extends JFrame implements ActionListener{
         t.setValueAt(ob1.getAñosExperiencia(), 0,5);
     }
 
-    public void actualizarTablaTodos(JTable tabla) {
-        final String Driver_Controlador = "com.mysql.cj.jdbc.Driver";
-        final String URL = "jdbc:mysql://localhost:3306/farmaciarx";
-        final String CONSULTA = " select * from medicos;";
-        try {
-            ResultSetTableModel modelo = new ResultSetTableModel(Driver_Controlador, URL, CONSULTA);
-            tabla.setModel(modelo);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+}
+
+class FiltroSoloNumeros11Digitos extends DocumentFilter {
+    @Override
+    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+        if (string.matches("[0-9]*") && (fb.getDocument().getLength() + string.length() <= 11)) {
+            super.insertString(fb, offset, string, attr);
         }
-    }//actualizarTabla*/
+    }
+
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        if (text.matches("[0-9]*") && (fb.getDocument().getLength() - length + text.length() <= 11)) {
+            super.replace(fb, offset, length, text, attrs);
+ }
+}
 }

@@ -7,6 +7,8 @@ import conexionBD.ConexionBD;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //importar librerias
@@ -38,7 +40,7 @@ public class MedicoDAO {
     public boolean cambiarMedico( Medico medico){
         String sql = "UPDATE medicos SET Nombre='" + medico.getNombre() +"'," +
                 " PApellido='" + medico.getPrimerApellido() +"',  SApellido='" + medico.getSegundoApellido() +"'," +
-                " Especialidad='"+medico.getEspecialidad()+"', AñosExperiencia='"+medico.getAñosExperiencia()+
+                " Especialidad='"+medico.getEspecialidad()+"', AñosExperiencia='"+medico.getAñosExperiencia()+"'"+
                 " WHERE NSS='" + medico.getNumSSN() + "'";
         return  conexionBD.ejecutarInstruccionLMD(sql); //retorta 0, 1 o 2... false o true
     }
@@ -54,15 +56,30 @@ public class MedicoDAO {
             }
         } catch (SQLException e) {throw new RuntimeException(e);}return tamaño;}
 
+    public List<Medico> obtenerTodosLosMedicos() {
+        List<Medico> medicos = new ArrayList<>();
+        String sql = "SELECT * FROM medicos";
+        ResultSet rs = conexionBD.ejecutarInstruccionSQL(sql);
+        try {
+            while (rs.next()) {
+                Medico medico = new Medico(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getByte(6));
+                medicos.add(medico);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicos;
+    }
+
 
     //*******************************CONSULTAS/*****************************
     public Medico mostrarMedico(String filtro, String tipoBusqueda){
         String sql= "";
 
         if (tipoBusqueda.equals("Uno")){
-            sql = "select * from medicos ORDER BY NSS DESC LIMIT 0,1;";}
+            sql = "select * from medicos ORDER BY NSS ASC LIMIT 0,1;";}
         if (tipoBusqueda.equals("Ultimo")){
-            sql = "select * from medicos ORDER BY NSS DESC LIMIT "+filtro+",1;";}
+            sql = "select * from medicos ORDER BY NSS ASC LIMIT "+filtro+",1;";}
 
 
         if (tipoBusqueda.equals("ID"))

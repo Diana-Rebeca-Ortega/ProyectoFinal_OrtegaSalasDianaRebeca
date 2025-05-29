@@ -6,6 +6,7 @@ import Modelo.ResultSetTableModel;
 import conexionBD.ConexionBD;
 
 import javax.swing.*;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
     JTable tablaMedicosAltas;
     JButton btnCAceptar, btnBorrar, btnCancelar;
     JPanel panelVerde, panelMENTA;
+    JLabel txtUsuarioMalo ;
     ConexionBD conexionBD =  ConexionBD.getInstance();
     public AltasMedicoss(){
         setTitle("Altas Medicos");
@@ -79,8 +81,15 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
         add(texSSN);
 
         cajaSSN = new JTextField("");
+        ((PlainDocument) cajaSSN.getDocument()).setDocumentFilter(new FiltroSoloNumeros11Digitos());
         cajaSSN.setBounds(160, 33, 200, 15);
         add(cajaSSN);
+
+        txtUsuarioMalo = new JLabel("La farmacia no existe");
+        txtUsuarioMalo.setFont(new Font("Arial", Font.PLAIN, 8));
+        txtUsuarioMalo.setForeground(new Color(255, 8, 8));
+        txtUsuarioMalo.setBounds(170, 50, 200,20);
+
 
         JLabel texNombres = new JLabel("NOMBRES:");
         texNombres.setBounds(20, 55, 300, 20);
@@ -255,7 +264,7 @@ public class AltasMedicoss  extends JFrame implements ActionListener {
     public boolean comprobacionTieneNumeros(String cajita) {
         for (int i = 0; i < cajita.length(); i++) {
             char c = cajita.charAt(i);
-            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')||  c==' ' )) {
                 return true;
             }
         }

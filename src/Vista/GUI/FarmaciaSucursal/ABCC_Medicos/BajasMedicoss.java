@@ -6,6 +6,7 @@ import Modelo.ResultSetTableModel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,6 +73,7 @@ public class BajasMedicoss  extends JFrame implements ActionListener {
         add(panelRojo);
 
         txtNSS = new JLabel("NUM. SEGURO SOCIAL:");
+
         txtNSS.setBounds(40, 40, 230, 20);
         txtNSS.setFont(new Font("Arial", Font.BOLD, 13));
         add(txtNSS);
@@ -82,6 +84,7 @@ public class BajasMedicoss  extends JFrame implements ActionListener {
         add(linea);
 
         cajaNSS = new JTextField();
+        ((PlainDocument) cajaNSS.getDocument()).setDocumentFilter(new FiltroSoloNumeros11Digitos());
         cajaNSS.setBounds(190, 40, 200, 20);
         add(cajaNSS);
 

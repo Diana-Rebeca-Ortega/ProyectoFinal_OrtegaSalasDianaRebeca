@@ -6,6 +6,7 @@ import Modelo.ResultSetTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,6 +74,8 @@ public class CambiosMedicoss extends JFrame implements ActionListener {
         add(panelNaranja);
 
         texNSS = new JLabel("NO. Seguro Social:");
+
+
         texNSS.setBounds(40, 40, 230, 20);
         texNSS.setFont(new Font("Arial", Font.BOLD, 13));
         add(texNSS);
@@ -83,6 +86,8 @@ public class CambiosMedicoss extends JFrame implements ActionListener {
         add(linea);
 
         cajaSSN = new JTextField();
+        ((PlainDocument) cajaSSN.getDocument()).setDocumentFilter(new FiltroSoloNumeros11Digitos());
+
         cajaSSN.setBounds(190, 40, 200, 20);
         add(cajaSSN);
 
@@ -301,7 +306,7 @@ try {
     public boolean comprobacionTieneNumeros(String cajita) {
         for (int i = 0; i < cajita.length(); i++) {
             char c = cajita.charAt(i);
-            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')||  c==' ' )) {
                 return true;
             }
         }
